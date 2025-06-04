@@ -15,7 +15,6 @@ const routeAnnunci = require("../server/routes/annunci.js");
 
 app.use('/annunci', routeAnnunci);
 
-
 app.listen(PORT, ()=>{
     console.log(`Running on http://localhost:${PORT}`);
 });

@@ -1,4 +1,4 @@
-import { BrowserRouter as  Router, Routes, Route, Link, data } from "react-router-dom";
+import { BrowserRouter as  Router, Routes, Route, Link, data, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import herox from '../assets/img/herox.jpg';
 import image2 from '../assets/img/image2.jpg';
@@ -18,6 +18,20 @@ const Home = () => {
         .catch(error=>{console.error("Error:",error)});
     }
 
+    const [valueRicerca, setValueRicerca] = useState('');
+    const redirectAnnunci =  useNavigate();
+        
+    const onChangeRicerca = (e) =>{
+        setValueRicerca(e.target.value);
+    }
+
+    const onSearch = (valueRicerca)=> {
+        //Call API
+        setValueRicerca(valueRicerca);
+       redirectAnnunci(`/annunci?ricercaData=${valueRicerca}`);
+        
+        console.log("Search: ", valueRicerca);
+    }
     useEffect(()=>{
         getAnnuncImmobiliari()
     }, []);
@@ -27,14 +41,36 @@ const Home = () => {
         <div>
             
             {/** Hero section */}
-            <div style={{background: `url(${herox})`}} className="h-screen bg-cover flex-col items-center bg-center text-white">
+            <div style={{background: `url(${herox})`,
+                backgroundSize: `cover`, backgroundPosition: `center`}} className="h-screen bg-cover flex-col items-center bg-center text-white">
                 <div className="">
                     <NavBar/>
                 </div>
                 <div className="text-7xl px-9 pt-3 font-bold">La Scelta Intelligente per il Tuo Immobile e il Risparmio!</div>
                 <p className="px-9 pt-3">Ti aiutiamo a <b>risparmiare su gas e luce</b>, calcolare il <b>valore della tua proprietà</b> e trovare le migliori <b>case in vendita</b> o <b>appartamenti in affitto</b>. Hai bisogno di ristrutturazioni o di una consulenza esperta? I nostri consulenti immobiliari sono a tua disposizione!</p>
-                <input type="search" className="bg-white text-black w-3/4 rounded-xl py-0.5 px-0.5 outline-0 my-1 md:ml-9 flex justify-between items-center"  name="search_immobili" id="search_immobili" placeholder="Ricerca tutti immobili disponibile" />
-                <button className="bg-red-500 text-white px-0.5 md:ml-9 py-0.5 hover:border-amber-50 hover:pointer ">Prenota una Consulenza</button>
+                <div className="relative w-full max-w-lg  ">
+
+                    
+                    <input type="search" value={valueRicerca} onChange={onChangeRicerca} className="bg-white text-black rounded-xl py-0.5 px-0.5 w-full outline-0 my-1 md:ml-9 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-blue-500"  name="search_immobili" id="search_immobili" placeholder="Ricerca tutti immobili disponibile, locazione, prezzo, tipo" />
+
+                    <button className="bg-red-500 text-white px-0.5 md:ml-9 py-0.5 hover:border-amber-50 hover:pointer" onClick={()=> onSearch(valueRicerca)}>Cerca</button>
+                    
+
+                    <div className="absolute z-10 top-2 left-9 w-full bg-white border border-gray-300 rounded-lg shadow-lg">
+                        <ul className="divide-y divide-gray-200">
+                            {/* L'agguingo per il filtro per le ricerche */}
+                            {annunci.filter(item=>{
+                                const  ricerca_dati = valueRicerca.toLowerCase(); 
+                                const titolo = item.titolo.toLowerCase();
+                                //Ritorna un true se il valore e' di ricerca esiste
+                                return ricerca_dati && titolo.startsWith(ricerca_dati) && titolo !== ricerca_dati;
+                            }).map((data)=>(
+                                <li onClick={()=>onSearch(data.titolo)} className="p-1 hover:bg-gray-100 text-black cursor-pointer">{data.titolo}</li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+                
             </div>
 
             {/* Listing top 5 recent */}
@@ -45,14 +81,13 @@ const Home = () => {
                 <div className="hidden lg:flex lg:flex-row lg:justify-center lg:gap-6 p-4">
                     {
                         //console.log(typeof annunci.result)
-                        Object.keys(annunci).slice(0, 3).map((data, i)=>{
+                        Object.keys(annunci).slice(0, 3).map((data)=>{
                             return <>
                                     {/* Card */}
-
-                                    <div key={i} className="w-72 bg-white rounded-2xl shadow-md overflow-hidden transition-transform hover:scale-105">
+                                    <div key={data.id} className="w-72 bg-white rounded-2xl shadow-md overflow-hidden transition-transform hover:scale-105">
                                         <img
                                             src={proprieta_1}
-                                            alt={annunci[data].titolo}
+                                            alt={data.titolo}
                                             className="w-full h-12 object-cover"
                                         />
                                         <div className="p-1 flex flex-col h-full">
