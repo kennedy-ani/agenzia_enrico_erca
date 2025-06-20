@@ -5,10 +5,14 @@ import axios from "axios";
 import proprieta_1 from '../assets/img/proprieta_1.jpg';
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import Footer from "../components/Footer";
 const Annunci = () => {
 
     const [annunci, setAnnunci] = useState([]);
     const location = useLocation();
+    const [listingSelected, setlistingSelected] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
 
     
     const getAllAnnunci = async() =>{
@@ -49,6 +53,7 @@ const Annunci = () => {
         }
            
     },[location.search])//Run effect whenever the query value changes
+    
     return <>
         {/* Hero Section */}
         <div style={{background: `url(${hero})`, backgroundSize: `cover`, backgroundPosition: `center`, backgroundRepeat: `no-repeat`}} className="h-screen bg-cover object-cover flex-col items-center bg-center text-white">
@@ -64,45 +69,17 @@ const Annunci = () => {
         </div>
 
         {/* Results */}
-         {/* <div className="hidden lg:flex lg:flex-wrap lg:justify-center lg:gap-6 p-4">
-            {Object.keys(annunci).map((data, i)=>{
-                return <>
-                    <div key={i} className="w-72 bg-white rounded-2xl shadow-md overflow-hidden transition-transform hover:scale-105">
-                        <img
-                            src={proprieta_1}
-                            alt={annunci[data].titolo}
-                            className="w-full h-12 object-cover"
-                        />
-                        <div className="p-1 flex flex-col h-full">
-                            <div className="mb-2">
-                                <h3 className="text-xl font-semibold">{annunci[data].titolo}</h3>
-                                <p className="text-gray-500 text-sm">{annunci[data].indirizzo}</p>
-                            </div>
-                            <div className="flex justify-between items-center mb-2">
-                                <h2 className="text-green-600 text-2xl font-bold">€500</h2>
-                                <span className="text-sm bg-green-100 text-green-700 px-2 py-0.5 rounded">
-                                    In Vendita
-                                </span>
-                            </div>
-                            <div className="text-gray-600 text-sm flex justify-between items-center">
-                            <p>{annunci[data].camere} camere · {annunci[data].bagni} bagni · 1250 sqft</p>
-                            <a href="#" className="text-blue-500 underline hover:text-blue-700">
-                                Chiama
-                            </a>
-                            </div>
-                        </div>
-                    </div>
-                </>
-            })}
-            
-        </div> */}
 
         <div className="lg:grid mt-4 px-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6">
             {Object.keys(annunci).map((data)=>{
                 return <>
-                    <div key={data.id} className=" bg-white rounded-2xl sm:mt-2 shadow-md overflow-hidden transition-transform hover:scale-105">
+                {/* Carta d'annunci */}
+                    <div key={data.id} onClick={()=>{
+                        setlistingSelected(annunci[data]);
+                        setIsModalOpen(true);
+                    }} className=" bg-white rounded-2xl sm:mt-2 shadow-md overflow-hidden transition-transform hover:scale-105">
                         <img
-                            src={proprieta_1}
+                            src={annunci[data].img_url}
                             alt={annunci[data].titolo}
                             className="w-full h-12 object-cover"
                         />
@@ -112,9 +89,9 @@ const Annunci = () => {
                                 <p className="text-gray-500 text-sm">{annunci[data].indirizzo}</p>
                             </div>
                             <div className="flex justify-between items-center mb-2">
-                                <h2 className="text-green-600 text-2xl font-bold">€500</h2>
+                                <h2 className="text-green-600 text-2xl font-bold">€{annunci[data].prezzo} {annunci[data].is_vendita === 0 ? '/mese': ''}</h2>
                                 <span className="text-sm bg-green-100 text-green-700 px-2 py-0.5 rounded">
-                                    In Vendita
+                                    {annunci[data].is_vendita === 1 ? 'Vendita': 'Affitto'}
                                 </span>
                             </div>
                             <div className="text-gray-600 text-sm flex justify-between items-center">
@@ -128,6 +105,49 @@ const Annunci = () => {
                 </>
             })}
         </div>
+
+        {/* popup */}
+        {isModalOpen && listingSelected && (
+            <div>
+                {console.log("hshsh", listingSelected)}
+                <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+                    <div className="bg-white p-2 rounded-lg shadow-lg w-24 text-center relative">
+                        <button onClick={()=>setIsModalOpen(false)} className="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-xl font-bold"
+                        >
+                        &times;
+                        </button>
+                        <h2 className="text-xl font-bold text-red-600 mb-2"></h2>
+                        <div>
+                            <img
+                                src={listingSelected.img_url}
+                                alt={listingSelected.titolo}
+                                className="w-full h-12 object-cover"
+                            />
+                        </div>
+                        <div className="p-2 flex flex-col h-full">
+                            <div className="mb-2">
+                                <h3 className="text-xl font-semibold">{listingSelected.titolo}</h3>
+                                <p className="text-gray-500 text-sm">{listingSelected.indirizzo}</p>
+                            </div>
+                            <div className="flex justify-between items-center mb-2">
+                                <h2 className="text-green-600 text-2xl font-bold">€{listingSelected.prezzo} {listingSelected.is_vendita === 0 ? '/mese': ''}</h2>
+                                <span className="text-sm bg-green-100 text-green-700 px-2 py-0.5 rounded">
+                                    {listingSelected.is_vendita === 1 ? 'Vendita': 'Affitto'}
+                                </span>
+                            </div>
+                            <div className="text-gray-600 text-sm flex justify-between items-center">
+                                <p>{listingSelected.camere} camere · {listingSelected.bagni} bagni · 1250 sqft</p>
+                           
+                            </div>
+                        </div>
+                        <a href="#" className="bg-green-600 p-0.5 !text-white font-bold">Chiama Agente</a>
+                    </div>
+                </div>
+            </div>
+        )}
+        
+        {/* Footer */}
+        <Footer/>
     </>
 }
 

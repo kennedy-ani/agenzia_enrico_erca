@@ -5,7 +5,7 @@ const Footer = () => {
         <div className="bg-red-500 rounded-tl-4xl flex justify-around items-center py-3">
             {/* Logo */}
             <div>
-                <h1 className="font-bold text-3xl text-white">EE</h1>
+                <h1 className="font-bold text-3xl text-white">ƎE</h1>
             </div>
             
             {/* Servizi */}

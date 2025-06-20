@@ -46,8 +46,8 @@ const Home = () => {
                 <div className="">
                     <NavBar/>
                 </div>
-                <div className="text-7xl px-9 pt-3 font-bold">La Scelta Intelligente per il Tuo Immobile e il Risparmio!</div>
-                <p className="px-9 pt-3">Ti aiutiamo a <b>risparmiare su gas e luce</b>, calcolare il <b>valore della tua proprietà</b> e trovare le migliori <b>case in vendita</b> o <b>appartamenti in affitto</b>. Hai bisogno di ristrutturazioni o di una consulenza esperta? I nostri consulenti immobiliari sono a tua disposizione!</p>
+                <div className="text-7xl px-9 pt-3 font-bold">La Scelta Intelligente per il Tuo Immobile e Risparmi!</div>
+                <p className="px-9 pt-3">Ti aiutiamo a <b>risparmiare su gas e luce</b>, calcolare il <b>valore della tua proprietà</b> e trovare le migliori <b>soluzioni in vendita</b> o <b>in affitto</b>. Hai bisogno di ristrutturazioni o di una consulenza esperta? I nostri consulenti immobiliari sono a tua disposizione!</p>
                 <div className="relative w-full max-w-lg  ">
 
                     
@@ -96,9 +96,9 @@ const Home = () => {
                                                 <p className="text-gray-500 text-sm">{annunci[data].indirizzo}</p>
                                             </div>
                                             <div className="flex justify-between items-center mb-2">
-                                                <h2 className="text-green-600 text-2xl font-bold">€500</h2>
+                                                <h2 className="text-green-600 text-2xl font-bold">€{annunci[data].prezzo} {annunci[data].is_vendita === 0 ? '/mese': ''}</h2>
                                                 <span className="text-sm bg-green-100 text-green-700 px-2 py-0.5 rounded">
-                                                    In Vendita
+                                                    {annunci[data].is_vendita === 1 ? 'Vendita': 'Affitto'}
                                                 </span>
                                             </div>
                                             <div className="text-gray-600 text-sm flex justify-between items-center">

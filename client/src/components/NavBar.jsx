@@ -9,7 +9,7 @@ const NavBar = () => {
                 <li className="block px-1.5 py-2 hover:underline underline-offset-8"><Link to={'/annunci'}><p className="text-white ">Annunci</p></Link></li>
                 <li className="block px-1.5 py-2 hover:underline underline-offset-8"><Link to={'/resa'}><p className="text-white ">Resa</p></Link></li>
                 <li className="block px-1.5 py-2 hover:underline underline-offset-8"><Link to={'/servizi'}><p className="text-white ">Servizi</p></Link></li>
-                <li className="block px-1.5 py-2 hover:underline underline-offset-8"><Link to={'/contatti'}><p className="text-white ">Contatti</p></Link></li>
+                <li className="block px-1.5 py-2 hover:underline underline-offset-8"><Link to={'/agenzia'}><p className="text-white ">Su di Noi</p></Link></li>
             </ul>
         </div>
 
