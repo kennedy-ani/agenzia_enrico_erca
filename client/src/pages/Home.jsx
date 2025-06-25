@@ -8,8 +8,11 @@ import proprieta_1 from '../assets/img/proprieta_1.jpg';
 import Footer from '../components/Footer.jsx';
 import axios from "axios";
 import { useEffect, useState } from "react";
+import ModalUtenze from "../components/ModalUtenze.jsx";
+import ModalConsulenza from "../components/ModalConsulenza.jsx";
+import ModalRistrutturazioni from "../components/ModalRistrutturazione.jsx";
 
-const Home = () => {
+const Home = ({popupUtenze, setServizioSelezionato, gestireContattiWhatsapp, setPopupUtenze, popupConsulenzaImmobiliare, setConsulenzaImmobiliare, moduloConsulenza, setModuloConsulenza, ristrutturazione, setRistrutturazione}) => {
     /** THE HOME PAGE */
     const [annunci, setAnnunci] = useState([]);
     const getAnnuncImmobiliari = async () =>{
@@ -129,7 +132,7 @@ const Home = () => {
 
             {/* Servizi */}
             <div className="flex justify-around items-center my-4">
-                <Link to={'/chat'} className="transition-transform hover:scale-105">
+                <Link onClick={()=>setPopupUtenze(true)} className="transition-transform hover:scale-105">
                     < div className="text-center">
                         <FaPiggyBank className="text-red-500 text-7xl mx-auto"/>
                         <p style={{color: "#36454F"}} className="font-bold mt-1">Gestione delle Bollette</p>
@@ -137,7 +140,7 @@ const Home = () => {
                     </div>
                 </Link>
 
-                <Link to={'/prenotazioni'} className="transition-transform hover:scale-105">
+                <Link onClick={()=>setConsulenzaImmobiliare(true)} className="transition-transform hover:scale-105">
                     <div className="text-center">
                         <FaHome className="text-red-500 text-7xl mx-auto"/>
                         <p style={{color: "#36454F"}}  className="font-bold mt-1">Consulenza Immobiliare</p>
@@ -146,15 +149,25 @@ const Home = () => {
                     </div>
                 </Link>
 
-                <Link to={'/ristrutturazioni'} className="transition-transform hover:scale-105">
+                <Link onClick={()=>setRistrutturazione(true)} className="transition-transform hover:scale-105">
                     <div className="text-center">
                         <FaTools className="text-red-500 text-7xl mx-auto"/>
                         <p style={{color: "#36454F"}}  className="font-bold mt-1">Ristrutturazioni</p>
                         <p style={{color: "#36454F"}} className="w-10">Sta pensando d'una ristrutturazione per il tuo domicilio?</p>
-
                     </div>
                 </Link>
             </div>
+            {popupUtenze === true && (
+                <ModalUtenze popupUtenze={popupUtenze} gestireContattiWhatsapp={gestireContattiWhatsapp} setServizioSelezionato={setServizioSelezionato} setPopupUtenze={setPopupUtenze}/>
+            )}
+
+            {popupConsulenzaImmobiliare === true && (
+                <ModalConsulenza moduloConsulenza={moduloConsulenza}setModuloConsulenza={setModuloConsulenza} setConsulenzaImmobiliare={setConsulenzaImmobiliare}/>
+            )}
+
+            {ristrutturazione === true && (
+                <ModalRistrutturazioni ristrutturazione={ristrutturazione} setRistrutturazione={setRistrutturazione}/>
+            )}
 
             {/* Footer */}
             <Footer/>

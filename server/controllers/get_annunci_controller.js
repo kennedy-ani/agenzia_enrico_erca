@@ -1,4 +1,4 @@
-const {getTuttiAnnunci} = require('../database/engine');
+const {getTuttiAnnunci} = require("../database/engine");
 const get_annunci = async(req, res) =>{
     const results = await getTuttiAnnunci();
 

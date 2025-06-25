@@ -5,13 +5,14 @@ import { useState } from "react";
 import 'react-toastify/ReactToastify.css'
 import Footer from "../components/Footer";
 import { toast, ToastContainer } from "react-toastify";
+import ModalUtenze from "../components/ModalUtenze";
 
 
-const Servizi = () => {
+const Servizi = ({popupUtenze, setPopupUtenze}) => {
   
 
     const [popupEntrate, setPopupEntrate] = useState(false);
-    const [popupUtenze, setPopupUtenze] = useState(false);
+    //const [popupUtenze, setPopupUtenze] = useState(false);
     const [popupConsulenzaImmobiliare, setConsulenzaImmobiliare] = useState(false);
 
     // HANDLES SELECTED SERVICES
@@ -27,8 +28,8 @@ const Servizi = () => {
             toast("Scegli un servizio!");
             return;
         }else {
-            const phone = '+393311887849'; //Numero di consulente
-
+            //const phone = '+393311887849'; //Numero di consulente
+            const phone = '+393881578442';
             let messaggio = `Hello there! I am here for ${servizioSelezionato}`;
             if(servizioSelezionato === 'luce' || servizioSelezionato === 'gas' || servizioSelezionato === 'acqua'){
 
@@ -133,46 +134,7 @@ const Servizi = () => {
 
             {/* PER LE UTENZE  */}
             {popupUtenze && (
-                <div>
-                    <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-                        <div className="bg-white p-2 rounded-lg shadow-lg w-24 text-center relative">
-                            <button
-                            onClick={() => setPopupUtenze(false)}
-                            className="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-xl font-bold"
-                            >
-                            &times;
-                            </button>
-                            <h2 className="text-xl font-bold text-red-600 mb-2">UTENZE</h2>
-                            <p className="text-gray-700">
-                                Scegli  un’operazione
-                            </p>
-
-                            <div className="flex flex-col">
-                                <select name="" value={servizioSelezionato} onChange={(e)=>setServizioSelezionato(e.target.value)}className="shadow-md bg- p-0.5" id="">
-                                    <option className="text-center" value="">--Scegli--</option>
-                                    <option className="text-center" value="luce">Luce</option>
-                                    <option className="text-center" value="gas">Gas</option>
-                                    <option className="text-center" value="acqua">Acqua<b> (devi avere con noi il contratto gas o luce)</b></option>
-                                </select>
-
-                                
-                                 <a href="#" onClick={(e)=>gestireContattiWhatsapp(e)} className="bg-green-600 p-0.5 mt-1 !text-white font-bold">Apri Whatsapp</a>
-                            </div>
-                            {/* <div className="my-0.5">
-                                <input type="radio" id="luce" name="servizi" value="luce"/>
-                                <label htmlFor="luce"> Luce</label><br />
-
-                                <input type="radio" id="gas" name="servizi" value="gas"/>
-                                <label htmlFor="gas"> Gas</label><br/>
-
-                                <input type="radio" id="acqua" name="servizi" value="acqua"/>
-                                <label htmlFor="acqua"> Acqua </label><br />
-                                <b>(devi avere con noi sia il contratto gas o luce)</b>
-                            </div> */}
-                        </div>
-                    </div>
-                </div>
-
+                <ModalUtenze setPopupUtenze={setPopupUtenze} servizioSelezionato={servizioSelezionato} setServizioSelezionato={setServizioSelezionato} gestireContattiWhatsapp={gestireContattiWhatsapp}/>
             )}
 
             
@@ -207,22 +169,7 @@ const Servizi = () => {
                                 
                                  <a href="#" onClick={(e)=>gestireContattiWhatsapp(e)} className="bg-green-600 p-0.5 mt-1 !text-white font-bold">Apri Whatsapp</a>
                             </div>
-                            {/* <div>
-                                <input type="radio" id="comunicazioni" name="servizi" value="Comunicazioni"/>
-                                <label htmlFor="Comunicazioni"> Consulenza Compravendita</label><br />
-
-                                <input type="radio" id="Interrogazioni" name="servizi" value="Interrogazioni"/>
-                                <label htmlFor="Interrogazioni"> Consulenza d’investimento</label><br/>
-
-                                <input type="radio" id="Dispetti" name="servizi" value="Dispetti"/>
-                                <label htmlFor="Dispetti"> Consulenza tecnico-legale</label><br />
-
-                                <input type="radio" id="Contratti di Affitto" name="servizi" value="Contratti di Affitto"/>
-                                <label htmlFor="Contratti di Affitto"> Consulenza Finanziaria</label><br />
-
-                                <input type="radio" id="Compromessi" name="servizi" value="Compromessi"/>
-                                <label htmlFor="Compromessi"> Consulenza per stranieri</label><br /><br />
-                            </div> */}
+                            
                         </div>
                     </div>
                 </div>

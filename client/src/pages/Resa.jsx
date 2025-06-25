@@ -5,15 +5,20 @@ import Footer from '../components/Footer';
 import NavBar from '../components/NavBar';
 import { NumericFormat } from 'react-number-format';
 import ResaPieChart from '../components/PieChart';
+import ModalConsulenza from '../components/ModalConsulenza';
 
 
 const Resa = () => {
 
+    // TUTTI GLI ELEMENTI DA UTILIZZARE A CALCOLARE LA RESA
     const [prezzoDiAcquisto, setPrezzoDiAcquisto] = useState(0);
     const [redditoMensileDaAffitto, setRedditoMensileDaAffitto] = useState(0);
     const [constiAnnuali, setConstiAnnuali] = useState(0);
     const [tassoDiSfitto, setTassoDiSfitto] = useState(0);
     const [resaNetta, setResaNetta] = useState(null);
+
+    // VARIABLE PER ATTIVARE IL MODAL
+    const [moduloConsulenza, setModuloConsulenza] = useState(false);
 
     const calcolaResa = () => {
         const redditoAnnuale = redditoMensileDaAffitto * 12;
@@ -21,6 +26,8 @@ const Resa = () => {
         const roi = (redditoAnnuoNetto / prezzoDiAcquisto) * 100;
         setResaNetta(roi.toFixed(2));
     };
+
+    
 
 
     return <>
@@ -74,6 +81,8 @@ const Resa = () => {
                     <div>
                         {/* € <input type="number" value={constiAnnuali} onChange={(e)=>setConstiAnnuali(Number(e.target.value))} id='costiAnnuali' className='bg-gray-400 outline-0 font-bold pl-0.5' name='costiAnnuali' /> */}
 
+                        
+
                         € <NumericFormat type="number" value={constiAnnuali} onValueChange={(values)=>{
                             const {floatValue} = values;
                             setConstiAnnuali(floatValue === undefined ? '' : floatValue)
@@ -86,11 +95,9 @@ const Resa = () => {
                     </div>
                 </div>
 
-                <div className='flex justify-between p-0.5'>
+                {/* <div className='flex justify-between p-0.5'>
                     <p className='font-bold'>Tasso di Sfitto (opzionale)</p>
                     <div>
-                        {/* % <input type="number" id='tassodiSfitto' value={tassoDiSfitto} onChange={(e)=>setTassoDiSfitto(Number(e.target.value))} className='bg-gray-400 outline-0 font-bold pl-0.5' name='tassodiSfitto' /> */}
-
                         % <NumericFormat type="number" id='tassodiSfitto' value={tassoDiSfitto} onValueChange={(values)=>{
                             const {floatValue} = values;
                             setTassoDiSfitto(floatValue === undefined ? '' : floatValue)
@@ -101,7 +108,7 @@ const Resa = () => {
                         allowNegative={false}
                         className='bg-gray-400 outline-0 font-bold pl-0.5' name='tassodiSfitto' />
                     </div>
-                </div>
+                </div> */}
 
                 <input onClick={calcolaResa} type="button" value="Calcola Resa" className='bg-black  text-amber-50 font-semibold block mx-auto mt-2 p-0.5 rounded' id='calcolaResa'/>
             </div>
@@ -124,7 +131,7 @@ const Resa = () => {
         {/* sezione informativa*/}
         <section className='mx-5 mb-2'>
             <p className='text-center mt-5'>
-            La RESA è un indicatore chiave per capire quanto ti rende davvero un immobile.  <br /><br />
+                La RESA è un indicatore chiave per capire quanto ti rende davvero un immobile.  <br /><br />
                 Ma non tutte le RESA sono uguali, e spesso ci sono costi nascosti o opportunità di ottimizzazione.
                 <br /><br />
                 - Una <b>resa del 3-4%</b> può essere bassa, ma sicura in zone centrali.<br /><br />
@@ -135,12 +142,17 @@ const Resa = () => {
             <p className='text-center font-bold uppercase'>Vuoi un’analisi personalizzata sul tuo caso specifico?</p>
             
             <div class="text-center mt-3">
-                <a href="/consulenza" class="bg-green-600 !text-white font-semibold px-3 py-1 rounded-xl hover:bg-green-700 transition">
+                <button onClick={()=>setModuloConsulenza(true)} class="bg-green-600 !text-white font-semibold px-3 py-1 rounded-xl hover:bg-green-700 transition">
                     Richiedi una consulenza personalizzata 🔍
-                </a>
+                </button>
                 <p class="text-sm text-gray-600 mt-2">Ti aiutiamo a valutare la tua strategia d'investimento in base ai dati reali.</p>
             </div>
         </section>
+
+        {/* Modal */}
+        {moduloConsulenza === true && (
+            <ModalConsulenza setModuloConsulenza={setModuloConsulenza}/>
+        )}
 
         <Footer/>
     </>

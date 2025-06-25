@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
-import { FaInstagram, FaFacebook } from "react-icons/fa";
+import { FaInstagram, FaFacebook, FaTiktok } from "react-icons/fa";
 const Footer = () => {
     return <>
         <div className="bg-red-500 rounded-tl-4xl flex justify-around items-center py-3">
@@ -32,6 +32,7 @@ const Footer = () => {
              <div>
                 <p className="font-bold text-xl text-center">Sociali</p>
                 <nav className="text-2xl flex justify-between items-center">
+                    <Link to={'/about'} style={{color:"whitesmoke"}}><FaTiktok/></Link><br />
                     <Link to={'/about'} style={{color:"whitesmoke"}}><FaInstagram/></Link><br />
                     <Link to={'/about'} style={{color:"whitesmoke"}}><FaFacebook/></Link>
                 </nav>
