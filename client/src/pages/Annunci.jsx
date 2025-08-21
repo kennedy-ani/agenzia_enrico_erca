@@ -1,40 +1,39 @@
 import NavBar from "../components/NavBar";
 import hero from "../assets/img/heroAnnunci.jpg";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaClock, FaPhone, FaEnvelope, FaArrowAltCircleLeft, FaArrowAltCircleRight, FaTimes } from "react-icons/fa";
 import axios from "axios";
 import proprieta_1 from '../assets/img/proprieta_1.jpg';
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
-const Annunci = () => {
+import logo from '../assets/img/White Logo.png';
+import { FadeIn } from "../components/animations/FadeIn";
+const Annunci = ({currentIndex, setCurrentIndex,
+          goPrev, goNext, valueRicerca, setValueRicerca, onChangeRicerca, getDataAnnunci, onOpenGallery, isGalleryOpen, setIsGalleryOpen, galleryImages, setGalleryImages, listingSelected, setlistingSelected, isModalOpen, setIsModalOpen, isFullScreen, setIsFullScreen, chiamaAgenteDaAnnuncio}) => {
 
     const [annunci, setAnnunci] = useState([]);
     const location = useLocation();
-    const [listingSelected, setlistingSelected] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-
-    
-    const getAllAnnunci = async() =>{
-        await axios.get('http://localhost:2001/annunci')
-        .then(response=>{setAnnunci(response.data.result)})
-        .catch(error=>{console.error(error)})
-    }
-
-    const getDataAnnunci = async(ricercaParolaChiave)=>{
-        const search = document.getElementById('search_immobili').value;
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+const getAllAnnunci = async(page = 1) =>{
+    try {
+        let response = await axios.get(`http://localhost:2001/annunci?page=${page}&limit=10`)
         
-        const keyword = ricercaParolaChiave || (search ? search : '');
-        
-        const dataObject = {ricercaData: keyword};
-
-        await axios.get('http://localhost:2001/annunci/ricerca', {
-            params: dataObject
-        })
-        .then(response=>{setAnnunci(response.data.result)})
-        .catch(error=>{console.error(error)})
+        setAnnunci(response.data.result);
+        setTotalPages(response.data.totalPages);
+        setPage(response.data.page);
+    } catch (error) {
+        console.log(error);
     }
+}
 
+    let navigare = useNavigate();
+    const onSearch = (valueRicerca)=> {
+        //Call API
+        setValueRicerca(valueRicerca);
+        navigare(`/annunci?ricercaData=${encodeURIComponent(valueRicerca)}`);// encode in case of space
+        console.log("Search: ", valueRicerca);
+    }
 
     useEffect(()=>{
         // Responsible for getting all the listings from data
@@ -49,85 +48,201 @@ const Annunci = () => {
             // Otherwise, get all listings
             console.log('No Keyword');
 
-            getAllAnnunci();
+            getAllAnnunci(page);
+        }
+
+
+        // check gallery images set
+        if(galleryImages.length > 0){
+            setCurrentIndex(0);
         }
            
-    },[location.search])//Run effect whenever the query value changes
+    },[galleryImages, 
+        page, 
+        setCurrentIndex,  
+        location.search])//Run effect whenever the query value changes
     
     return <>
         {/* Hero Section */}
-        <div style={{background: `url(${hero})`, backgroundSize: `cover`, backgroundPosition: `center`, backgroundRepeat: `no-repeat`}} className="h-screen bg-cover object-cover flex-col items-center bg-center text-white">
-            <div className="">
-                <NavBar/>
-            </div>
-            <div className="text-7xl px-9 pt-3 font-bold text-center">Scopri La Tua Casa Perfetta!</div>
-            
-            <div className="flex justify-around items-center p-1">
-                <input type="search"  className="bg-white text-black w-2/4 rounded-xl py-0.5 px-0.5 outline-0 my-1 md:ml-9 flex justify-between items-center"  name="search_immobili" id="search_immobili" placeholder="Ricerca tutti immobili disponibile, locazione, prezzo, tipo" />
-                <button onClick={()=>getDataAnnunci()} type="submit" className="bg-red-500 text-white w-10 px-0.5 py-0.5 hover:border-amber-50 hover:pointer"><FaSearch/></button>
-            </div>
-        </div>
+        
 
-        {/* Results */}
+            <FadeIn>
 
-        <div className="lg:grid mt-4 px-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6">
-            {Object.keys(annunci).map((data)=>{
-                return <>
-                {/* Carta d'annunci */}
-                    <div key={data.id} onClick={()=>{
-                        setlistingSelected(annunci[data]);
-                        setIsModalOpen(true);
-                    }} className=" bg-white rounded-2xl sm:mt-2 shadow-md overflow-hidden transition-transform hover:scale-105">
-                        <img
-                            src={annunci[data].img_url}
-                            alt={annunci[data].titolo}
-                            className="w-full h-12 object-cover"
-                        />
-                        <div className="p-2 flex flex-col h-full">
-                            <div className="mb-2">
-                                <h3 className="text-xl font-semibold">{annunci[data].titolo}</h3>
-                                <p className="text-gray-500 text-sm">{annunci[data].indirizzo}</p>
+                <div style={{background: `url(${hero})`, backgroundSize: `cover`, backgroundPosition: `center`, backgroundRepeat: `no-repeat`}} className="min-h-screen img bg-cover flex-col items-center bg-center text-white md:px-5 py-2">
+                        {/* Contact Bar */}
+                        <div className="flex md:w-56  sm:w-25 flex-col sm:flex-row justify-between text-xs sm:text-sm px-2 py-1">
+                            {/* phone and email */}
+                            <div className="flex sm:flex-col md:flex-row justify-center items-center">
+                                <FaPhone className="mr-0.5 sm:hidden"/>
+                                <span className="mr-2 md:w-1/2">+39 331-1887849 | 0573-737305</span>
+                                <FaEnvelope className="mr-0.5 md:w-1/2 sm:hidden"/>
+                                <span>gunzimangusta@gmail.com</span>
                             </div>
-                            <div className="flex justify-between items-center mb-2">
-                                <h2 className="text-green-600 text-2xl font-bold">€{annunci[data].prezzo} {annunci[data].is_vendita === 0 ? '/mese': ''}</h2>
-                                <span className="text-sm bg-green-100 text-green-700 px-2 py-0.5 rounded">
-                                    {annunci[data].is_vendita === 1 ? 'Vendita': 'Affitto'}
-                                </span>
-                            </div>
-                            <div className="text-gray-600 text-sm flex justify-between items-center">
-                            <p>{annunci[data].camere} camere · {annunci[data].bagni} bagni · 1250 sqft</p>
-                            <a href="#" className="text-blue-500 underline hover:text-blue-700">
-                                Chiama
-                            </a>
+
+                            {/* time */}
+                            <div className="flex sm:flex-col md:flex-row md:w-20 items-center sm:items-start justify-start gap-1">
+                                <FaClock className="mr-0.5 md:text-md sm:hidden"/>
+                                <span className="mr-2 w-full md:w-1/2">Lunedi - Venerdi</span>
+                                <span className="w-full md:w-1/2">9:30 - 13:00 16:00 - 19:30</span>
                             </div>
                         </div>
-                    </div>
-                </>
-            })}
-        </div>
+                        <div className="flex sm:justify-between sm:ml-2 sm:items-center">
+                            <img src={logo} className="w-5" alt="Enrico Erca"/>
+                            <NavBar/>
+                        </div>
+                    <h1 className="text-7xl sm:text-5xl sm:mt-4 px-9 sm:px-3 pt-3 font-bold text-center">Scopri La Tua Casa Perfetta!</h1>
 
-        {/* popup */}
+                    {/* Search bar */}
+                    <div className="relative w-full max-w-6xl sm:w-26 md:mx-auto px-4">
+                        <div className="flex flex-col sm:flex-row items-center gap-2 mt-0 w-full max-w-6xl">
+                        <input type="search" value={valueRicerca} onChange={onChangeRicerca} className="border-b text-white border-white outline-none py-0.5 px-1 w-full sm:w-3/4 outline-0 my-1 md:ml-9 lg:ml-0 sm:ml-3 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-white-500"  name="search_immobili" id="search_immobili" placeholder="Ricerca tutti immobili disponibile, locazione, prezzo, tipo" />
+                        {/* <button className="bg-red-500 text-white px-0.5 md:ml-9 py-0.5 hover:border-amber-50 hover:pointer" onClick={()=> onSearch(valueRicerca)}>Cerca</button> */}
+                        </div>
+                        {/* Search Results */}
+                        
+                        {valueRicerca && (
+                            <div className="absolute z-10 -top-1 left-9 lg:lef-0 w-full sm:top-3 sm:left-0 sm:w-25 bg-white border border-gray-300 rounded-lg shadow-lg">
+                                <ul className="divide-y divide-gray-200">
+                                    {/* L'agguingo per il filtro per le ricerche */}
+                                    {annunci?.filter(item=>{
+                                        const  ricerca_dati = valueRicerca.toLowerCase(); 
+                                        const titolo = item.titolo.toLowerCase();
+                                        //Ritorna un true se il valore e' di ricerca esiste
+                                        return ricerca_dati && titolo.startsWith(ricerca_dati) && titolo !== ricerca_dati;
+                                    }).map((data)=>(
+                                        <li onClick={()=>onSearch(data.titolo)} className="p-1 hover:bg-gray-100 text-black cursor-pointer">{data.titolo}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                        
+                    </div>
+                </div>
+            </FadeIn>
+        
+
+        {/* Tutti gli annunci */}
+        
+
+            <div className="grid md:grid-cols-3 sm:grid-cols-1 gap-3 md:px-2 md:mt-10 sm:px-1">
+                {console.log(annunci)}
+                {
+                    annunci && annunci.length > 0 && annunci.map((data) => (
+                        
+                        <>
+                            {/* Card */}
+                            <FadeIn>
+                                <div key={data.id} onClick={()=>{setIsModalOpen(true); setlistingSelected(data); onOpenGallery(data.id)}} className="md:w-20 sm:w-25 sm:mb-2 bg-white rounded-2xl cursor-pointer shadow-md overflow-hidden transition-transform hover:scale-105">
+                                    <img
+                                        src={`http://localhost:2001/uploads/${data.img_url}`}
+                                        alt={data.titolo}
+                                        className="w-full h-12 object-cover"
+                                    />
+                                    <div className="p-1 flex flex-col h-full">
+                                        <div className="mb-2">
+                                            <h3 className="text-xl font-semibold">{data.titolo}</h3>
+                                            <p className="text-gray-500 text-sm">{data.indirizzo}</p>
+                                        </div>
+                                        <div className="flex justify-between items-center mb-2">
+                                            <h2 className="text-green-600 text-2xl font-bold">€{data.prezzo} {data.is_vendita === 0 ? '/mese': ''}</h2>
+                                            <span className="text-sm bg-green-100 text-green-700 px-2 py-0.5 rounded">
+                                                {data.is_vendita === 1 ? 'Vendita': 'Affitto'}
+                                            </span>
+                                        </div>
+                                        <div className="text-gray-600 text-sm flex justify-between items-center">
+                                        <p>{data.camere} camere · {data.bagni} bagni · 1250 sqft</p>
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </FadeIn>
+                        </>
+                    ))
+                }
+
+            </div>
+        
+        
+        
+
+
+        
+        {/* listing card of each listing clicked on */}
         {isModalOpen && listingSelected && (
             <div>
-                {console.log("hshsh", listingSelected)}
+                
                 <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-                    <div className="bg-white p-2 rounded-lg shadow-lg w-24 text-center relative">
+                    <div className="bg-white p-2 rounded-lg shadow-lg w-24 my-2 text-center relative overflow-y-auto max-h-[95vh]">
                         <button onClick={()=>setIsModalOpen(false)} className="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-xl font-bold"
                         >
                         &times;
                         </button>
                         <h2 className="text-xl font-bold text-red-600 mb-2"></h2>
                         <div>
-                            <img
-                                src={listingSelected.img_url}
-                                alt={listingSelected.titolo}
-                                className="w-full h-12 object-cover"
-                            />
+                            {galleryImages.length > 0 && (
+                                <img
+                                    src={galleryImages[currentIndex]}
+                                    alt={`Image ${currentIndex}`}
+                                    className="w-full h-12 object-cover cursor-pointer"
+                                    onClick={()=>setIsFullScreen(true)}
+                                />
+                            )}
+                                {/* Left Button */}
+                                <button
+                                onClick={goPrev}
+                                className="absolute left-2 top-1/3 -translate-y-1/2 bg-white/50 cursor-pointer text-black px-0.5 py-0.5 rounded-full"
+                                >
+                                <FaArrowAltCircleLeft/>
+                                </button>
+
+                                {/* Right Button */}
+                                <button
+                                onClick={goNext}
+                                className="absolute right-2 top-1/3 -translate-y-1/2 bg-white/50 cursor-pointer text-black px-0.5 py-0.5 rounded-full"
+                                >
+                                <FaArrowAltCircleRight/>
+                                </button>
+
+                            {isFullScreen && (
+                                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                                    <img
+                                    src={galleryImages[currentIndex]}
+                                    alt={`Image ${currentIndex}`}
+                                    className="max-h-[90%] max-w-[90%] object-contain"
+                                    />
+                                    <button
+                                    onClick={() => setIsFullScreen(false)}
+                                    className="absolute top-4 right-4 text-white text-3xl"
+                                    >
+                                    <FaTimes/>
+                                    </button>
+
+                                    {/* slides left and right */}
+                                    {/* Left Button */}
+                                    <button
+                                    onClick={goPrev}
+                                    className="absolute left-2 top-1/3 -translate-y-1/2 bg-white/50 cursor-pointer text-black px-0.5 py-0.5 rounded-full"
+                                    >
+                                    <FaArrowAltCircleLeft/>
+                                    </button>
+
+                                    {/* Right Button */}
+                                    <button
+                                    onClick={goNext}
+                                    className="absolute right-2 top-1/3 -translate-y-1/2 bg-white/50 cursor-pointer text-black px-0.5 py-0.5 rounded-full"
+                                    >
+                                    <FaArrowAltCircleRight/>
+                                    </button>
+                            </div>
+                            )}
                         </div>
                         <div className="p-2 flex flex-col h-full">
                             <div className="mb-2">
                                 <h3 className="text-xl font-semibold">{listingSelected.titolo}</h3>
                                 <p className="text-gray-500 text-sm">{listingSelected.indirizzo}</p>
+                            </div>
+                            <div className="mb-2">
+                                <p className="text-gray-500 text-sm">{listingSelected.descrizione}</p>
                             </div>
                             <div className="flex justify-between items-center mb-2">
                                 <h2 className="text-green-600 text-2xl font-bold">€{listingSelected.prezzo} {listingSelected.is_vendita === 0 ? '/mese': ''}</h2>
@@ -140,11 +255,34 @@ const Annunci = () => {
                            
                             </div>
                         </div>
-                        <a href="#" className="bg-green-600 p-0.5 !text-white font-bold">Chiama Agente</a>
+                        <div className="sm:flex sm:justify-between sm:items-center md:block md:mx-auto">
+                            <a href="https://wa.me/393272794535" className="bg-green-600 p-0.5 !text-white font-bold">Scrivi ora</a>
+                            <a href="tel:+393508223873" className="bg-green-600 p-0.5 md:hidden !text-white font-bold">Chiama ora</a>
+                        </div>
                     </div>
                 </div>
             </div>
         )}
+
+        <div className="flex gap-2 justify-center mt-4">
+            <button 
+                disabled={page === 1} 
+                onClick={() => setPage(page - 1)} 
+                className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+            >
+                <FaArrowAltCircleLeft/>
+            </button>
+
+            <span>Page {page} of {totalPages}</span>
+
+            <button 
+                disabled={page === totalPages} 
+                onClick={() => setPage(page + 1)} 
+                className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+            >
+                <FaArrowAltCircleRight/>
+            </button>
+        </div>
         
         {/* Footer */}
         <Footer/>

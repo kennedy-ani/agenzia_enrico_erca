@@ -16,7 +16,7 @@ const ModalUtenze = ({setPopupUtenze,setServizioSelezionato, servizioSelezionato
                     </p>
 
                     <div className="flex flex-col">
-                        <select name="" value={servizioSelezionato} onChange={(e)=>setServizioSelezionato(e.target.value)}className="shadow-md bg- p-0.5" id="">
+                        <select name="" value={servizioSelezionato} onChange={(e)=>setServizioSelezionato(e.target.value)}className="shadow-md bg- p-0.5 outline-none " id="">
                             <option className="text-center" value="">--Scegli--</option>
                             <option className="text-center" value="luce">Luce</option>
                             <option className="text-center" value="gas">Gas</option>

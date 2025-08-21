@@ -1,26 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-const ModalConsulenza = ({setModuloConsulenza, setConsulenzaImmobiliare, moduloConsulenza}) => {
-
-    const {nome, setNome} = useState('');
-    const {cognome, setCognome} = useState('');
-    const {emailUtente, setemailUtente} = useState('');
-    const {telnumero, setTelnumero} = useState('');
-    const {messaggio, setMessaggio} = useState('');
-
-
-    // Invia tutti dati inseriti al backend
-    const gestireDatiConsulenza = () => {
-        const params = {
-            nome: nome,
-            cognome: cognome,
-            email: emailUtente,
-            numeroditelefono: telnumero,
-            messaggio: messaggio
-        }
-
-        console.log(params);
-    }
+const ModalConsulenza = ({gestireDatiConsulenza, nome, setNome, setCognome, cognome, emailUtente, setEmailUtente, telnumero, setTelnumero, messaggio, setMessaggio, accettoPrivacy, setAccettoPrivacy, toast, setModuloConsulenza,setConsulenzaImmobiliare, moduloConsulenza}) => {
 
     async function sendWhatsAppMessage(userMessage) {
         const phone = '+393881578442'; // e.g., +39333xxxxxxx
@@ -36,9 +16,9 @@ const ModalConsulenza = ({setModuloConsulenza, setConsulenzaImmobiliare, moduloC
     return <>
         <div>
             <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-                <div className="bg-white p-2 rounded-lg shadow-lg w-full max-w-2xl overflow-hidden max-h-[90vh] text-center relative">
+                <div className="bg-white sm:max-w-xl p-2 rounded-lg shadow-lg w-full max-w-2xl overflow-hidden max-h-[90vh] text-center relative">
                     <button onClick={()=>setConsulenzaImmobiliare(false)}
-                    className="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-xl font-bold"
+                    className="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-xl font-bold outline-0"
                     >
                     &times;
                     </button>
@@ -49,32 +29,45 @@ const ModalConsulenza = ({setModuloConsulenza, setConsulenzaImmobiliare, moduloC
                     <div className="overflow-y-auto max-h-[70vh] space-y-4">
 
                         <div className="flex mt-2 text-left flex-col">
-                            <label htmlFor="nome">Nome</label>
-                            <input type="text" id='nome'  className='bg-gray-300 shadow p-0.5 outline-0 w-20 pl-0.5' name='nome' />
+                            <label htmlFor="nome">Nome*</label>
+                            <input type="text" id='nome' value={nome} onChange={(e)=>setNome(e.target.value)} className='bg-gray-300 rounded-sm shadow p-0.5 outline-0 w-20 pl-0.5' placeholder="Es:Enrico" name='nome' required />
                         </div>
 
-                        <div className="flex text-left flex-col mt-2">
-                            <label htmlFor="cognome">Cognome</label>
-                            <input type="text" id='cognome' className='bg-gray-300 shadow p-0.5 outline-0 w-20 pl-0.5' onChange={()=>setCognome(e.target.value)} name='cognome' />
+                         <div className="flex text-left flex-col mt-2">
+                            <label htmlFor="cognome">Cognome*</label>
+                            <input type="text" id='cognome' className='bg-gray-300 rounded-sm shadow p-0.5 outline-0 w-20 pl-0.5' value={cognome} onChange={(e)=>setCognome(e.target.value)} name='cognome' placeholder="Es:Erca" required />
                         </div>
 
                         <div className="flex text-left flex-col mt-2">
                             <label htmlFor="email">Email</label>
-                            <input type="text" id='email' className='bg-gray-300 shadow p-0.5 outline-0 w-20 pl-0.5' name='email' />
+                            <input type="email" id='email' value={emailUtente} onChange={(e)=>setEmailUtente(e.target.value)} className='bg-gray-300 shadow rounded-sm p-0.5 outline-0 w-20 pl-0.5' placeholder="Es:test@gmail.com" name='email' />
                         </div>
 
                         <div className="flex text-left flex-col mt-2">
-                            <label htmlFor="telnumber">Numero di Telefono</label>
-                            <input type="text" id='telnumber' className='bg-gray-300 outline-0 shadow p-0.5  w-20 pl-0.5' name='telnumber' />
+                            <label htmlFor="telnumber">Numero di Telefono*</label>
+                            <input type="text" id='telnumber' value={telnumero} onChange={(e)=>{
+                                const input = e.target.value;
+
+                                //Allow only digits
+                                if(/^\d*$/.test(input)){
+                                    //Limit to 10 digits (change this to your desired length)
+                                    if(input.length <= 10){
+                                        setTelnumero(input);
+                                    }
+                                }
+                            }} className='bg-gray-300 rounded-sm outline-0 shadow p-0.5  w-20 pl-0.5' name='telnumber' placeholder="Es: 3331234567" required/>
                         </div>
 
                         <div className="flex text-left flex-col mt-2">
-                            <label htmlFor="messaggio">Messaggio</label>
-                            <textarea name="messaggio" className="outline-0 bg-gray-300 w-20 shadow p-0.5" id="messaggio" cols="30" rows="10"></textarea>
+                            <label htmlFor="messaggio">Messaggio*</label>
+                            <textarea name="messaggio" value={messaggio} onChange={(e)=>setMessaggio(e.target.value)} className="outline-0 bg-gray-300 rounded-sm w-20 shadow p-0.5" id="messaggio" cols="30" rows="10" required></textarea>
+                        </div> 
+
+                        <div className="flex flex-col text-left ">
+                             <label><input type="checkbox" checked={accettoPrivacy} onClick={(e)=>setAccettoPrivacy(e.target.checked)} className="" required /> Accetto la privacy policy</label>
                         </div>
-                    
                         <div className="pb-4 text-center">
-                            <button onClick={sendWhatsAppMessage}className="bg-green-600 text-white px-4 py-0.5 rounded hover:bg-green-700">
+                            <button onClick={()=>gestireDatiConsulenza()}className="bg-green-600 text-white px-4 py-0.5 rounded hover:bg-green-700">
                                 Invia Richiesta
                             </button>
                         </div>

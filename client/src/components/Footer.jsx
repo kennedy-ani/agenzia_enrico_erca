@@ -2,39 +2,40 @@ import { BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import { FaInstagram, FaFacebook, FaTiktok } from "react-icons/fa";
 const Footer = () => {
     return <>
-        <div className="bg-red-500 rounded-tl-4xl flex justify-around items-center py-3">
+        <div className="bg-red-500 rounded-tl-4xl flex flex-col md:flex-row justify-around items-center py-3">
             {/* Logo */}
-            <div>
-                <h1 className="font-bold text-3xl text-white">ƎE</h1>
+            <div className="">
+                <h1 className="font-bold sm:text-9xl text-4xl text-white">ƎE</h1>
             </div>
             
             {/* Servizi */}
-            <div>
-                <p className="font-bold text-xl text-center">Servizi</p>
+            <div className="">
+                <p className="font-bold text-xl sm:mt-2 text-white text-center">Servizi</p>
                 <nav className="text-center">
-                    <Link style={{color:"whitesmoke"}} to={'/chat'}>Risparmi sulle bollette</Link><br />
-                    <Link style={{color:"whitesmoke"}} to={'/resa'}>Resa</Link><br />
-                    <Link style={{color:"whitesmoke"}} to={'/prenotazioni'}>Consulenza</Link><br />
-                    <Link style={{color:"whitesmoke"}} to={'/ristrutturazioni'}>Ristrutturazione</Link>
+                    <Link style={{color:"whitesmoke"}} className="text-xl " to={'/chat'}>Risparmi sulle bollette</Link><br />
+                    <Link style={{color:"whitesmoke"}} className="text-xl " to={'/resa'}>Resa</Link><br />
+                    <Link style={{color:"whitesmoke"}} className="text-xl " to={'/prenotazioni'}>Consulenza</Link><br />
+                    <Link style={{color:"whitesmoke"}} className="text-xl " to={'/ristrutturazioni'}>Ristrutturazione</Link>
                 </nav>
             </div>
 
             {/* Agenzia */}
-            <div>
-                <p className="font-bold text-xl text-center">Agenzia</p>
+            <div className="">
+                <p className="font-bold text-xl sm:mt-2 text-center text-white  ">Agenzia</p>
                 <nav className="text-center">
-                    <Link to={'/about'} style={{color:"whitesmoke"}}>Su di noi</Link><br />
-                    <Link to={'/about'} style={{color:"whitesmoke"}}>Team</Link>
+                    <Link to={'/agenzia'} className="text-xl" style={{color:"whitesmoke"}}>Su di noi</Link><br />
+                    <Link to={'/agenzia'} className="text-xl" style={{color:"whitesmoke"}}>Team</Link> <br />
+                    <Link to={'/privacy'} className="text-xl" style={{color: "whitesmoke"}}>Policy</Link>
                 </nav>
             </div>
 
              {/* Socials */}
              <div>
-                <p className="font-bold text-xl text-center">Sociali</p>
+                <p className="font-bold text-xl sm:mt-2 text-center text-white">Social</p>
                 <nav className="text-2xl flex justify-between items-center">
-                    <Link to={'/about'} style={{color:"whitesmoke"}}><FaTiktok/></Link><br />
-                    <Link to={'/about'} style={{color:"whitesmoke"}}><FaInstagram/></Link><br />
-                    <Link to={'/about'} style={{color:"whitesmoke"}}><FaFacebook/></Link>
+                    <Link to={'/about'} style={{color:"whitesmoke"}} className="mx-0.5"><FaTiktok/></Link><br />
+                    <Link to={'/about'} style={{color:"whitesmoke"}} className=""><FaInstagram/></Link><br />
+                    <Link to={'/about'} style={{color:"whitesmoke"}} className="mx-0.5"><FaFacebook/></Link>
                 </nav>
             </div>
         </div>
