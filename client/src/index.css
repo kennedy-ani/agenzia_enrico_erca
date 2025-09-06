@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme{
-  --color-red-500: #cf1739;
+  --color-red-500: #BB0505;
   --color-oxford-blue: #031D44;
   --color-prussian: #04395E;
   --color-cambridge: #70A288;
@@ -10,6 +10,7 @@
   --spacing: 1.5rem;
 
 }
+
 
 
 

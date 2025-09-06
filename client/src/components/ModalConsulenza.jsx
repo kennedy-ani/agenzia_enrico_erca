@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-const ModalConsulenza = ({gestireDatiConsulenza, nome, setNome, setCognome, cognome, emailUtente, setEmailUtente, telnumero, setTelnumero, messaggio, setMessaggio, accettoPrivacy, setAccettoPrivacy, toast, setModuloConsulenza,setConsulenzaImmobiliare, moduloConsulenza}) => {
+const ModalConsulenza = ({gestireDatiConsulenza, nome, setNome, setCognome, cognome, emailUtente, setEmailUtente, telnumero, setTelnumero, motivoPerConsulenzaImmobiliare, setMotivoPerConsulenzaImmobiliare, accettoPrivacy, setAccettoPrivacy, setConsulenzaImmobiliare}) => {
 
     async function sendWhatsAppMessage(userMessage) {
         const phone = '+393881578442'; // e.g., +39333xxxxxxx
@@ -59,8 +59,8 @@ const ModalConsulenza = ({gestireDatiConsulenza, nome, setNome, setCognome, cogn
                         </div>
 
                         <div className="flex text-left flex-col mt-2">
-                            <label htmlFor="messaggio">Messaggio*</label>
-                            <textarea name="messaggio" value={messaggio} onChange={(e)=>setMessaggio(e.target.value)} className="outline-0 bg-gray-300 rounded-sm w-20 shadow p-0.5" id="messaggio" cols="30" rows="10" required></textarea>
+                            <label htmlFor="messaggio">Motivo per la consulenza*</label>
+                            <textarea name="messaggio" value={motivoPerConsulenzaImmobiliare} onChange={(e)=>setMotivoPerConsulenzaImmobiliare(e.target.value)} className="outline-0 bg-gray-300 rounded-sm w-20 shadow p-0.5" id="messaggio" cols="30" rows="10" required></textarea>
                         </div> 
 
                         <div className="flex flex-col text-left ">

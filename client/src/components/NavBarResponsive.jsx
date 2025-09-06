@@ -7,9 +7,9 @@ const NavBarResponsive = ({showMenu, setShowMenu}) => {
             <FaTimes className='text-white  text-xl' onClick={()=>setShowMenu(false)}/>
             <li className="block px-1.5 py-0.5 hover:underline underline-offset-8"><Link className="" to={'/'}><p className="text-white ">Home</p></Link></li>
             <li className="block px-1.5 py-0.5 hover:underline underline-offset-8"><Link to={'/annunci'}><p className="text-white ">Annunci</p></Link></li>
-            <li className="block px-1.5 py-0.5 hover:underline underline-offset-8"><Link to={'/resa'}><p className="text-white ">Resa</p></Link></li>
             <li className="block px-1.5 py-0.5 hover:underline underline-offset-8"><Link to={'/servizi'}><p className="text-white ">Servizi</p></Link></li>
             <li className="block px-1.5 py-0.5 hover:underline underline-offset-8"><Link to={'/agenzia'}><p className="text-white text-center w-10">Su di Noi</p></Link></li>
+            <li className="block px-1.5 py-0.5 hover:underline underline-offset-8"><Link to={'/consulenza-privata'}><p className="text-white text-center">Consulenza Privata</p></Link></li>
         </ul>
     </>
 }

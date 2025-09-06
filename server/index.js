@@ -20,8 +20,10 @@ app.get("/", (req, res)=>{
 /** ALL ROUTES */
 const routeAnnunci = require("../server/routes/annunci.js");
 const routeConsulenza = require("../server/routes/consulenzaImmobiliare.js")
+const routeServizi = require("../server/routes/servizi.js");
 
 app.use('/annunci', routeAnnunci);
+app.use('/servizi', routeServizi);
 app.use('/consulenzaimmobiliare', routeConsulenza);
 
 app.listen(PORT, ()=>{

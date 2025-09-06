@@ -4,7 +4,7 @@ const ModalStraOrdinaria = ({
     indirizzoManutenzioneStra, setindirizzoManutenzioneStra, capManutenzioneStra, setCapManutenzioneStra, cittaManutenzioneStra, setCittaManutenzioneStra, tipoDiImmobiliareManutenzioneStra, setTipoDiImmobiliareManutenzioneStra,
     ristrutturazione_parziale,  setRistrutturazione_parziale, perdite_gravi, setPerdite_gravi, Impianti_elettrici_idraulici, setImpianti_elettrici_idraulici, messa_norma_caldaie, setMessa_norma_caldaie, opere_murarie_strutturali,
     setOpere_murarie_strutturali, rifacimento_bagni, setRifacimento_bagni, interventi_post_allagamento, setInterventi_post_allagamento, grado_di_urgenza, setGrado_di_urgenza, accettoPrivacyStraOrdinaria, setAccettoPrivacyStraOrdinaria,
-    moduloManutenzioneStra, setModuloManutenzioneStra, setDescrizioneManutenzioneStra, descrizioneManutenzioneStra
+    moduloManutenzioneStra, setModuloManutenzioneStra, setDescrizioneManutenzioneStra, descrizioneManutenzioneStra, gestireDatiManutenzioneStra
 }) => {
     return <>
         <div>
@@ -54,11 +54,20 @@ const ModalStraOrdinaria = ({
                         {/* INDRIZZIO DELL'IMMOBILE */}
                         <h1 className="!text-2xl">L'indirizzo completo dell'immobile</h1>
                         
-                        <input type="text" id='indirizzoManutenzione' className='bg-gray-300 rounded-sm shadow p-0.5 outline-0 w-20 pl-0.5' value={indirizzoManutenzioneStra} onChange={(e)=>setindirizzoManutenzioneStra(e.target.value)} name='indirizzoManutenzione' placeholder="Es:Via Republica 00 " required />
+                        <div className="flex text-left flex-col mt-2">
+                            <label htmlFor="indirizzo" className="text-left">Indirizzo</label>
+                            <input type="text" id='indirizzoManutenzione' className='bg-gray-300 rounded-sm shadow p-0.5 outline-0 w-20 pl-0.5' value={indirizzoManutenzioneStra} onChange={(e)=>setindirizzoManutenzioneStra(e.target.value)} name='indirizzoManutenzione' placeholder="Es:Via Republica 00 " required />
+                        </div>
 
-                        <input type="text" id='capManutenzione' className='bg-gray-300 rounded-sm shadow p-0.5 outline-0 w-20 pl-0.5' value={capManutenzioneStra} onChange={(e)=>setCapManutenzioneStra(e.target.value)} name='capManutenzione' placeholder="Es:60134" required />
+                        <div className="flex text-left flex-col mt-2">
+                            <label htmlFor="cap" className="text-left">Cap</label>
+                            <input type="text" id='capManutenzione' className='bg-gray-300 rounded-sm shadow p-0.5 outline-0 w-20 pl-0.5' value={capManutenzioneStra} onChange={(e)=>setCapManutenzioneStra(e.target.value)} name='capManutenzione' placeholder="Es:60134" required />
+                        </div>
 
-                        <input type="text" id='citta' className='bg-gray-300 rounded-sm shadow p-0.5 outline-0 w-20 pl-0.5' value={cittaManutenzioneStra} onChange={(e)=>setCittaManutenzioneStra(e.target.value)} name='citta' placeholder="Es:Pistoia" required />
+                        <div className="flex text-left flex-col mt-2">
+                            <label htmlFor="citta" className="text-left">Citta</label>
+                            <input type="text" id='citta' className='bg-gray-300 rounded-sm shadow p-0.5 outline-0 w-20 pl-0.5' value={cittaManutenzioneStra} onChange={(e)=>setCittaManutenzioneStra(e.target.value)} name='citta' placeholder="Es:Pistoia" required />
+                        </div>
 
                         {/* Tipo di Immobiliare */}
                         {/* <select name="tipodiImmobiliareManutenzione" value={tipoDiImmobiliareManutenzione} onChange={(e)=>setTipoDiImmobiliareManutenzione(e.target.value)} className="w-full mt-1 bg-gray-300 outline-0 rounded-sm p-0.5" required>
@@ -71,28 +80,29 @@ const ModalStraOrdinaria = ({
                         {/* Tipologia di Manutenzione Richiesta */}
                         <h2 className="my-1 font-bold">Tipo di Manutenzione Straordinaria</h2>
                         <div className="">
-                            <label><input type="checkbox" checked={ristrutturazione_parziale} name="interventi" onChange={(e)=>setRistrutturazione_parziale(e.target.checked)} value="Impianti elettrici" /> Ristrutturazione Parziale o Totale</label><br />
+                            <label><input type="checkbox" checked={ristrutturazione_parziale} name="interventi" onChange={(e)=>setRistrutturazione_parziale(e.target.checked)} value="Ristrutturazione Parziale o Totale" /> Ristrutturazione Parziale o Totale</label><br />
 
-                            <label><input type="checkbox" name="interventi" value="impianto idraulico" checked={perdite_gravi} onChange={(e)=>setPerdite_gravi(e.target.checked)}/> Perdite gravi o infiltrazioni</label><br />
+                            <label><input type="checkbox" name="interventi" value="Perdite gravi o infiltrazioni" checked={perdite_gravi} onChange={(e)=>setPerdite_gravi(e.target.checked)}/> Perdite gravi o infiltrazioni</label><br />
 
-                            <label><input type="checkbox" checked={Impianti_elettrici_idraulici} name="tinteggiatura" onChange={(e)=>setImpianti_elettrici_idraulici(e.target.checked)} value="Tinteggiatura" />Impianti elettrici o idraulici da rifare</label><br />
+                            <label><input type="checkbox" checked={Impianti_elettrici_idraulici} name="impianti_elettrici_idraulici" onChange={(e)=>setImpianti_elettrici_idraulici(e.target.checked)} value="Impianti elettrici o idraulici da rifare" /> Impianti elettrici o idraulici da rifare</label><br />
 
-                            <label><input type="checkbox" checked={messa_norma_caldaie} name="pulizie_condo" onChange={(e)=>setMessa_norma_caldaie(e.target.checked)} value="Pulizie Condominiali" /> Messa a norma caldaie o impianti</label><br />
+                            <label><input type="checkbox" checked={messa_norma_caldaie} name="messa_norma_caldaie" onChange={(e)=>setMessa_norma_caldaie(e.target.checked)} value="messa norma caldaie" /> Messa a norma caldaie o impianti</label><br />
 
-                            <label><input type="checkbox" checked={opere_murarie_strutturali} name="controllocaldaia" onChange={(e)=>setOpere_murarie_strutturali(e.target.checked)} value="Controllo Caldaia / Climatizzatore" />Opere murarie o strutturali</label><br />
+                            <label><input type="checkbox" checked={opere_murarie_strutturali}  onChange={(e)=>setOpere_murarie_strutturali(e.target.checked)} value="Opere murarie o strutturali" /> Opere murarie o strutturali</label><br />
 
-                            <label><input type="checkbox" checked={rifacimento_bagni} name="controllocaldaia" onChange={(e)=>setRifacimento_bagni(e.target.checked)} value="Controllo Caldaia / Climatizzatore" />Rifacimento bagni o cucine</label><br />
+                            <label><input type="checkbox" checked={rifacimento_bagni}  onChange={(e)=>setRifacimento_bagni(e.target.checked)} value="Rifacimento bagni o cucine" /> Rifacimento bagni o cucine</label><br />
 
-                            <label><input type="checkbox" checked={interventi_post_allagamento} name="controllocaldaia" onClick={(e)=>setInterventi_post_allagamento(e.target.checked)} value="Controllo Caldaia / Climatizzatore" />Interventi post-allagamento o emergenze</label><br />
+                            <label><input type="checkbox" checked={interventi_post_allagamento}  onClick={(e)=>setInterventi_post_allagamento(e.target.checked)} value="interventi post allagamento" /> Interventi post-allagamento o emergenze</label><br />
 
                             {/* Preferenza di Giorno e Fascia Giorno */}
                             <div className="flex sm:flex-col">
-                                
+                                <label htmlFor="messaggio" className="mt-5 font-bold ">Grado di Urgenza</label>
                                 <select name="grado_di_urgenza" value={grado_di_urgenza} onChange={(e)=>setGrado_di_urgenza(e.target.value)} className="w-full mt-1 bg-gray-300 outline-0 rounded-sm p-0.5" required>
-                                    <option value="appartamento">Subito</option>
-                                    <option value="villa">Entro 24h</option>
-                                    <option value="ufficio">Entro la settimana</option>
-                                    <option value="monolocale">Da Pianificare</option>
+                                    <option value=""> Quanto è urgente?  </option>
+                                    <option value="subito">Subito</option>
+                                    <option value="entro 24h">Entro 24h</option>
+                                    <option value="entro la settimana">Entro la settimana</option>
+                                    <option value="da pianificare">Da Pianificare</option>
                                 </select>
                             </div>
                         </div>
@@ -103,8 +113,8 @@ const ModalStraOrdinaria = ({
                         </div> 
 
                         {/* Immagina caricato */}
-                        <label htmlFor="imageManutenzioneOrd" style={{ background:"grey", padding:"5px 10px" }}>Inserire immagine (optionale ma utile)</label>
-                        <input type="file" className="text-center" placeholder=""name="imageManutenzioneOrd"  id=""/>
+                        {/* <label htmlFor="imageManutenzioneOrd" style={{ background:"grey", padding:"5px 10px" }}>Inserire immagine (optionale ma utile)</label>
+                        <input type="file" className="text-center" placeholder=""name="imageManutenzioneOrd"  id=""/> */}
 
                         <div className="flex flex-col text-left ">
                              <label><input type="checkbox" checked={accettoPrivacyStraOrdinaria} onClick={(e)=>setAccettoPrivacyStraOrdinaria(e.target.checked)} className="" required /> Accetto la privacy policy</label>

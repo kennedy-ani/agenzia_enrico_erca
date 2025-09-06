@@ -13,16 +13,32 @@ import ModalArchitectura from "../components/ModalArchitectura";
 import ModalStraOrdinaria from "../components/ModalStraOrdinaria";
 import ModalOrdinaria from "../components/ModalOrdinaria";
 import { FadeIn } from "../components/animations/FadeIn";
+// agenti
+import service_provider1 from '../assets/img/agenti/alexander-hipp-iEEBWgY_6lA-unsplash.jpg'
+import service_provider2 from '../assets/img/agenti/calm-therapy-kyYsAAf4xS8-unsplash.jpg'
+import service_provider3 from '../assets/img/agenti/daniil-lobachev-XAo09LtQiAQ-unsplash.jpg'
+import service_provider4 from '../assets/img/agenti/diego-hernandez-MSepzbKFz10-unsplash.jpg'
+import service_provider5 from '../assets/img/agenti/podmatch-GEnCnYhA1J4-unsplash.jpg'
+import service_provider6 from '../assets/img/agenti/nicolas-horn-MTZTGvDsHFY-unsplash.jpg'
+import ModalConsulenza from "../components/ModalConsulenza";
+import ModalInteriorDesign from "../components/ModalInteriorDesign";
 
 
 const Servizi = ({popupUtenze, setPopupUtenze, setPopupArchitectura, popupArchitectura, popupConsulenzaImmobiliare, 
-setServizioSelezionato, setConsulenzaImmobiliare, gestireContattiWhatsapp, popupEntrate, setPopupEntrate, servizioSelezionato,
+setServizioSelezionato, setConsulenzaImmobiliare, gestireContattiWhatsapp, popupEntrate, setPopupEntrate, servizioSelezionato, 
 
+// Dati per consulenza immobiliare
+gestireDatiConsulenza, motivoPerConsulenzaImmobiliare, setMotivoPerConsulenzaImmobiliare, accettoPrivacy, setAccettoPrivacy,
+popupInterior, setPopupInterior,
 // Dati per servizi architectura
 ristrutturazione_completa, setRistrutturazione_completa, 
 interior_design_arredo, setInterior_design_arredo, 
+inviaDatiPerInteriorDesign,
 ridistribuzione_spazi_interni, setRidistribuzione_spazi_interni,
+setOpereStrutturali, opereStrutturali,  altriServizi, setAltriServizi, 
 luce_illuminotecnica, setLuce_illuminotecnica, cucine_bagni_camere_su_misura, 
+moderno, setModerno, minimal, setMinimal, classico, setClassico, industriale, setIndustriale, luxury, setLuxury,decidereConVoi,setDecidereConVoi,inviaDatiPerArchitectura,
+
 setcucine_bagni_camere_su_misura, noteDellUtente, setNoteDellUtente, indirizzoMobileRis,setIndirizzoMobileRis,
 nome, setNome, cognome, setCognome, emailUtente, setEmailUtente, telnumero, setTelnumero, tipodiImmobiliareRis,
 set_architectura_interior_design, setTipodiImmobiliareRis, architectura_interior_design,
@@ -32,7 +48,8 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
     indirizzoManutenzioneStra, setindirizzoManutenzioneStra, capManutenzioneStra, setCapManutenzioneStra, cittaManutenzioneStra, setCittaManutenzioneStra, tipoDiImmobiliareManutenzioneStra, setTipoDiImmobiliareManutenzioneStra,
     ristrutturazione_parziale,  setRistrutturazione_parziale, perdite_gravi, setPerdite_gravi, Impianti_elettrici_idraulici, setImpianti_elettrici_idraulici, messa_norma_caldaie, setMessa_norma_caldaie, opere_murarie_strutturali,
     setOpere_murarie_strutturali, rifacimento_bagni, setRifacimento_bagni, interventi_post_allagamento, setInterventi_post_allagamento, grado_di_urgenza, setGrado_di_urgenza, accettoPrivacyStraOrdinaria, setAccettoPrivacyStraOrdinaria,
-    moduloManutenzioneStra, setDescrizioneManutenzioneStra, descrizioneManutenzioneStra,
+    moduloManutenzioneStra, setDescrizioneManutenzioneStra, descrizioneManutenzioneStra, setUrlispirazione, urlispirazione,
+    gestireDatiManutenzioneStra,
     // Manutenzione Ordinaria
     moduloManutenzione, setModuloManutenzione,
     nomeManutenzione, setNomeManutenzione, cognomeManutenzione,
@@ -40,6 +57,8 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
     indirizzoManutenzione, setindirizzoManutenzione, accettoPrivacyOrdinaria, setAccettoPrivacyOrdinaria,
     capManutenzione, setCapManutenzione, cittaManutenzione, setCittaManutenzione,
     tipoDiImmobiliareManutenzione, setTipoDiImmobiliareManutenzione, impattiElettriciManutenzione, setImpattiElettriciManutenzione, impianto_idraulicoManutenzione, setImpiantoIdraulicoManutenzione, tinteggiaturaManutenzione, setTinteggiaturaManutenzione, pulizieCondoManutenzione, setpulizieCondoManutenzione, controllo_caldaiaManutenzione, setControllo_caldaiaManutenzione, calendarioManutenzione, setcalendarioManutenzione, fasciaGiornoManutenzione, setfasciaGiornoManutenzione, messaggioManutenzione, setMessaggioManutenzione, invia_dati_per_manutenzioni_ordinaria
+
+    //
 }) => {
   
 
@@ -93,7 +112,7 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
                     {/* Contact Bar */}
                     <div className="flex md:w-56  sm:w-25 flex-col sm:flex-row justify-between text-xs sm:text-sm px-2 py-1">
                         {/* phone and email */}
-                        <div className="flex sm:flex-col md:flex-row justify-center items-center">
+                        <div className="flex sm:flex-col md:flex-row sm:items-start  justify-center items-center">
                             <FaPhone className="mr-0.5 sm:hidden"/>
                             <span className="mr-2 md:w-1/2">+39 331-1887849 | 0573-737305</span>
                             <FaEnvelope className="mr-0.5 md:w-1/2 sm:hidden"/>
@@ -101,7 +120,7 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
                         </div>
 
                         {/* time */}
-                        <div className="flex sm:flex-col md:flex-row md:w-20 items-center sm:items-start justify-start gap-1">
+                        <div className="flex  sm:flex-col md:flex-row md:w-20 sm:justify-center items-center sm:items-start justify-start">
                             <FaClock className="mr-0.5 md:text-md sm:hidden"/>
                             <span className="mr-2 w-full md:w-1/2">Lunedi - Venerdi</span>
                             <span className="w-full md:w-1/2">9:30 - 13:00 16:00 - 19:30</span>
@@ -118,23 +137,34 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
             </div>
         </FadeIn>
 
+        <FadeIn>
+            <p className="text-xl font-bold my-3 text-center" style={{color: "#36454F"}}>Non  obbligatorio di acquistare da noi immobili per usufruire dei nostri servizi*</p>
+        </FadeIn>
         <div>
         <FadeIn>
             <h1 className="text-center my-2 sm:!text-lg md:text-2xl font-bold uppercase underline underline-offset-8">Le Nostre Soluzioni</h1>
             {/* Service Sections */}
             <div className="grid md:grid-cols-2 sm:grid-cols-1">
                 {/* Service Card */}
-                <div onClick={()=>setPopupEntrate(true)} className="my-2 cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl">
+                <div onClick={()=>setPopupEntrate(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl h-[10rem]">
+                    <div className="w-[17rem] absolute right-[-30%] top-[-20%] ">
+                        <img src={service_provider1} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <p className="font-bold uppercase">Marco Pulcini</p>
+                    </div>
                     <div className="">
                         <h2 className="font-bold text-red-600 " >AGENZIA ENTRATE</h2>
-                        <p className="font-semibold">Registrazioni Contratti e/o 
+                        <p className="font-semibold w-10">Registrazioni Contratti e/o 
                         compromessi, communicazioni varie    </p>
                     </div>
                     <FaFile className="text-5xl text-red-600"/>
                 </div>
 
                 {/* Utenze */}
-                <div onClick={()=>setPopupUtenze(true)} className="my-2 mx-2 cursor-pointer transition-transform hover:scale-105 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl">
+                <div onClick={()=>setPopupUtenze(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl h-[10rem]">
+                    <div className="w-[17rem] absolute right-[-30%] top-[-20%] ">
+                        <img src={service_provider2} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <p className="font-bold uppercase">Marco Pulcini</p>
+                    </div>
                     <div className="">
                         <h2 className="font-bold text-red-600">UTENZE</h2>
                         <p className="font-semibold">Luce, gas e aqua </p>
@@ -142,39 +172,69 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
                     <FaLightbulb className="text-5xl text-red-600"/>
                 </div>
 
-               {/* Architectura e Interior Design */}
-                <div onClick={()=>setPopupArchitectura(true)} className="my-2 mx-2 cursor-pointer transition-transform hover:scale-105 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl">
+               {/*Interior Design */}
+                <div onClick={()=>setPopupInterior(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl h-[12rem]">
+                    <div className="w-[17rem] absolute right-[-30%] top-[0%] ">
+                        <img src={service_provider3} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <p className="font-bold uppercase">Marco Pulcini</p>
+                    </div>
                     <div className="">
-                        <h2 className="font-bold text-red-600 " >ARCHITECTURA e INTERIOR DESIGN</h2>
-                        <p className="font-semibold">Con Architetti Specializzati in Progettazioni 3D</p>
+                        <h2 className="font-bold text-red-600 " >INTERIOR DESIGN</h2>
+                        <p className="font-semibold w-10">Con Designer pronti ad offrire la miglior soluzione per adornare l'immobile</p>
                     </div>
                     <MdArchitecture className="text-7xl text-red-600"/>
                 </div>
 
+                {/* Architecttura */}
+                <div onClick={()=>setPopupArchitectura(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl h-[12rem]">
+                    <div className="w-[17rem] absolute right-[-30%] top-[0%] ">
+                        <img src={service_provider1} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <p className="font-bold uppercase">Marco Pulcini</p>
+                    </div>
+                    <div className="">
+                        <h2 className="font-bold text-red-600 " >ARCHITETTURA</h2>
+                        <p className="font-semibold w-10">Con architetti specializzati in progettazioni 3D</p>
+                    </div>
+                    <MdArchitecture className="text-7xl text-red-600"/>
+                </div>
+
+
                 {/* Manutenzioni Straordinario */}
-                <div onClick={()=>setModuloManutenzioneStra(true)} className="my-2 mx-2 cursor-pointer transition-transform hover:scale-105 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl">
+                <div onClick={()=>setModuloManutenzioneStra(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl h-[12rem]">
+                    <div className="w-[17rem] absolute right-[-30%] top-[0%] ">
+                        <img src={service_provider4} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <p className="font-bold uppercase">Marco Pulcini</p>
+                    </div>
                     <div className="">
                         <h2 className="font-bold text-red-600 " >MANUTENZIONI STRAORDINARIO</h2>
-                        <p className="font-semibold">Con le ditte con cui collaboriamo al fine di ottenere il prodotto desiderato nella maniera migliore e piu economia</p>
+                        <p className="font-semibold w-10">Con le ditte con cui collaboriamo al fine di ottenere il prodotto desiderato nella maniera migliore e piu economia</p>
                     </div>
                     <GrVmMaintenance className="text-8xl text-red-600"/>
                 </div>
 
                  {/* La Consulenza Immobiliare */}
-                <div onClick={()=>setConsulenzaImmobiliare(true)} className="my-2 mx-2 cursor-pointer transition-transform hover:scale-105 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl">
+                <div onClick={()=>setConsulenzaImmobiliare(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl h-[12rem]">
+                    <div className="w-[17rem] absolute right-[-30%] top-[0%] ">
+                        <img src={service_provider5} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <p className="font-bold uppercase">Marco Pulcini</p>
+                    </div>
                     <div className="">
                         <h2 className="font-bold text-red-600 " >CONSULENZA IMMOBILIARE</h2>
-                        <p className="font-semibold">Supporto esperto per comprare, 
+                        <p className="font-semibold w-10">Supporto esperto per comprare, 
                         vendere o gestire immobili con sicurezza.</p>
                     </div>
                     <FaCompass className="text-7xl text-red-600"/>
                 </div>
 
                 {/* Manutenzioni Ordinario */}
-                <div onClick={()=>setModuloManutenzione(true)} className="my-2 mx-2 cursor-pointer transition-transform hover:scale-105 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl">
+                <div onClick={()=>setModuloManutenzione(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl h-[12rem]">
+                    <div className="w-[17rem] absolute right-[-30%] top-[0%] ">
+                        <img src={service_provider6} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <p className="font-bold uppercase">Marco Pulcini</p>
+                    </div>
                     <div className="">
-                        <h2 className="font-bold text-red-600 " >MANUTENZIONI ORDINARIO</h2>
-                        <p className="font-semibold">Manutenzione Caldaia, Servizi Falegnameria, Servizio Idraulica</p>
+                        <h2 className="font-bold text-red-600 ">MANUTENZIONI ORDINARIO</h2>
+                        <p className="font-semibold w-10">Manutenzione Caldaia, Servizi Falegnameria, Servizio Idraulica</p>
                     </div>
                     <GrVmMaintenance className="text-8xl text-red-600"/>
                 </div>
@@ -222,65 +282,50 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
 
             
             {/* CONSULENZA */}
-            {popupConsulenzaImmobiliare && (
-                <div>
-                    <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-                        <div className="bg-white p-2 rounded-lg shadow-lg w-24 text-center relative">
-                            <button
-                            onClick={() => setConsulenzaImmobiliare(false)}
-                            className="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-xl font-bold"
-                            >
-                            &times;
-                            </button>
-                            <h2 className="text-xl font-bold text-red-600 mb-2">CONSULENZA IMMOBILIARE</h2>
-                            <p className="text-gray-700">
-                                Scegli  un’operazione
-                            </p>
+            {popupConsulenzaImmobiliare && (<ModalConsulenza
+                gestireDatiConsulenza={gestireDatiConsulenza} nome={nome} setNome={setNome} setCognome={setCognome} cognome={cognome} emailUtente={emailUtente} setEmailUtente={setEmailUtente} telnumero={telnumero} setTelnumero={setTelnumero} motivoPerConsulenzaImmobiliare={motivoPerConsulenzaImmobiliare} setMotivoPerConsulenzaImmobiliare={setMotivoPerConsulenzaImmobiliare} accettoPrivacy={accettoPrivacy} setAccettoPrivacy={setAccettoPrivacy} setConsulenzaImmobiliare={setConsulenzaImmobiliare}
+            />)}
 
-                            <div className="flex flex-col">
-                                <select name="" value={servizioSelezionato} onChange={(e)=>setServizioSelezionato(e.target.value)}className="shadow-md bg- p-0.5" id="">
-                                    <option className="text-center" value="">--Scegli--</option>
-
-                                    <option className="text-center" value="consulenza compravendita">Consulenza Immobiliare Compravendita</option>
-
-                                    <option className="text-center" value="consulenza d'investimento">Consulenza Immobiliare per ASTE</option>
-
-                                    <option className="text-center" value="consulenza tecnico-legale">Consulenza Immobiliare per Affitto</option>
-
-                                    <option className="text-center" value="consulenza finanziaria">Consulenza Immobiliare per Terreni</option>
-                                </select>
-                                
-                                 <a href="#" onClick={(e)=>gestireContattiWhatsapp(e)} className="bg-green-600 p-0.5 mt-1 !text-white font-bold">Apri Whatsapp</a>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
+            {/* INTERIOR DESIGN */}
+            {popupInterior && (
+                <ModalInteriorDesign nome={nome} setNome={setNome} setCognome={setCognome} cognome={cognome} emailUtente={emailUtente} setEmailUtente={setEmailUtente} telnumero={telnumero} setTelnumero={setTelnumero} 
+                setIndirizzoMobileRis={setIndirizzoMobileRis} indirizzoMobileRis={indirizzoMobileRis}
+                tipodiImmobiliareRis={tipodiImmobiliareRis} setTipodiImmobiliareRis={setTipodiImmobiliareRis} ristrutturazione_completa={ristrutturazione_completa} setRistrutturazione_completa={setRistrutturazione_completa} ridistribuzione_spazi_interni={ridistribuzione_spazi_interni}  setRidistribuzione_spazi_interni={setRidistribuzione_spazi_interni} opereStrutturali={opereStrutturali} setOpereStrutturali={setOpereStrutturali} altriServizi={altriServizi} setAltriServizi={setAltriServizi} noteDellUtente={noteDellUtente} setNoteDellUtente={setNoteDellUtente} inviaDatiPerRistrutturazione inviaDatiPerInteriorDesign={inviaDatiPerInteriorDesign}
+                setPopupInterior={setPopupInterior}
+                moderno={moderno} setModerno={setModerno}
+                minimal={minimal} setMinimal={setMinimal}
+                classico={classico} setClassico={setClassico}
+                industriale={industriale} setIndustriale={setIndustriale}
+                luxury={luxury} setLuxury={setLuxury}
+                decidereConVoi={decidereConVoi} setDecidereConVoi={setDecidereConVoi}
+                setUrlispirazione={setUrlispirazione} urlispirazione={urlispirazione}
+                accettoPrivacy={accettoPrivacy} setAccettoPrivacy={setAccettoPrivacy}
+                />
             )}
 
-            {/* ARCHITECTURA | INTERIOR DESIGN */}
+            {/* ARCHITECTURA*/}
             {popupArchitectura && (
                 <ModalArchitectura 
                                 
-                ristrutturazione_completa={ristrutturazione_completa}setRistrutturazione_completa={setRistrutturazione_completa} setPopupArchitectura={setPopupArchitectura}
-
-                interior_design_arredo={interior_design_arredo} setInterior_design_arredo={setInterior_design_arredo}
-                
-                ridistribuzione_spazi_interni={ridistribuzione_spazi_interni} 
-                setRidistribuzione_spazi_interni={setRidistribuzione_spazi_interni}
-
-                luce_illuminotecnica={luce_illuminotecnica} setLuce_illuminotecnica={setLuce_illuminotecnica} cucine_bagni_camere_su_misura={cucine_bagni_camere_su_misura} 
-
-                setcucine_bagni_camere_su_misura={setcucine_bagni_camere_su_misura} noteDellUtente={noteDellUtente} setNoteDellUtente={setNoteDellUtente} indirizzoMobileRis={indirizzoMobileRis} setIndirizzoMobileRis={setIndirizzoMobileRis}
+                ristrutturazione_completa={ristrutturazione_completa}
+                setRistrutturazione_completa={setRistrutturazione_completa} 
+                setPopupArchitectura={setPopupArchitectura}
+                noteDellUtente={noteDellUtente} setNoteDellUtente={setNoteDellUtente} indirizzoMobileRis={indirizzoMobileRis} setIndirizzoMobileRis={setIndirizzoMobileRis}
                 nome={nome} setNome={setNome} cognome={cognome} setCognome={setCognome} emailUtente={emailUtente} setEmailUtente={setEmailUtente} telnumero={telnumero} setTelnumero={setTelnumero} tipodiImmobiliareRis={tipodiImmobiliareRis}
                 set_architectura_interior_design={set_architectura_interior_design} setTipodiImmobiliareRis={setTipodiImmobiliareRis} architectura_interior_design={architectura_interior_design}
-                
+                ridistribuzione_spazi_interni={ridistribuzione_spazi_interni} setRidistribuzione_spazi_intern={setRidistribuzione_spazi_interni}
+                setOpereStrutturali={setOpereStrutturali}
+                opereStrutturali={setOpereStrutturali}
+                altriServizi={altriServizi} setAltriServizi={setAltriServizi}
+                inviaDatiPerArchitectura={inviaDatiPerArchitectura}
+                accettoPrivacy={accettoPrivacy} setAccettoPrivacy={setAccettoPrivacy}
                 />
             )}
 
             {/* MANUTENZIONE STRAORDINARIA */}
             {moduloManutenzioneStra && (
                 <ModalStraOrdinaria
+                    gestireDatiManutenzioneStra={gestireDatiManutenzioneStra}
                     nomeManutenzioneStra={nomeManutenzioneStra} setNomeManutenzioneStra={setNomeManutenzioneStra} cognomeManutenzioneStra={cognomeManutenzioneStra} setCognomeManutenzioneStra={setCognomeManutenzioneStra}
                     emailUtenteManutenzioneStra={emailUtenteManutenzioneStra} setEmailUtenteManutenzioneStra={setEmailUtenteManutenzioneStra} telnumeroManutenzioneStra={telnumeroManutenzioneStra}setTelnumeroManutenzioneStra={setTelnumeroManutenzioneStra}
                     indirizzoManutenzioneStra={indirizzoManutenzioneStra} setindirizzoManutenzioneStra={setindirizzoManutenzioneStra} capManutenzioneStra={capManutenzioneStra} setCapManutenzioneStra={setCapManutenzioneStra} cittaManutenzioneStra={cittaManutenzioneStra} setCittaManutenzioneStra={setCittaManutenzioneStra} tipoDiImmobiliareManutenzioneStra={tipoDiImmobiliareManutenzioneStra} setTipoDiImmobiliareManutenzioneStra={setTipoDiImmobiliareManutenzioneStra}

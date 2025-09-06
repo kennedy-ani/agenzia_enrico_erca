@@ -1,23 +1,17 @@
-import {Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const ModalArchitectura = ({ristrutturazione_completa, setRistrutturazione_completa, 
-opereStrutturali, setOpereStrutturali,
-ridistribuzione_spazi_interni, setRidistribuzione_spazi_interni,
-luce_illuminotecnica, setLuce_illuminotecnica, cucine_bagni_camere_su_misura, 
-setcucine_bagni_camere_su_misura, noteDellUtente, setNoteDellUtente, indirizzoMobileRis,setIndirizzoMobileRis,
-nome, setNome, cognome, setCognome, emailUtente, setEmailUtente, telnumero, setTelnumero, tipodiImmobiliareRis,
-set_architectura_interior_design, setTipodiImmobiliareRis, setPopupArchitectura, altriServizi, setAltriServizi, inviaDatiPerArchitectura, accettoPrivacy, setAccettoPrivacy}) => {
-    
+const ModalInteriorDesign = ({nome, setNome, cognome, setCognome, emailUtente, setEmailUtente, telnumero, setTelnumero, indirizzoMobileRis,setIndirizzoMobileRis, tipodiImmobiliareRis, setTipodiImmobiliareRis, noteDellUtente, setNoteDellUtente,  inviaDatiPerInteriorDesign, moderno, setModerno, minimal, setMinimal, classico, setClassico, industriale, setIndustriale, luxury, setLuxury, decidereConVoi, setDecidereConVoi, setPopupInterior, setUrlispirazione, urlispirazione, accettoPrivacy, setAccettoPrivacy}) => {
+
     return <>
         <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
             <div className="bg-white p-2 rounded-lg shadow-lg w-full max-w-2xl overflow-hidden max-h-[90vh] text-center relative">
                 <button
-                onClick={() => setPopupArchitectura(false)}
+                onClick={() => setPopupInterior(false)}
                 className="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-xl font-bold"
                 >
                 &times;
                 </button>
-                <h2 className="text-xl font-bold text-red-600 mb-2">Architectura</h2>
+                <h2 className="text-xl font-bold text-red-600 mb-2">Interior Design</h2>
                 <p className="text-gray-700">
                     Inserisci i tuoi dati personali
                 </p>
@@ -48,35 +42,43 @@ set_architectura_interior_design, setTipodiImmobiliareRis, setPopupArchitectura,
 
                     </select>
 
-                    <h2 className="my-1 font-bold">Tipo di Servizio Richiesto*</h2>
+                    <h2 className="my-1 font-bold">Stile Preferito*(Devi Scegliere Uno)</h2>
                     <div className="flex flex-col justify-left items-center">
-                        <label><input type="checkbox" checked={ristrutturazione_completa} name="interventi" onChange={(e)=>setRistrutturazione_completa(e.target.checked)} value="Progetto di ristrutturazione completa" /> Progetto di ristrutturazione completa</label>
+                        <label><input type="checkbox" checked={moderno} name="moderno" onChange={(e)=>setModerno(e.target.checked)} value="moderno" /> Moderno</label>
 
-                        <label><input type="checkbox" name="Ridistribuzione_spazi_interni"  checked={ridistribuzione_spazi_interni} value="Ridistribuzione spazi interni" onChange={(e)=>setRidistribuzione_spazi_interni(e.target.checked)}/> Ridistribuzione spazi interni
+                        <label><input type="checkbox" name="minimal" value="minimal" checked={minimal} onChange={(e)=>setMinimal(e.target.checked)}/> Minimal</label>
+
+                        <label><input type="checkbox" name="classico" value="classico" checked={classico} onChange={(e)=>setClassico(e.target.checked)}/> Classico</label>
+
+                        <label>
+                            <input type="checkbox" value="Industriale" name="industriale" onChange={(e)=>setIndustriale(e.target.checked)} id="" /> Industriale
                         </label>
 
-                        <label><input type="checkbox" name="Opere_strutturali" value="Opere Strutturali" checked={opereStrutturali} onChange={(e)=>setOpereStrutturali(e.target.checked)}/> Opere Strutturali</label>
+                        <label><input type="checkbox" name="luxury" value="luxury" checked={luxury} onChange={(e)=>setLuxury(e.target.checked)}/> Elegante/Di Lusso</label>
 
-                        <label><input type="checkbox" name="altro" value="altro" checked={altriServizi} onChange={(e)=>setAltriServizi(e.target.checked)}/> Altro</label>
-                        {/* {altro && (
-                            // Esci fuori un input per farsi spiegare meglio l'utente
+                        <label><input type="checkbox" name="decidereConVoi" value="decidereConVoi" checked={decidereConVoi} onChange={(e)=>setDecidereConVoi(e.target.checked)}/> Decidere con voi</label>
 
-                        )} */}
+                        
                     </div>
+
+                    {/* Link a ispirazione */}
+                    <label htmlFor="ispirazione_url">Ispirazioni (link) </label>
+                    <input type="url" name="ispirazione_url" id="ispirazione_url" className="p-0.5 rounded-sm outline-0 bg-gray-300 w-full" value={urlispirazione} 
+                    placeholder="E.g: https://pinterest.com" onChange={(e)=>setUrlispirazione(e.target.value)} />
 
                     <textarea value={noteDellUtente} onChange={(e)=>setNoteDellUtente(e.target.value)} name="dettagli" placeholder="Descrivi meglio cosa vuoi fare" className="w-full mt-1 bg-gray-300 outline-0 rounded-sm p-0.5"></textarea>
 
                     <h2 className="mt-1 font-bold">Privacy</h2>
                     <div className="flex flex-col text-left ">
-                        <label><input type="checkbox" checked={accettoPrivacy} onClick={(e)=>setAccettoPrivacy(e.target.checked)} className="" required />Accetto la privacy policy. <Link to="/privacy">Clicca qui per piu informazione sulla privacy</Link></label>
+                        <label><input type="checkbox" checked={accettoPrivacy} className="text-center mx-auto" onClick={(e)=>setAccettoPrivacy(e.target.checked)} required /> Accetto la privacy policy. <br /> <Link to="/privacy">Clicca qui per piu informazione sulla privacy</Link></label>
                     
                     </div>
                     
-                    <button type="submit" onClick={()=>inviaDatiPerArchitectura()} className="bg-red-500 text-white rounded-sm p-0.5 mt-2">Richiedi Consulenza Architettura</button>
+                    <button type="submit" onClick={()=>inviaDatiPerInteriorDesign()} className="bg-red-500 text-white rounded-sm p-0.5 mt-2">Richiedi Consulenza Design</button>
                 </div>
             </div>
         </div>
     </>
 }
 
-export default ModalArchitectura;
+export default ModalInteriorDesign;

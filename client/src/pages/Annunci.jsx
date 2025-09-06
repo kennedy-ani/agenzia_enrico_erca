@@ -9,12 +9,16 @@ import Footer from "../components/Footer";
 import logo from '../assets/img/White Logo.png';
 import { FadeIn } from "../components/animations/FadeIn";
 const Annunci = ({currentIndex, setCurrentIndex,
-          goPrev, goNext, valueRicerca, setValueRicerca, onChangeRicerca, getDataAnnunci, onOpenGallery, isGalleryOpen, setIsGalleryOpen, galleryImages, setGalleryImages, listingSelected, setlistingSelected, isModalOpen, setIsModalOpen, isFullScreen, setIsFullScreen, chiamaAgenteDaAnnuncio}) => {
+          goPrev, goNext, valueRicerca, setValueRicerca, /*onChangeRicerca,*/ getDataAnnunci, onOpenGallery, isGalleryOpen, setIsGalleryOpen, galleryImages, setGalleryImages, listingSelected, setlistingSelected, isModalOpen, setIsModalOpen, isFullScreen, setIsFullScreen, chiamaAgenteDaAnnuncio}) => {
 
     const [annunci, setAnnunci] = useState([]);
     const location = useLocation();
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+
+    // Search for real-time
+    const [search, setSearch] = useState("");
+    console.log(search);
 const getAllAnnunci = async(page = 1) =>{
     try {
         let response = await axios.get(`http://localhost:2001/annunci?page=${page}&limit=10`)
@@ -72,7 +76,7 @@ const getAllAnnunci = async(page = 1) =>{
                         {/* Contact Bar */}
                         <div className="flex md:w-56  sm:w-25 flex-col sm:flex-row justify-between text-xs sm:text-sm px-2 py-1">
                             {/* phone and email */}
-                            <div className="flex sm:flex-col md:flex-row justify-center items-center">
+                            <div className="flex sm:flex-col md:flex-row sm:items-start  justify-center items-center">
                                 <FaPhone className="mr-0.5 sm:hidden"/>
                                 <span className="mr-2 md:w-1/2">+39 331-1887849 | 0573-737305</span>
                                 <FaEnvelope className="mr-0.5 md:w-1/2 sm:hidden"/>
@@ -80,7 +84,7 @@ const getAllAnnunci = async(page = 1) =>{
                             </div>
 
                             {/* time */}
-                            <div className="flex sm:flex-col md:flex-row md:w-20 items-center sm:items-start justify-start gap-1">
+                            <div className="flex  sm:flex-col md:flex-row md:w-20 sm:justify-center items-center sm:items-start justify-start">
                                 <FaClock className="mr-0.5 md:text-md sm:hidden"/>
                                 <span className="mr-2 w-full md:w-1/2">Lunedi - Venerdi</span>
                                 <span className="w-full md:w-1/2">9:30 - 13:00 16:00 - 19:30</span>
@@ -93,10 +97,10 @@ const getAllAnnunci = async(page = 1) =>{
                     <h1 className="text-7xl sm:text-5xl sm:mt-4 px-9 sm:px-3 pt-3 font-bold text-center">Scopri La Tua Casa Perfetta!</h1>
 
                     {/* Search bar */}
-                    <div className="relative w-full max-w-6xl sm:w-26 md:mx-auto px-4">
-                        <div className="flex flex-col sm:flex-row items-center gap-2 mt-0 w-full max-w-6xl">
-                        <input type="search" value={valueRicerca} onChange={onChangeRicerca} className="border-b text-white border-white outline-none py-0.5 px-1 w-full sm:w-3/4 outline-0 my-1 md:ml-9 lg:ml-0 sm:ml-3 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-white-500"  name="search_immobili" id="search_immobili" placeholder="Ricerca tutti immobili disponibile, locazione, prezzo, tipo" />
-                        {/* <button className="bg-red-500 text-white px-0.5 md:ml-9 py-0.5 hover:border-amber-50 hover:pointer" onClick={()=> onSearch(valueRicerca)}>Cerca</button> */}
+                    <div className="relative w-full max-w-6xl sm:w-26 md:ml-[15rem] px-4 ">
+                        <div className="flex flex-col sm:flex-row items-center gap-2 mt-0 w-[60rem] sm:w-[35rem]">
+                            <input type="search" /*value={valueRicerca}*/ onChange={(e)=>setSearch(e.target.value)} className="border-b text-white border-white outline-none py-0.5 px-1 w-full sm:w-3/4 outline-0 my-1 md:ml-9 lg:ml-0 sm:ml-1 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-white-500"  name="search_immobili" id="search_immobili" placeholder="Ricerca tutti immobili disponibile, locazione, prezzo, tipo" />
+                            {/* <button className="bg-red-500 text-white px-0.5 md:ml-9 py-0.5 hover:border-amber-50 hover:pointer" onClick={()=> onSearch(valueRicerca)}>Cerca</button> */}
                         </div>
                         {/* Search Results */}
                         
@@ -123,14 +127,16 @@ const getAllAnnunci = async(page = 1) =>{
 
         {/* Tutti gli annunci */}
         
-
-            <div className="grid md:grid-cols-3 sm:grid-cols-1 gap-3 md:px-2 md:mt-10 sm:px-1">
-                {console.log(annunci)}
+            
+            <div className="grid md:grid-cols-3 sm:grid-cols-1 gap-3 md:px-2  sm:px-1">
+                
                 {
-                    annunci && annunci.length > 0 && annunci.map((data) => (
-                        
+                    annunci && annunci.length > 0 && annunci.filter((data)=>{
+                        return search.toLowerCase() === "" ? data : data.titolo.toLowerCase().includes(search) || String(data.prezzo).includes(search) || data.indirizzo.toLowerCase().includes(search) 
+                    }).map((data) => (
                         <>
                             {/* Card */}
+                            
                             <FadeIn>
                                 <div key={data.id} onClick={()=>{setIsModalOpen(true); setlistingSelected(data); onOpenGallery(data.id)}} className="md:w-20 sm:w-25 sm:mb-2 bg-white rounded-2xl cursor-pointer shadow-md overflow-hidden transition-transform hover:scale-105">
                                     <img
@@ -158,7 +164,7 @@ const getAllAnnunci = async(page = 1) =>{
                             </FadeIn>
                         </>
                     ))
-                }
+                } 
 
             </div>
         
@@ -264,6 +270,7 @@ const getAllAnnunci = async(page = 1) =>{
             </div>
         )}
 
+        {/* Impaginazione */}
         <div className="flex gap-2 justify-center mt-4">
             <button 
                 disabled={page === 1} 

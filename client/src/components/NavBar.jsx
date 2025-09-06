@@ -15,9 +15,9 @@ const NavBar = () => {
             <ul className="md:flex justify-center items-center py-0.5 hidden ">
                 <li className="block px-1.5 py-2 hover:underline underline-offset-8"><Link className="" to={'/'}><p className="text-white ">Home</p></Link></li>
                 <li className="block px-1.5 py-2 hover:underline underline-offset-8"><Link to={'/annunci'}><p className="text-white ">Annunci</p></Link></li>
-                <li className="block px-1.5 py-2 hover:underline underline-offset-8"><Link to={'/resa'}><p className="text-white ">Resa</p></Link></li>
                 <li className="block px-1.5 py-2 hover:underline underline-offset-8"><Link to={'/servizi'}><p className="text-white ">Servizi</p></Link></li>
                 <li className="block px-1.5 py-2 hover:underline underline-offset-8"><Link to={'/agenzia'}><p className="text-white ">Su di Noi</p></Link></li>
+                <li className="block px-0.5 py-0.5 ml-[1rem] transition-transform hover:scale-105 border-none bg-white rounded-4xl border"><Link to={'/consulenza-privata'}><p className="text-red-500 font-bold uppercase">Consulenza Privata</p></Link></li>
             </ul>
         </div>
 

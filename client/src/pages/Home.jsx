@@ -23,7 +23,7 @@ import ModalStraOrdinaria from "../components/ModalStraOrdinaria.jsx";
 import ModalArchitectura from "../components/ModalArchitectura.jsx";
 import { FadeIn } from "../components/animations/FadeIn.jsx";
 
-const Home = ({popupUtenze, nome, setNome, setCognome, cognome, emailUtente, setEmailUtente, telnumero, setTelnumero, messaggio, setMessaggio, setServizioSelezionato ,gestireDatiConsulenza,  gestireContattiWhatsapp, setPopupUtenze, popupConsulenzaImmobiliare, setConsulenzaImmobiliare, moduloConsulenza, setModuloConsulenza, ristrutturazione, setRistrutturazione, setAccettoPrivacy, accettoPrivacy, nomeRis, emailRis, setEmailRis, setNomeRis, cognomeRis, setCognomeRis, telfonoRis, setTelfonoRis, indirizzoMobileRis, setIndirizzoMobileRis, tipodiImmobiliareRis, setTipodiImmobiliareRis, superficieRis, setSuperficieRis, stanzedaRis, setStanzedaRis, impattiElettrici, setImpattiElettrici, pavimenti, setPavimenti, descrizioneRis, setDescrizioneRis, budgetRis, setBudgetRis, tempisticheRis, setTempisticheRis, durataRis, setDurataRis, inviaDatiPerRistrutturazione, moduloManutenzione, setModuloManutenzione,
+const Home = ({popupUtenze, nome, setNome, setCognome, cognome, emailUtente, setEmailUtente, telnumero, setTelnumero, setMotivoPerConsulenzaImmobiliare, motivoPerConsulenzaImmobiliare, setServizioSelezionato ,gestireDatiConsulenza,  gestireContattiWhatsapp, setPopupUtenze, popupConsulenzaImmobiliare, setConsulenzaImmobiliare, moduloConsulenza, setModuloConsulenza, ristrutturazione, setRistrutturazione, setAccettoPrivacy, accettoPrivacy, nomeRis, emailRis, setEmailRis, setNomeRis, cognomeRis, setCognomeRis, telfonoRis, setTelfonoRis, indirizzoMobileRis, setIndirizzoMobileRis, tipodiImmobiliareRis, setTipodiImmobiliareRis, superficieRis, setSuperficieRis, stanzedaRis, setStanzedaRis, impattiElettrici, setImpattiElettrici, pavimenti, setPavimenti, descrizioneRis, setDescrizioneRis, budgetRis, setBudgetRis, tempisticheRis, setTempisticheRis, durataRis, setDurataRis, inviaDatiPerRistrutturazione, moduloManutenzione, setModuloManutenzione,
 nomeManutenzione, setNomeManutenzione, cognomeManutenzione,
 setCognomeManutenzione, emailUtenteManutenzione,  setEmailUtenteManutenzione, telnumeroManutenzione, setTelnumeroManutenzione,
 indirizzoManutenzione, setindirizzoManutenzione,
@@ -37,7 +37,7 @@ setOpere_murarie_strutturali, rifacimento_bagni, setRifacimento_bagni, intervent
 moduloManutenzioneStra, setModuloManutenzioneStra, setDescrizioneManutenzioneStra, descrizioneManutenzioneStra, ristrutturazione_completa, setRistrutturazione_completa, interior_design_arredo, setInterior_design_arredo, ridistribuzione_spazi_interni, setRidistribuzione_spazi_interni,
 luce_illuminotecnica, setLuce_illuminotecnica, cucine_bagni_camere_su_misura, setcucine_bagni_camere_su_misura, noteDellUtente, setNoteDellUtente,
 set_architectura_interior_design, architectura_interior_design, valueRicerca, setValueRicerca, onChangeRicerca
-}) => {
+, setIsModalOpen, setlistingSelected, onOpenGallery}) => {
     /** THE HOME PAGE */
     const [annunci, setAnnunci] = useState([]);
     const getAnnuncImmobiliari = async () =>{
@@ -79,7 +79,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
 
             {/** Hero section */}
             <FadeIn>
-            <div style={{background: `url(${herox})`,
+            <div  style={{background: `url(${herox})`,
                 backgroundSize: `cover`, backgroundPosition: `center`}} className=" min-h-screen img bg-cover flex-col items-center bg-center  text-white md:px-5 py-2">
                     
                 {/* Contact Bar */}
@@ -110,30 +110,30 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
 
 
                 {/* Search bar */}
-                <div className="relative w-full max-w-6xl sm:w-26 md:mx-auto px-4">
-                    <div className="flex flex-col sm:flex-row items-center gap-2 mt-0 w-full max-w-6xl">
-                    <input type="search" value={valueRicerca} onChange={onChangeRicerca} className="border-b text-white border-white outline-none py-0.5 px-1 w-full sm:w-3/4 outline-0 my-1 md:ml-9 lg:ml-0 sm:ml-3 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-white-500"  name="search_immobili" id="search_immobili" placeholder="Ricerca tutti immobili disponibile, locazione, prezzo, tipo" />
-                    {/* <button className="bg-red-500 text-white px-0.5 md:ml-9 py-0.5 hover:border-amber-50 hover:pointer" onClick={()=> onSearch(valueRicerca)}>Cerca</button> */}
-                    </div>
-                    {/* Search Results */}
-                    
-                    {valueRicerca && (
-                        <div className="absolute z-10 -top-1 left-9 lg:lef-0 w-full sm:top-3 sm:left-0 sm:w-25 bg-white border border-gray-300 rounded-lg shadow-lg">
-                            <ul className="divide-y divide-gray-200">
-                                {/* L'agguingo per il filtro per le ricerche */}
-                                {annunci.filter(item=>{
-                                    const  ricerca_dati = valueRicerca.toLowerCase(); 
-                                    const titolo = item.titolo.toLowerCase();
-                                    //Ritorna un true se il valore e' di ricerca esiste
-                                    return ricerca_dati && titolo.startsWith(ricerca_dati) && titolo !== ricerca_dati;
-                                }).map((data)=>(
-                                    <li onClick={()=>onSearch(data.titolo)} className="p-1 hover:bg-gray-100 text-black cursor-pointer">{data.titolo}</li>
-                                ))}
-                            </ul>
+                    <div className="relative w-full max-w-6xl sm:w-26 md:ml-[15rem] px-4">
+                        <div className="flex flex-col sm:flex-row items-center gap-2 mt-0 w-[60rem] sm:w-[35rem] ">
+                        <input type="search" /*value={valueRicerca}*/ onChange={(e)=>setSearch(e.target.value)} className="border-b text-white border-white outline-none py-0.5 px-1 w-full sm:w-3/4 outline-0 my-1 md:ml-9  lg:ml-0 sm:ml-1 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-white-500 "  name="search_immobili" id="search_immobili" placeholder="Ricerca tutti immobili disponibile, locazione, prezzo, tipo" />
+                        {/* <button className="bg-red-500 text-white px-0.5 md:ml-9 py-0.5 hover:border-amber-50 hover:pointer" onClick={()=> onSearch(valueRicerca)}>Cerca</button> */}
                         </div>
-                    )}
-                    
-                </div>
+                        {/* Search Results */}
+                        
+                        {valueRicerca && (
+                            <div className="absolute z-10 -top-1 left-9 lg:lef-0 w-full sm:top-3 sm:left-0 sm:w-25 bg-white border border-gray-300 rounded-lg shadow-lg">
+                                <ul className="divide-y divide-gray-200">
+                                    {/* L'agguingo per il filtro per le ricerche */}
+                                    {annunci?.filter(item=>{
+                                        const  ricerca_dati = valueRicerca.toLowerCase(); 
+                                        const titolo = item.titolo.toLowerCase();
+                                        //Ritorna un true se il valore e' di ricerca esiste
+                                        return ricerca_dati && titolo.startsWith(ricerca_dati) && titolo !== ricerca_dati;
+                                    }).map((data)=>(
+                                        <li onClick={()=>onSearch(data.titolo)} className="p-1 hover:bg-gray-100 text-black cursor-pointer">{data.titolo}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                        
+                    </div>
                 
                 
             </div>
@@ -145,14 +145,14 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                 <h1 className="text-center my-2 sm:!text-lg md:text-2xl font-bold uppercase underline underline-offset-8">Annunci In Evidenza</h1>
                 
                 
-                <div className=" lg:flex lg:flex-row lg:justify-center lg:gap-6 p-4 sm:p-1">
+                <div className=" lg:flex  lg:flex-row lg:justify-center lg:gap-6 p-4 sm:p-1">
                     {
-                        //console.log(typeof annunci.result)
+                        // Questa parte monstra solo le 3 recenti annunci scaricato
                         Object.keys(annunci).slice(0, 3).map((data)=>{
                             return <>
                                     {/* Card */}
-                                    {console.log(annunci[data].titolo)}
-                                    <div key={annunci[data].id} className="md:w-72 sm:w-25 sm:mb-2 bg-white rounded-2xl shadow-md overflow-hidden transition-transform hover:scale-105">
+                                    
+                                    <div key={annunci[data].id} onClick={()=>{setIsModalOpen(true); setlistingSelected(data); onOpenGallery(data.id)}} className="md:w-72 sm:w-25 sm:mb-2 bg-white rounded-2xl shadow-md overflow-hidden transition-transform hover:scale-105">
                                         <img
                                             src={`http://localhost:2001/uploads/${annunci[data].img_url}`}
                                             alt={annunci[data].titolo}
@@ -198,10 +198,11 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
             </div>
             </FadeIn>
             {/* Servizi */}
+            <p className="text-xl font-bold my-3 text-center" style={{color: "#36454F"}}>Non  obbligatorio di acquistare da noi immobili per usufruire dei nostri servizi*</p>
             <div className="grid md:grid-cols-3 gap-1 sm:grid-cols-1">
                 <FadeIn>
                     <Link onClick={()=>setPopupUtenze(true)} className="transition-transform hover:scale-105 sm:mb-3">
-                        < div className="text-center">
+                        < div className="text-center sm:mt-3">
                             <FaPiggyBank className="text-red-500 text-7xl mx-auto"/>
                             <p style={{color: "#36454F"}} className="font-bold mt-1">Gestione delle Bollette</p>
                             <p style={{color: "#36454F"}} className="w-10 mx-auto">Cerchi un sistema di risparmia delle tue bollette? </p>
@@ -210,7 +211,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                 </FadeIn>
                 <FadeIn>
                     <Link onClick={()=>setConsulenzaImmobiliare(true)} className="transition-transform hover:scale-105 sm:mb-3">
-                        <div className="text-center mt-3">
+                        <div className="text-center sm:mt-3">
                             <FaHome className="text-red-500 text-7xl mx-auto"/>
                             <p style={{color: "#36454F"}}  className="font-bold mt-1">Consulenza Immobiliare</p>
                             <p style={{color: "#36454F"}} className="w-10 mx-auto">
@@ -225,7 +226,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                 <FadeIn>
                     {/* Archittetura */}
                     <Link onClick={()=>set_architectura_interior_design(true)} className="transition-transform hover:scale-105 sm:mb-3">
-                        <div className="text-center mt-3">
+                        <div className="text-center sm:mt-3">
                             <MdArchitecture className="text-red-500 text-7xl mx-auto"/>
                             <p style={{color: "#36454F"}}  className="font-bold mt-1">Architectura <br /> e Interior Design</p>
                             <p style={{color: "#36454F"}} className="w-10 mx-auto">Hai trovato la casa giusta? Ora rendila perfetta.</p>
@@ -236,7 +237,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                 <FadeIn>
                     {/* Manutenzione Ordinaria */}
                     <Link onClick={()=>setModuloManutenzione(true)} className="transition-transform hover:scale-105 sm:mb-3">
-                        <div className="text-center mt-3">
+                        <div className="text-center sm:mt-3">
                             <GrVmMaintenance className="text-red-500 text-7xl mx-auto"/>
                             <p style={{color: "#36454F"}}  className="font-bold mt-1">Manutenzione Ordinaria</p>
                             <p style={{color: "#36454F"}} className="w-10 mx-auto">Hai trovato la casa giusta? Ora rendila perfetta.</p>
@@ -248,7 +249,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                 <FadeIn>
                     {/* Manutenzione Straodinaria */}
                     <Link onClick={()=>setModuloManutenzioneStra(true)} className="transition-transform hover:scale-105 sm:mb-3">
-                        <div className="text-center mt-3">
+                        <div className="text-center sm:mt-3">
                             <GrVmMaintenance className="text-red-500 text-7xl mx-auto"/>
                             <p style={{color: "#36454F"}}  className="font-bold mt-1">Manutenzione Straordinaria</p>
                             <p style={{color: "#36454F"}} className="w-10 mx-auto">
@@ -267,7 +268,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
             )}
 
             {popupConsulenzaImmobiliare === true && (
-                <ModalConsulenza gestireDatiConsulenza={gestireDatiConsulenza} nome={nome} setNome={setNome} setCognome={setCognome} cognome={cognome} emailUtente={emailUtente} setEmailUtente={setEmailUtente}  telnumero={telnumero} setTelnumero={setTelnumero} messaggio={messaggio} setMessaggio={setMessaggio} setModuloConsulenza={setModuloConsulenza} toast={toast} 
+                <ModalConsulenza gestireDatiConsulenza={gestireDatiConsulenza} nome={nome} setNome={setNome} setCognome={setCognome} cognome={cognome} emailUtente={emailUtente} setEmailUtente={setEmailUtente}  telnumero={telnumero} setTelnumero={setTelnumero} setMotivoPerConsulenzaImmobiliare={setMotivoPerConsulenzaImmobiliare} motivoPerConsulenzaImmobiliare={motivoPerConsulenzaImmobiliare} setModuloConsulenza={setModuloConsulenza} toast={toast} 
                 setConsulenzaImmobiliare={setConsulenzaImmobiliare} 
                 popupConsulenzaImmobiliare={popupConsulenzaImmobiliare}moduloConsulenza={moduloConsulenza} setAccettoPrivacy={setAccettoPrivacy} accettoPrivacy={accettoPrivacy}/>
             )}
@@ -322,7 +323,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
             )}
 
             {/* FAQs */}
-            <section className="faq py-8">
+            <section className="faq py-8 ">
                 <h2 className="text-center text-black text-2xl sm:text-3xl mb-2">FAQs</h2>
                 <p className="text-center text-base sm:text-lg mb-6">Queste sono le domande frequenti</p>
 

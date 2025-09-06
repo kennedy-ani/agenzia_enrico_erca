@@ -8,9 +8,10 @@ import Annunci from './pages/Annunci.jsx';
 import Policy from './pages/Policy.jsx';
 import Servizi from './pages/Servizi.jsx';
 import Su_di_noi from './pages/Su_di_noi.jsx';
-import Resa from './pages/Resa.jsx';
+import Resa from './pages/ConsulenzaPrivata.jsx';
 import { useEffect, useState } from 'react';
 import preloader from './components/preloader.jsx';
+import ConsulenzaPrivata from './pages/ConsulenzaPrivata.jsx';
 
 function App() {
 
@@ -20,7 +21,7 @@ function App() {
   // Funzionalita per gli annunci
   const [galleryImages, setGalleryImages] = useState([]);
   const [listingSelected, setlistingSelected] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   // Variable for setting the zoom in
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -61,6 +62,7 @@ function App() {
   const [popupUtenze, setPopupUtenze] = useState(false);//Servizi per l'utenze dei clienti
   const [popupConsulenzaImmobiliare, setConsulenzaImmobiliare] = useState(false);
   const [popupArchitectura, setPopupArchitectura] = useState(false);
+  const [popupInterior, setPopupInterior] = useState()
   const [popupEntrate, setPopupEntrate] = useState(false);
 
   const [ristrutturazione, setRistrutturazione] = useState(false);
@@ -70,14 +72,14 @@ function App() {
   // Ricerca e tutti variabli per ricercare gli annunci immobiliari
   const [annunci, setAnnunci] = useState([]);
   const [valueRicerca, setValueRicerca] = useState('');
-  const onChangeRicerca = (e) =>{
-    setValueRicerca(e.target.value);
-  }
+  // const onChangeRicerca = (e) =>{
+  //   setValueRicerca(e.target.value);
+  // }
   //const navigare = useNavigate();//redirect a
   const onSearch = (valueRicerca)=> {
         //Call API
-        setValueRicerca(valueRicerca);
-       navigare(`/annunci?ricercaData=${encodeURIComponent(valueRicerca)}`);// encode in case of space
+      setValueRicerca(valueRicerca);
+      navigare(`/annunci?ricercaData=${encodeURIComponent(valueRicerca)}`);// encode in case of space
         
         console.log("Search: ", valueRicerca);
   }
@@ -116,21 +118,21 @@ function App() {
     }else {
         //const phone = '+393311887849'; //Numero di consulente
         const phone = '+393881578442';
-        let messaggio = `Hello there! I am here for ${servizioSelezionato}`;
+        let messaggio = `Salve! Sono qui per questo servizio: ${servizioSelezionato}`;
         if(servizioSelezionato === 'luce' || servizioSelezionato === 'gas' || servizioSelezionato === 'acqua'){
 
-            messaggio = `Ciao, Sono Kennedy Ani. Vorrei chidere per il vostro servizio su ${servizioSelezionato}`;
+            messaggio = `Ciao! Vorrei chidere per il vostro servizio su ${servizioSelezionato}`;
             // PREVENTS BUGS FROM SPECIAL CHARACTERS
             const encodedMessage = encodeURIComponent(messaggio);
 
             window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank')
         }else if(servizioSelezionato === 'comunicazioni' || servizioSelezionato === 'interrogazioni' || servizioSelezionato === 'dispetti'|| servizioSelezionato === 'contratti di affitto' || servizioSelezionato === 'compromessi'){
-            messaggio = `Ciao, Sono Kennedy Ani. Vorrei sapere un'po sul ${servizioSelezionato}`;
+            messaggio = `Ciao! Vorrei sapere un'po sul ${servizioSelezionato}`;
             // PREVENTS BUGS FROM SPECIAL CHARACTERS
             const encodedMessage = encodeURIComponent(messaggio);
             window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank')
         }else if(servizioSelezionato === 'consulenza compravendita' || servizioSelezionato === "consulenza d'investimento" || servizioSelezionato === 'consulenza tecnico-legale' || servizioSelezionato === 'consulenza per stranieri' || servizioSelezionato === 'consulenza finanziaria'){
-            messaggio = `Ciao, Sono Kennedy Ani. Vorrei sapere un'po consulenza  ${servizioSelezionato}`;
+            messaggio = `Ciao! Vorrei sapere un'po consulenza  ${servizioSelezionato}`;
             // PREVENTS BUGS FROM SPECIAL CHARACTERS
             const encodedMessage = encodeURIComponent(messaggio);
             window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank')
@@ -143,7 +145,7 @@ function App() {
   const [cognome, setCognome] = useState("");
   const [emailUtente, setEmailUtente] = useState("");
   const [telnumero, setTelnumero] = useState("");
-  const [messaggio, setMessaggio]= useState("");
+  const [motivoPerConsulenzaImmobiliare, setMotivoPerConsulenzaImmobiliare]= useState("");
   const [accettoPrivacy, setAccettoPrivacy] = useState("");
 
 
@@ -183,9 +185,9 @@ function App() {
   const [tinteggiaturaManutenzione, setTinteggiaturaManutenzione] = useState(false);
   const [pulizieCondoManutenzione, setpulizieCondoManutenzione] = useState(false);
   const [controllo_caldaiaManutenzione, setControllo_caldaiaManutenzione] = useState(false);
-  const [calendarioManutenzione, setcalendarioManutenzione] = useState(false);
-  const [fasciaGiornoManutenzione, setfasciaGiornoManutenzione] = useState(false);
-  const [messaggioManutenzione, setMessaggioManutenzione] = useState(false);
+  const [calendarioManutenzione, setcalendarioManutenzione] = useState("");
+  const [fasciaGiornoManutenzione, setfasciaGiornoManutenzione] = useState("");
+  const [messaggioManutenzione, setMessaggioManutenzione] = useState("");
   const [accettoPrivacyOrdinaria, setAccettoPrivacyOrdinaria]=useState(false);
 
 
@@ -211,12 +213,23 @@ function App() {
 
   // VARIABLE PER ARCHITECTURA E INTERIOR DESIGN
   const [ristrutturazione_completa, setRistrutturazione_completa] = useState(false);
+  const [noteDellUtente, setNoteDellUtente] = useState("");
+  const [opereStrutturali, setOpereStrutturali] = useState(false);
   const [interior_design_arredo, setInterior_design_arredo] = useState(false);
   const [ridistribuzione_spazi_interni, setRidistribuzione_spazi_interni] = useState(false);
+  const [altriServizi, setAltriServizi] = useState(false);
+
+
+  const [moderno, setModerno] = useState(false);
+  const [minimal, setMinimal] = useState(false);
+  const [classico, setClassico] = useState(false);
+  const [industriale, setIndustriale] = useState(false);
+  const [luxury, setLuxury] = useState(false);
+  const [decidereConVoi, setDecidereConVoi] = useState(false);
+  const [urlispirazione, setUrlispirazione] = useState("");
   const [luce_illuminotecnica, setLuce_illuminotecnica] = useState(false);
   const [cucine_bagni_camere_su_misura, setcucine_bagni_camere_su_misura] = useState(false);
-  const [noteDellUtente, setNoteDellUtente] = useState(false);
-  
+
 
     // Invia tutti dati inseriti al backend per fissare un appuntamento di consulenza
     const gestireDatiConsulenza = async() => {
@@ -225,23 +238,24 @@ function App() {
             cognome: cognome,
             email: emailUtente,
             numeroditelefono: telnumero,
-            messaggio: messaggio,
+            motivo: motivoPerConsulenzaImmobiliare,
             accettoPrivacy: accettoPrivacy
         }
-
         const isValidPhone = /^\d{10}$/.test(params.numeroditelefono);
-
+        
         if(!params.nome.trim()){
           toast.error("Inserisci il nome");
         }else if(!params.cognome.trim()){
           toast.error("Inserisci il cognome")
         }else if(!isValidPhone){
           toast.error("Inserisci un numero di telefono valido (10 cifre)");
-        }else if(!params.messaggio.trim()){
+        }else if(!params.motivo.trim()){
           toast.error("Scrivi un messaggio");
         }else if(!params.accettoPrivacy){
           toast.error("Devi accettare la privacy policy")
         }else{
+
+          // Manda i dati alla backend
           await axios.post('http://localhost:2001/consulenzaimmobiliare', params,
               {
                 headers: {
@@ -265,8 +279,18 @@ function App() {
         }
     }
 
+    
     const invia_dati_per_manutenzioni_ordinaria = async() => {
 
+      const serviziManutenzioneSelezionati = [];
+
+      impattiElettriciManutenzione === true && serviziManutenzioneSelezionati.push("impatti elettrici manutenzione");
+      impianto_idraulicoManutenzione === true && serviziManutenzioneSelezionati.push("impianto idraulico");
+      tinteggiaturaManutenzione === true && serviziManutenzioneSelezionati.push("Tinteggiatura");
+      pulizieCondoManutenzione === true && serviziManutenzioneSelezionati.push("Pulizie Condominiali");
+      controllo_caldaiaManutenzione === true && serviziManutenzioneSelezionati.push("Controllo Caldaia / Climatizzatore");
+
+      
       const params = {
         nome: nomeManutenzione,
         cognome: cognomeManutenzione,
@@ -276,11 +300,7 @@ function App() {
         cap: capManutenzione,
         citta: cittaManutenzione,
         tipoDiImmobiliare: tipoDiImmobiliareManutenzione,
-        impatti_elettrici_manutenzione: impattiElettriciManutenzione,
-        impianto_idraulico: impianto_idraulicoManutenzione,
-        tinteggiatura: tinteggiaturaManutenzione,
-        pulizie_condo: pulizieCondoManutenzione,
-        controllo_caldaia: controllo_caldaiaManutenzione,
+        servizi: serviziManutenzioneSelezionati,
         calendario: calendarioManutenzione,
         fascia_giorno: fasciaGiornoManutenzione,
         messaggio: messaggioManutenzione,
@@ -303,23 +323,19 @@ function App() {
         toast.error("Scrivi la citta");
       }else if(!params.tipoDiImmobiliare.trim()){
         toast.error("Scegliere il tipo di immobiliare");
+      }else if(params.servizi.length < 1){
+        toast.error("Scegli un servizio");
+      }else if(!params.calendario.trim()){
+        toast.error("Scegli un giorno");
+      }else if(!params.fascia_giorno.trim()){
+        toast.error("Scegli l'ora del giorno");
       }else if(params.accetto_privacy === false){
         toast.error("Accetta il privacy prima di proseguire");
-      }else if(!params.indirizzoMobile.trim()){
-        toast.error("Scrivi un messaggio");
-      }else if(!params.indirizzoMobile.trim()){
-        toast.error("Scrivi un messaggio");
-      }else if(!params.indirizzoMobile.trim()){
-        toast.error("Scrivi un messaggio");
-      }else if(!params.indirizzoMobile.trim()){
-        toast.error("Scrivi un messaggio");
-      }else if(!params.messaggio.trim()){
-        toast.error("Scrivi un messaggio");
       }
       console.log(params);
 
       // Manda i dati con API al backend
-      await axios('http://localhost:2001/consulenza-manutenzione-ordinaria', params, {
+      await axios.post('http://localhost:2001/servizi/consulenza-manutenzione-ordinaria', params, {
         headers: {
           'Content-Type': 'application/json' 
         }
@@ -338,6 +354,216 @@ function App() {
       })
     }
 
+    const inviaDatiPerInteriorDesign = async() =>{
+      
+      //L'array che ritiene tutti i stili 
+      const stiliSelezionati = [];
+      
+      //Condizioni di stile selezionati
+      moderno === true && stiliSelezionati.push('Moderno');
+      minimal === true && stiliSelezionati.push('Minimal');
+      classico === true && stiliSelezionati.push('Classico');
+      industriale === true && stiliSelezionati.push('Industriale')
+      luxury === true && stiliSelezionati.push('Luxury');
+      decidereConVoi === true && stiliSelezionati.push('Decidere con voi');
+      
+      const params = {
+        nome: nome,
+        cognome: cognome,
+        email: emailUtente,
+        numeroditelefono: telnumero,
+        indirizzo: indirizzoMobileRis,
+        tipoDiImmobiliare: tipodiImmobiliareRis,
+        stilePreferito: stiliSelezionati,
+        noteDellUtente: noteDellUtente,
+        url: urlispirazione,
+        accettoPrivacy: accettoPrivacy
+      }
+
+      const isValidPhone = /^\d{10}$/.test(params.numeroditelefono);
+
+      console.log("Design", params);
+
+      if(!params.nome.trim()){
+        toast.error("Inserisci il nome");
+      }else if(!params.cognome.trim()){
+        toast.error("Inserisci il cognome");
+      }else if(!isValidPhone){
+        toast.error("Inserisci un numero di telefono valido (10 cifre)");
+      }else if(!params.indirizzo.trim()){
+        toast.error("Scrivi un indirizzo del mobile");
+      }else if(!params.tipoDiImmobiliare.trim()){
+        toast.error("Scegli il tipo di immobiliare");
+      }else if(params.stilePreferito.length < 1){
+        toast.error("Scegli uno stile che ti piace");
+      }else if(params.accettoPrivacy === false){
+        toast.error("Accetta il nostro privacy policy");
+      }else{
+        await axios.post('http://localhost:2001/servizi/consulenza-interior-design', params,
+              {
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              }
+            )
+            .then((response)=>{
+                console.log("Response: ",response.data);
+                if(response.status === 200){
+                  // Close modal
+                  setPopupInterior(false);
+                  toast.success("Richesta inviata con successo!");
+                }
+            }).catch((error)=>{
+                console.log("Errore: ",error.message);
+                toast.error("Errore durante l'invio della richiesta");
+                console.error("Errore: ", error);
+            })
+      }
+    }
+
+    const inviaDatiPerArchitectura = async() => {
+      //L'array che ritiene tutti i stili 
+      const servizioDiArchitectura = [];
+      
+      //Condizioni di stile selezionati
+      ristrutturazione_completa === true && servizioDiArchitectura.push('Progetto di ristrutturazione completa');
+      ridistribuzione_spazi_interni === true && servizioDiArchitectura.push('Ridistribuzione spazi interni');
+      opereStrutturali === true && servizioDiArchitectura.push('Opere Strutturali');
+      altriServizi === true && servizioDiArchitectura.push('altro')
+      
+      
+      const params = {
+        nome: nome,
+        cognome: cognome,
+        email: emailUtente,
+        numeroditelefono: telnumero,
+        indirizzo: indirizzoMobileRis,
+        tipoDiImmobiliare: tipodiImmobiliareRis,
+        servizioSelezionati: servizioDiArchitectura,
+        noteDellUtente: noteDellUtente,
+        accettoPrivacy: accettoPrivacy
+      }
+
+      const isValidPhone = /^\d{10}$/.test(params.numeroditelefono);
+
+      console.log("Design", params);
+
+      if(!params.nome.trim()){
+        toast.error("Inserisci il nome");
+      }else if(!params.cognome.trim()){
+        toast.error("Inserisci il cognome");
+      }else if(!isValidPhone){
+        toast.error("Inserisci un numero di telefono valido (10 cifre)");
+      }else if(!params.indirizzo.trim()){
+        toast.error("Scrivi un indirizzo del mobile");
+      }else if(!params.tipoDiImmobiliare.trim()){
+        toast.error("Scegli il tipo di immobiliare");
+      }else if(params.servizioSelezionati.length < 1){
+        toast.error("Scegli uno stile che ti piace");
+      }else if(params.accettoPrivacy === false){
+        toast.error("Accetta il nostro privacy policy");
+      }else{
+        await axios.post('http://localhost:2001/servizi/consulenza-architettura', params,
+              {
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              }
+            )
+            .then((response)=>{
+                console.log("Response: ",response.data);
+                if(response.status === 200){
+                  // Close modal
+                  setPopupInterior(false);
+                  toast.success("Richesta inviata con successo!");
+                }
+            }).catch((error)=>{
+                console.log("Errore: ",error.message);
+                toast.error("Errore durante l'invio della richiesta");
+                console.error("Errore: ", error);
+            })
+      }
+    }
+
+    const gestireDatiManutenzioneStra = async() => {
+      //L'array che ritiene tutti i stili 
+      const servizioDiManutenzioneStra = [];
+      
+      //Condizioni di stile selezionati
+      ristrutturazione_parziale === true && servizioDiManutenzioneStra.push('Ristrutturazione Parziale o Totale');
+
+      perdite_gravi === true && servizioDiManutenzioneStra.push('Perdite gravi o infiltrazioni');
+
+      Impianti_elettrici_idraulici === true && servizioDiManutenzioneStra.push('Impianti elettrici o idraulici da rifare');
+
+      messa_norma_caldaie === true && servizioDiManutenzioneStra.push('messa norma caldaie');
+      
+      opere_murarie_strutturali === true && servizioDiManutenzioneStra.push('Opere murarie o strutturali');
+
+      rifacimento_bagni === true && servizioDiManutenzioneStra.push('Rifacimento bagni o cucine');
+
+      interventi_post_allagamento === true && servizioDiManutenzioneStra.push('interventi post allagamento');
+      
+      
+      const params = {
+        nome: nomeManutenzioneStra,
+        cognome: cognomeManutenzioneStra,
+        email: emailUtenteManutenzioneStra,
+        numeroditelefono: telnumeroManutenzioneStra,
+        indirizzo: indirizzoManutenzioneStra,
+        cap: capManutenzioneStra,
+        citta: cittaManutenzioneStra,
+        servizioManutenzioneStra: servizioDiManutenzioneStra,
+        grado_di_urgenza: grado_di_urgenza,
+        descrizione_problema: descrizioneManutenzioneStra,
+        accettoPrivacy: accettoPrivacyStraOrdinaria
+      }
+
+      const isValidPhone = /^\d{10}$/.test(params.numeroditelefono);
+
+      console.log(params);
+
+      if(!params.nome.trim()){
+        toast.error("Inserisci il nome");
+      }else if(!params.cognome.trim()){
+        toast.error("Inserisci il cognome");
+      }else if(!isValidPhone){
+        toast.error("Inserisci un numero di telefono valido (10 cifre)");
+      }else if(!params.cap.trim()){
+        toast.error("Inserisci un CAP");
+      }else if(!params.indirizzo.trim()){
+        toast.error("Scrivi un indirizzo del mobile");
+      }else if(!params.citta.trim()){
+        toast.error("Scegli la tua citta");
+      }else if(params.servizioManutenzioneStra.length < 1){
+        toast.error("Scegli almeno un servizio di manutenzione");
+      }else if(!params.grado_di_urgenza.trim()){
+        toast.error("Scegli il livello di urgenza");
+      }else if(params.accettoPrivacy === false){
+        toast.error("Accetta il nostro privacy policy");
+      }else{
+        await axios.post('http://localhost:2001/servizi/consulenza-manutenzione-straordinaria', params,
+              {
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              }
+            )
+            .then((response)=>{
+                console.log("Response: ",response.data);
+                if(response.status === 200){
+                  // Close modal
+                  setModuloManutenzioneStra(false);
+                  toast.success("Richesta inviata con successo!");
+                }
+            }).catch((error)=>{
+                console.log("Errore: ", error.message);
+                toast.error("Errore durante l'invio della richiesta");
+                console.error("Errore: ", error);
+            })
+      }
+
+    }
 
     useEffect(()=>{
       const timer = setTimeout(()=>{
@@ -352,12 +578,15 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home 
-          nome={nome} setNome={setNome} setCognome={setCognome} cognome={cognome} emailUtente={emailUtente} setEmailUtente={setEmailUtente} telnumero={telnumero} setTelnumero={setTelnumero} messaggio={messaggio} setMessaggio={setMessaggio}
+          nome={nome} setNome={setNome} setCognome={setCognome} cognome={cognome} emailUtente={emailUtente} setEmailUtente={setEmailUtente} telnumero={telnumero} setTelnumero={setTelnumero} motivoPerConsulenzaImmobiliare={motivoPerConsulenzaImmobiliare} setMotivoPerConsulenzaImmobiliare={setMotivoPerConsulenzaImmobiliare}
           gestireDatiConsulenza={gestireDatiConsulenza} popupConsulenzaImmobiliare={popupConsulenzaImmobiliare} popupUtenze={popupUtenze} servizioSelezionato={servizioSelezionato} setConsulenzaImmobiliare={setConsulenzaImmobiliare} setServizioSelezionato={setServizioSelezionato} gestireContattiWhatsapp={gestireContattiWhatsapp} setPopupUtenze={setPopupUtenze} moduloConsulenza={moduloConsulenza} setModuloConsulenza={setModuloConsulenza} ristrutturazione={ristrutturazione} setRistrutturazione={setRistrutturazione} accettoPrivacy={accettoPrivacy} setAccettoPrivacy={setAccettoPrivacy}
           valueRicerca={valueRicerca}  setValueRicerca={setValueRicerca}
           // Dati Ricerca
-          onChangeRicerca={onChangeRicerca}
+          // onChangeRicerca={onChangeRicerca}
           onSearch={onSearch}
+          onOpenGallery={onOpenGallery}
+          setIsModalOpen={setIsModalOpen}
+          setlistingSelected={setlistingSelected}
           // Dati per la manutenzioni
             nomeManutenzione={nomeManutenzione} setNomeManutenzione={setNomeManutenzione} cognomeManutenzione={cognomeManutenzione}
             setCognomeManutenzione={setCognomeManutenzione} emailUtenteManutenzione={emailUtenteManutenzione} setEmailUtenteManutenzione={setEmailUtenteManutenzione} telnumeroManutenzione={telnumeroManutenzione} setTelnumeroManutenzione={setTelnumeroManutenzione}
@@ -399,9 +628,10 @@ function App() {
             ristrutturazione_completa={ristrutturazione_completa} setRistrutturazione_completa={setRistrutturazione_completa}
             interior_design_arredo={interior_design_arredo} setInterior_design_arredo={setInterior_design_arredo} ridistribuzione_spazi_interni={ridistribuzione_spazi_interni}
             setRidistribuzione_spazi_interni={setRidistribuzione_spazi_interni}
+            opereStrutturali={opereStrutturali} setOpereStrutturali={setOpereStrutturali}
             luce_illuminotecnica={luce_illuminotecnica} setLuce_illuminotecnica={setLuce_illuminotecnica}
             cucine_bagni_camere_su_misura={cucine_bagni_camere_su_misura} setcucine_bagni_camere_su_misura={setcucine_bagni_camere_su_misura}
-            noteDellUtente={noteDellUtente} setNoteDellUtente={setNoteDellUtente}
+            
           />}/>  
 
           <Route path="/annunci" element={<Annunci 
@@ -411,29 +641,41 @@ function App() {
           // Funzione per chiamare agente da annuncio
           chiamaAgenteDaAnnuncio={chiamaAgenteDaAnnuncio}
 
-          listingSelected={listingSelected} setlistingSelected={setlistingSelected} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} onOpenGallery={onOpenGallery} isGalleryOpen={isGalleryOpen} setIsGalleryOpen={setIsGalleryOpen} galleryImages={galleryImages} setGalleryImages={setGalleryImages} valueRicerca={valueRicerca}  setValueRicerca={setValueRicerca} onChangeRicerca={onChangeRicerca} getDataAnnunci={getDataAnnunci}/>}/>  
+          listingSelected={listingSelected} setlistingSelected={setlistingSelected} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} onOpenGallery={onOpenGallery} isGalleryOpen={isGalleryOpen} setIsGalleryOpen={setIsGalleryOpen} galleryImages={galleryImages} setGalleryImages={setGalleryImages} valueRicerca={valueRicerca}  setValueRicerca={setValueRicerca} /*onChangeRicerca={onChangeRicerca}*/ getDataAnnunci={getDataAnnunci}/>}/>  
 
           <Route path="/servizi" element={<Servizi 
           
           popupConsulenzaImmobiliare={popupConsulenzaImmobiliare} gestireContattiWhatsapp={gestireContattiWhatsapp} setConsulenzaImmobiliare={setConsulenzaImmobiliare} servizioSelezionato={servizioSelezionato} setServizioSelezionato={setServizioSelezionato} popupUtenze={popupUtenze} setPopupUtenze={setPopupUtenze}
-          popupEntrate={popupEntrate} setPopupEntrate={setPopupEntrate} 
+          popupEntrate={popupEntrate} setPopupEntrate={setPopupEntrate}  
+            // DATI CONSULENZA 
+            gestireDatiConsulenza={gestireDatiConsulenza} motivoPerConsulenzaImmobiliare={motivoPerConsulenzaImmobiliare} setMotivoPerConsulenzaImmobiliare={setMotivoPerConsulenzaImmobiliare} accettoPrivacy={accettoPrivacy} setAccettoPrivacy={setAccettoPrivacy}
+
           // ARCHITECTURA INTERIOR E DESIGN
+          popupInterior={popupInterior} setPopupInterior={setPopupInterior}
+          urlispirazione={urlispirazione} setUrlispirazione={setUrlispirazione}
             popupArchitectura={popupArchitectura} setPopupArchitectura={setPopupArchitectura}
             ristrutturazione_completa={ristrutturazione_completa}setRistrutturazione_completa={setRistrutturazione_completa}
+            inviaDatiPerInteriorDesign={inviaDatiPerInteriorDesign}
+
+            moderno={moderno} setModerno={setModerno}
+            minimal={minimal} setMinimal={setMinimal}
+            classico={classico} setClassico={setClassico}
+            industriale={industriale} setIndustriale={setIndustriale}
+            luxury={luxury} setLuxury={setLuxury}
+            decidereConVoi={decidereConVoi} setDecidereConVoi={setDecidereConVoi}
+
+            indirizzoMobileRis={indirizzoMobileRis}setIndirizzoMobileRis={setIndirizzoMobileRis} tipodiImmobiliareRis={tipodiImmobiliareRis} setTipodiImmobiliareRis={setTipodiImmobiliareRis} ridistribuzione_spazi_interni={ridistribuzione_spazi_interni} setRidistribuzione_spazi_interni={setRidistribuzione_spazi_interni} opereStrutturali={opereStrutturali} setOpereStrutturali={setOpereStrutturali} altriServizi={altriServizi} setAltriServizi={setAltriServizi} noteDellUtente={noteDellUtente} setNoteDellUtente={setNoteDellUtente} inviaDatiPerRistrutturazione
 
                 interior_design_arredo={interior_design_arredo} setInterior_design_arredo={setInterior_design_arredo}
-                
-                ridistribuzione_spazi_interni={ridistribuzione_spazi_interni} 
-                setRidistribuzione_spazi_interni={setRidistribuzione_spazi_interni}
+                luce_illuminotecnica={luce_illuminotecnica} setLuce_illuminotecnica={setLuce_illuminotecnica} cucine_bagni_camere_su_misura={cucine_bagni_camere_su_misura} inviaDatiPerArchitectura={inviaDatiPerArchitectura}
 
-                luce_illuminotecnica={luce_illuminotecnica} setLuce_illuminotecnica={setLuce_illuminotecnica} cucine_bagni_camere_su_misura={cucine_bagni_camere_su_misura} 
-
-                setcucine_bagni_camere_su_misura={setcucine_bagni_camere_su_misura} noteDellUtente={noteDellUtente} setNoteDellUtente={setNoteDellUtente} indirizzoMobileRis={indirizzoMobileRis} setIndirizzoMobileRis={setIndirizzoMobileRis}
-                nome={nome} setNome={setNome} cognome={cognome} setCognome={setCognome} emailUtente={emailUtente} setEmailUtente={setEmailUtente} telnumero={telnumero} setTelnumero={setTelnumero} tipodiImmobiliareRis={tipodiImmobiliareRis}
-                set_architectura_interior_design={set_architectura_interior_design} setTipodiImmobiliareRis={setTipodiImmobiliareRis} architectura_interior_design={architectura_interior_design}
+                setcucine_bagni_camere_su_misura={setcucine_bagni_camere_su_misura} 
+                nome={nome} setNome={setNome} cognome={cognome} setCognome={setCognome} emailUtente={emailUtente} setEmailUtente={setEmailUtente} telnumero={telnumero} setTelnumero={setTelnumero} 
+                set_architectura_interior_design={set_architectura_interior_design} architectura_interior_design={architectura_interior_design}
               getDataAnnunci={getDataAnnunci}
-
+              
               // Straordinaria dati
+              gestireDatiManutenzioneStra={gestireDatiManutenzioneStra}
               moduloManutenzioneStra={moduloManutenzioneStra} setModuloManutenzioneStra={setModuloManutenzioneStra}
               nomeManutenzioneStra={nomeManutenzioneStra} setNomeManutenzioneStra={setNomeManutenzioneStra} cognomeManutenzioneStra={cognomeManutenzioneStra} setCognomeManutenzioneStra={setCognomeManutenzioneStra}
                     emailUtenteManutenzioneStra={emailUtenteManutenzioneStra} setEmailUtenteManutenzioneStra={setEmailUtenteManutenzioneStra} telnumeroManutenzioneStra={telnumeroManutenzioneStra}setTelnumeroManutenzioneStra={setTelnumeroManutenzioneStra}
@@ -455,9 +697,12 @@ function App() {
 
           <Route path="/agenzia" element={<Su_di_noi/>}/>
           <Route path='/privacy' element={<Policy/>}/>
-          <Route path="/resa" element={<Resa gestireDatiConsulenza={gestireDatiConsulenza} nome={nome} setNome={setNome} setCognome={setCognome} cognome={cognome} emailUtente={emailUtente} setEmailUtente={setEmailUtente} telnumero={telnumero} setTelnumero={setTelnumero} messaggio={messaggio} setMessaggio={setMessaggio} setConsulenzaImmobiliare={setConsulenzaImmobiliare} popupConsulenzaImmobiliare={popupConsulenzaImmobiliare} toast={toast} ToastContainer={ToastContainer}/>}/>
+          <Route path="/consulenza-privata" element={<ConsulenzaPrivata popupConsulenzaImmobiliare={popupConsulenzaImmobiliare} setConsulenzaImmobiliare={setConsulenzaImmobiliare} gestireDatiConsulenza={gestireDatiConsulenza} nome={nome} setNome={setNome} cognome={cognome} setCognome={setCognome} emailUtente={emailUtente}setEmailUtente={setEmailUtente} telnumero={telnumero} setTelnumero={setTelnumero} motivoPerConsulenzaImmobiliare={motivoPerConsulenzaImmobiliare} setMotivoPerConsulenzaImmobiliare={setMotivoPerConsulenzaImmobiliare} accettoPrivacy={accettoPrivacy} setAccettoPrivacy={setAccettoPrivacy} toast={toast}/>}/>
         </Routes>  
       </Router>      
+
+      {/* Toast Notification */}
+      <ToastContainer position='bottom-right' autoClose={3000}/>
     </>
   )
 }

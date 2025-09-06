@@ -87,7 +87,7 @@ tipoDiImmobiliareManutenzione, setTipoDiImmobiliareManutenzione, impattiElettric
                                 <input type="date" value={calendarioManutenzione} onChange={(e)=>setcalendarioManutenzione(e.target.value)} className="w-full mt-1 bg-gray-300 outline-0 rounded-sm p-0.5" name="calendarioManutenzione" required/>
 
                                 {/* Fascia Giorno */}
-                                <select name="fasciaGiorno" value={fasciaGiornoManutenzione} onChange={(e)=>setfasciaGiorno(e.target.value)} className="w-full mt-1 bg-gray-300 outline-0 rounded-sm p-0.5" required>
+                                <select name="fasciaGiorno" value={fasciaGiornoManutenzione} onChange={(e)=>setfasciaGiornoManutenzione(e.target.value)} className="w-full mt-1 bg-gray-300 outline-0 rounded-sm p-0.5" required>
                                     <option value="9:00 - 12:00">9:00-12:00</option>
                                     <option value="14:00-17:00">14:00-17:00</option>
                                     <option value="17:00-19:00">17:00-19:00</option>
@@ -101,12 +101,13 @@ tipoDiImmobiliareManutenzione, setTipoDiImmobiliareManutenzione, impattiElettric
                         </div> 
 
                         {/* Immagina caricato */}
-                        <label htmlFor="imageManutenzioneOrd" style={{ background:"grey", padding:"5px 10px" }}>Inserire immagine (optionale)</label>
-                        <input type="file" className="text-center" placeholder=""name="imageManutenzioneOrd"  id=""/>
+                        {/* <label htmlFor="imageManutenzioneOrd" style={{ background:"grey", padding:"5px 10px" }}>Inserire immagine (optionale)</label>
+                        <input type="file" className="text-center" placeholder=""name="imageManutenzioneOrd"  id=""/> */}
 
                         <div className="flex flex-col text-left ">
                              <label><input type="checkbox" checked={accettoPrivacyOrdinaria} onClick={(e)=>setAccettoPrivacyOrdinaria(e.target.checked)} className="" required /> Accetto la privacy policy</label>
                         </div>
+
                         <div className="pb-4 text-center">
                             <button onClick={()=>invia_dati_per_manutenzioni_ordinaria()}className="bg-green-600 text-white px-4 py-0.5 rounded hover:bg-green-700">
                                 Invia Richiesta
