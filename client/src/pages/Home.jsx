@@ -86,7 +86,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                 <div className="flex w-full justify-between items-center text-sm px-2 py-1">
                     {/* phone and email */}
                     
-                    <div className="flex flex-col md:flex-row -ml-1.5 lg:flex-row w-10 md:w-1/2  justify-start md:items-center">
+                    <div className="flex flex-col md:flex-row -ml-0 lg:flex-row w-10 md:w-1/2  justify-start md:items-center">
                         <FaPhone className="md:w-1/5  hidden md:inline"/>
                         <span className="md:mr-2 w-5 ml-[0rem] md:w-full text-[0.9rem]">+393311887849 | 0573-737305</span>
 
