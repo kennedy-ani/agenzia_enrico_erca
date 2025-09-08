@@ -62,83 +62,47 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
 }) => {
   
 
-    //const [popupEntrate, setPopupEntrate] = useState(false);
-    //const [popupUtenze, setPopupUtenze] = useState(false);
-    //const [popupConsulenzaImmobiliare, setConsulenzaImmobiliare] = useState(false);
-
-    // HANDLES SELECTED SERVICES
-    // const [servizioSelezionato, setServizioSelezionato] = useState("");
-
-    
-    // This function helps with redirecting users to the whatsapp
-    // const gestireContattiWhatsapp = (e) => {
-    //     e.preventDefault();
-
-    //     if(!servizioSelezionato){
-    //         // Send a toast message
-    //         toast("Scegli un servizio!");
-    //         return;
-    //     }else {
-    //         //const phone = '+393311887849'; //Numero di consulente
-    //         const phone = '+393881578442';
-    //         let messaggio = `Hello there! I am here for ${servizioSelezionato}`;
-    //         if(servizioSelezionato === 'luce' || servizioSelezionato === 'gas' || servizioSelezionato === 'acqua'){
-
-    //             messaggio = `Ciao, Sono Kennedy Ani. Vorrei chidere per il vostro servizio su ${servizioSelezionato}`;
-    //             // PREVENTS BUGS FROM SPECIAL CHARACTERS
-    //             const encodedMessage = encodeURIComponent(messaggio);
-
-    //             window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank')
-    //         }else if(servizioSelezionato === 'comunicazioni' || servizioSelezionato === 'interrogazioni' || servizioSelezionato === 'dispetti'|| servizioSelezionato === 'contratti di affitto' || servizioSelezionato === 'compromessi'){
-    //             messaggio = `Ciao, Sono Kennedy Ani. Vorrei sapere un'po sul ${servizioSelezionato}`;
-    //             // PREVENTS BUGS FROM SPECIAL CHARACTERS
-    //             const encodedMessage = encodeURIComponent(messaggio);
-    //             window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank')
-    //         }else if(servizioSelezionato === 'consulenza compravendita' || servizioSelezionato === "consulenza d'investimento" || servizioSelezionato === 'consulenza tecnico-legale' || servizioSelezionato === 'consulenza per stranieri' || servizioSelezionato === 'consulenza finanziaria'){
-    //             messaggio = `Ciao, Sono Kennedy Ani. Vorrei sapere un'po consulenza  ${servizioSelezionato}`;
-    //             // PREVENTS BUGS FROM SPECIAL CHARACTERS
-    //             const encodedMessage = encodeURIComponent(messaggio);
-    //             window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank')
-    //         }
-    //     }
-    // }
     return <>
     <div>
         {/** Hero section */}
         <FadeIn>
 
-            <div style={{background: `url(${heroImage})`,
-                    backgroundSize: `cover`, backgroundPosition: `center`}} className="min-h-screen img bg-cover flex-col items-center bg-center text-white md:px-5 py-2">
+                <div style={{background: `url(${heroImage})`,
+                    backgroundSize: `cover`, backgroundPosition: `center`}} className=" min-h-screen img bg-cover flex-col items-center bg-center  text-white md:px-5 ">
                     {/* Contact Bar */}
-                    <div className="flex md:w-56  sm:w-25 flex-col sm:flex-row justify-between text-xs sm:text-sm px-2 py-1">
+                    <div className="flex flex-col sm:flex-row  w-full justify-between items-center text-sm px-2 py-1">
                         {/* phone and email */}
-                        <div className="flex sm:flex-col md:flex-row sm:items-start  justify-center items-center">
-                            <FaPhone className="mr-0.5 sm:hidden"/>
-                            <span className="mr-2 md:w-1/2">+39 331-1887849 | 0573-737305</span>
-                            <FaEnvelope className="mr-0.5 md:w-1/2 sm:hidden"/>
-                            <span>gunzimangusta@gmail.com</span>
+                        
+                        <div className="flex flex-col md:flex-row w-full lg:flex-row md:w-1/2  justify-start md:items-center">
+                            <FaPhone className="md:w-1/5  hidden md:inline"/>
+                            <span className="md:mr-2 ml-[0rem] md:w-full text-[0.9rem] w-full">+393311887849 | 0573-737305</span>
+
+                            <FaEnvelope className=" md:w-1/5  hidden md:inline"/>
+                            <span className=" text-[0.9rem] w-1/2">gunzimangusta@gmail.com</span>
                         </div>
+                        
 
                         {/* time */}
-                        <div className="flex  sm:flex-col md:flex-row md:w-20 sm:justify-center items-center sm:items-start justify-start">
-                            <FaClock className="mr-0.5 md:text-md sm:hidden"/>
-                            <span className="mr-2 w-full md:w-1/2">Lunedi - Venerdi</span>
-                            <span className="w-full md:w-1/2">9:30 - 13:00 16:00 - 19:30</span>
+                        <div className="flex flex-col md:justify-end mt-1 md:mt-0 md:ml-5 md:flex-row w-full md:w-1/2 ">
+                            <FaClock className="mr-0.5  md:text-md hidden "/>
+                            <span className=" md:w-1/2 text-[0.9rem]">Lunedi - Venerdi</span>
+                            <span className=" md:w-1/2  text-[0.9rem] ">9:30  - 13:00 | 16:00 - 19:30</span>
                         </div>
                     </div>
-                    <div className="flex sm:justify-between sm:ml-2 sm:items-center">
-                        <img src={logo} className="w-5" alt="Enrico Erca"/>
-                        <NavBar/>
+
+                    <div className="flex justify-between items-center">
+                         <img src={logo} className="w-5 ml-2" alt="Enrico Erca"/>
+                    <NavBar/>
                     </div>
                     
-                    <h1 className="sm:text-5xl sm:mt-4 px-9 sm:px-3 font-bold text-center">Tutto ciò che serve per gestire la tua proprietà, senza pensieri.</h1>
-                    <p className="px-9 sm:px-3  text-center font-semibold pt-1">Dalla burocrazia alle bollette, dalla manutenzione alla relocation — ci pensiamo noi.</p>
+                    <h1 className="text-lg md:text-7xl text-center mt-3 mx-1 font-bold">Tutto ciò che serve per gestire la tua proprietà, senza pensieri.</h1>
+                    <p className="mt-2 sm:mt-1 text-base md:text-base text-center mx-auto px-1 md:px-5">Dalla burocrazia alle bollette, dalla manutenzione alla relocation — ci pensiamo noi.</p>
                     <p className="text-center">Servizi completi per proprietari, inquilini e investitori immobiliari</p>  
             </div>
         </FadeIn>
 
         <FadeIn>
-            <p className="text-xl font-bold my-3 text-center" style={{color: "#36454F"}}>Non  obbligatorio di acquistare da noi immobili per usufruire dei nostri servizi*</p>
+            <p className="text-xl font-bold mx-1 my-3 text-center" style={{color: "#36454F"}}>Non e' obbligatorio di acquistare da noi immobili per usufruire dei nostri servizi*</p>
         </FadeIn>
         <div>
         <FadeIn>
