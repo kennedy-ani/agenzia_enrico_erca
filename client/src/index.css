@@ -8,9 +8,12 @@
   --color-tan: #DAB785;
   --color-sienna: #D5896F;
   --spacing: 1.5rem;
-
+  --text-sm: 1rem;
+  --text-lg: 2rem;
+  --text-md: 1.5rem;
 }
 
+/* font size  */
 
 
 
@@ -46,10 +49,10 @@ body {
   /* min-height: 100vh; */
 }
 
-h1 {
+/* h1 {
   font-size: 3.2em;
   line-height: 1.1;
-}
+} */
 
 .img{
  width: 100%;

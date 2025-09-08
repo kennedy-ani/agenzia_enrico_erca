@@ -21,7 +21,7 @@ const ConsulenzaPrivata = ({gestireDatiConsulenza, nome, setNome, cognome, setCo
             <div className="w-full min-h-screen bg-red-500 rounded-b-[100%]">
                 <div className="flex items-center justify-center h-full text-white">
                     {/* Contact Bar */}
-                    <div className="flex md:w-56  sm:w-25 flex-col sm:flex-row justify-between text-xs sm:text-sm px-2 py-1">
+                    <div className="flex md:w-56  sm:w-25 justify-between text-xs sm:text-sm px-2 py-1">
                         {/* phone and email */}
                         <div className="flex sm:flex-col md:flex-row sm:items-start  justify-center items-center">
                             <FaPhone className="mr-0.5 sm:hidden"/>
@@ -38,8 +38,9 @@ const ConsulenzaPrivata = ({gestireDatiConsulenza, nome, setNome, cognome, setCo
                         </div>
                     </div>
                 </div>
-                <div className="flex sm:justify-between sm:ml-2 sm:items-center">
-                    <img src={logo} className="w-5" alt="Enrico Erca"/>
+
+                <div className="flex mx-[10rem] justify-between  items-center">
+                    <img src={logo} className="w-5 ml-1.5" alt="Enrico Erca"/>
                     <NavBar/>
                 </div>
 
@@ -54,7 +55,7 @@ const ConsulenzaPrivata = ({gestireDatiConsulenza, nome, setNome, cognome, setCo
             </div>
 
             
-            <img src={consulente} className='absolute bottom-[-50px] right-[15%] w-[390px] h-[600px] z-20 sm:bottom-[-150px] sm:right-[-10%]' alt="" />
+            <img src={consulente} className='absolute bottom-[-50px] right-[15%] w-[390px] h-[600px] z-20' alt="" />
 
             
         </FadeIn>

@@ -83,37 +83,39 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                 backgroundSize: `cover`, backgroundPosition: `center`}} className=" min-h-screen img bg-cover flex-col items-center bg-center  text-white md:px-5 py-2">
                     
                 {/* Contact Bar */}
-                <div className="flex md:w-56  sm:w-25 flex-col sm:flex-row justify-between text-xs sm:text-sm px-2 py-1">
+                <div className="flex w-full justify-between  items-center text-sm px-2 py-1">
                     {/* phone and email */}
                     
-                    <div className="flex sm:flex-col md:flex-row sm:items-start  justify-center items-center">
-                        <FaPhone className="mr-0.5 sm:hidden"/>
-                        <span className="mr-2 md:w-1/2 ">+39 331-1887849 | 0573-737305</span>
-                        <FaEnvelope className="mr-0.5 md:w-1/2 sm:hidden"/>
-                        <span>gunzimangusta@gmail.com</span>
+                    <div className="flex flex-col md:flex-row lg:flex-row w-10 md:w-1/2  justify-start md:items-center">
+                        <FaPhone className="md:w-1/5  hidden md:inline"/>
+                        <span className="md:mr-2  w-1/2 md:w-full text-[0.9rem]">+39 331-1887849 | 0573-737305</span>
+
+                        <FaEnvelope className=" md:w-1/5   hidden md:inline"/>
+                        <span className=" text-[0.9rem] ">gunzimangusta@gmail.com</span>
                     </div>
                     
 
                     {/* time */}
-                    <div className="flex  sm:flex-col md:flex-row md:w-20 sm:justify-center items-center sm:items-start justify-start">
-                        <FaClock className="mr-0.5  md:text-md sm:hidden"/>
-                        <span className="mr-2 w-full  md:w-1/2">Lunedi - Venerdi</span>
-                        <span className="w-full  md:w-1/2">9:30 - 13:00 16:00 - 19:30</span>
+                    <div className="flex flex-col md:justify-end md:flex-row md:w-1/2 ">
+                        <FaClock className="mr-0.5  md:text-md hidden"/>
+                        <span className="w-5  text-[0.9rem]">Lunedi - Venerdi</span>
+                        <span className="w-1/2  text-[0.9rem]">9:30  - 13:00 | 16:00 - 19:30</span>
                     </div>
                 </div>
-                <div className="flex sm:justify-between sm:ml-2 sm:items-center">
-                    <img src={logo} className="w-5 " alt="Enrico Erca"/>
+
+                <div className="flex justify-between items-center">
+                    <img src={logo} className="w-5 ml-1.5" alt="Enrico Erca"/>
                     <NavBar/>
                 </div>
-                <h1 className="text-3xl sm:text-6xl sm:w-25 md:w-50 md:text-7xl text-center mt-6 sm:mt-3 mx-auto font-bold">La scelta intelligente per il tuo immobile!</h1>
-                <p className="mt-4 sm:mt-1 text-base sm:w-20 md:text-base text-center md:w-32 mx-auto">Ti aiutiamo a <b>risparmiare su gas e luce</b>, calcolare il <b>valore della tua proprietà</b> e trovare le migliori <b>soluzioni in vendita</b> o <b>in affitto</b>. Hai bisogno di ristrutturazioni o di una consulenza esperta? I nostri consulenti immobiliari sono a tua disposizione!</p>
+                <h1 className="text-lg md:text-7xl text-center mt-3 mx-3 font-bold">La scelta intelligente per il tuo immobile!</h1>
+                <p className="mt-2 sm:mt-1 text-base md:text-base text-center mx-auto px-2 md:px-5">Ti aiutiamo a <b>risparmiare su gas e luce</b>, calcolare il <b>valore della tua proprietà</b> e trovare le migliori <b>soluzioni in vendita</b> o <b>in affitto</b>. Hai bisogno di ristrutturazioni o di una consulenza esperta? I nostri consulenti immobiliari sono a tua disposizione!</p>
 
 
                 {/* Search bar */}
-                    <div className="relative w-full max-w-6xl sm:w-26 md:ml-[15rem] px-4">
-                        <div className="flex flex-col sm:flex-row items-center gap-2 mt-0 w-[60rem] sm:w-[35rem] ">
-                        <input type="search" /*value={valueRicerca}*/ onChange={(e)=>setSearch(e.target.value)} className="border-b text-white border-white outline-none py-0.5 px-1 w-full sm:w-3/4 outline-0 my-1 md:ml-9  lg:ml-0 sm:ml-1 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-white-500 "  name="search_immobili" id="search_immobili" placeholder="Ricerca tutti immobili disponibile, locazione, prezzo, tipo" />
-                        {/* <button className="bg-red-500 text-white px-0.5 md:ml-9 py-0.5 hover:border-amber-50 hover:pointer" onClick={()=> onSearch(valueRicerca)}>Cerca</button> */}
+                    <div className="relative w-full flex justify-center items-center px-4">
+                        <div className="flex flex-col sm:flex-row items-center gap-2 mt-0 w-[40rem] md:w-[50rem] justify-center ">
+                            <input type="search" /*value={valueRicerca}*/ onChange={(e)=>setSearch(e.target.value)} className="border-b text-white border-white outline-none py-0.5 px-1 sm:w-3/4 outline-0 my-1  sm:ml-1 flex justify-between items-center focus:outline-none focus:ring-2 w-full focus:ring-white-500 "  name="search_immobili" id="search_immobili" placeholder="Ricerca tutti immobili disponibile, locazione, prezzo, tipo" />
+                            {/* <button className="bg-red-500 text-white px-0.5 md:ml-9 py-0.5 hover:border-amber-50 hover:pointer" onClick={()=> onSearch(valueRicerca)}>Cerca</button> */}
                         </div>
                         {/* Search Results */}
                         
@@ -142,23 +144,23 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
             {/* Listing top 5 recent */}
             <FadeIn>
             <div className=" my-2">
-                <h1 className="text-center my-2 sm:!text-lg md:text-2xl font-bold uppercase underline underline-offset-8">Annunci In Evidenza</h1>
+                <h1 className="text-center my-2 text-md  md:text-2xl font-bold uppercase underline underline-offset-8">Annunci In Evidenza</h1>
                 
                 
-                <div className=" lg:flex  lg:flex-row lg:justify-center lg:gap-6 p-4 sm:p-1">
+                <div className=" grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 gap-3">
                     {
                         // Questa parte monstra solo le 3 recenti annunci scaricato
                         Object.keys(annunci).slice(0, 3).map((data)=>{
                             return <>
                                     {/* Card */}
                                     
-                                    <div key={annunci[data].id} onClick={()=>{setIsModalOpen(true); setlistingSelected(data); onOpenGallery(data.id)}} className="md:w-72 sm:w-25 sm:mb-2 bg-white rounded-2xl shadow-md overflow-hidden transition-transform hover:scale-105">
+                                    <div key={annunci[data].id} onClick={()=>{setIsModalOpen(true); setlistingSelected(data); onOpenGallery(data.id)}} className="w-full mb-2 sm:mb-2 bg-white rounded-2xl shadow-md overflow-hidden  transition-transform hover:scale-105">
                                         <img
                                             src={`http://localhost:2001/uploads/${annunci[data].img_url}`}
                                             alt={annunci[data].titolo}
                                             className="w-full h-12 object-cover"
                                         />
-                                        <div className="p-1 flex flex-col h-full">
+                                        <div className="p-3 flex flex-col h-full">
                                             <div className="mb-2">
                                                 <h3 className="text-xl font-semibold">{annunci[data].titolo}</h3>
                                                 <p className="text-gray-500 text-sm">{annunci[data].indirizzo}</p>
@@ -189,19 +191,23 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
             {/* Chi siamo */}
             <FadeIn>
             <div style={{background: `url(${image2})`,
-                backgroundSize: `cover`, backgroundPosition: `center`}} className="min-h-24 img w-full flex justify-center items-center bg-cover bg-center text-white px-4 py-10 text-center md:text-left">
+                backgroundSize: `cover`, backgroundPosition: `center`}} className="min-h-24 img w-full flex flex-col md:flex-row justify-center items-center bg-cover bg-center text-white px-4  py-10 text-center  md:text-left">
                 <div className="px-2 md:w-2/3">
                     <h2 className="font-bold text-4xl md:text-6xl mb-4">CHI SIAMO</h2>
-                    <p>Siamo un'agenzia immobiliare impegnata ad aiutarti a trovare la casa perfetta, sia in affitto che in acquisto, fornendo allo stesso tempo una guida esperta su come risparmiare su gas ed elettricità. La nostra missione è rendere le transazioni immobiliari fluide e convenienti per te!</p>
+                    <p>
+                        Siamo un'agenzia immobiliare impegnata ad aiutarti a trovare la casa perfetta, sia in affitto che in acquisto, fornendo allo stesso tempo una guida esperta su come risparmiare su gas ed elettricità. La nostra missione è rendere le transazioni immobiliari fluide e convenienti per te!
+                    </p>
                 </div>
-                <img className="w-15 sm:hidden md:block mt-6 md:mt-0 md:ml-6 h-20 border-5" src={guide} alt=""/>
+                <img className="w-10 md:w-15 md:h-20 md:block mt-6 md:mt-0 md:ml-6 h-15 border-5" src={guide} alt=""/>
             </div>
             </FadeIn>
+
+
             {/* Servizi */}
-            <p className="text-xl font-bold my-3 text-center" style={{color: "#36454F"}}>Non  obbligatorio di acquistare da noi immobili per usufruire dei nostri servizi*</p>
-            <div className="grid md:grid-cols-3 gap-1 sm:grid-cols-1">
+            <p className="text-xl font-bold mx-3 my-3 text-center" style={{color: "#36454F"}}>Non obbligatorio di acquistare da noi immobili per usufruire dei nostri servizi*</p>
+            <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 gap-3">
                 <FadeIn>
-                    <Link onClick={()=>setPopupUtenze(true)} className="transition-transform hover:scale-105 sm:mb-3">
+                    <Link onClick={()=>setPopupUtenze(true)} className="transition-transform hover:scale-105 mb-5">
                         < div className="text-center sm:mt-3">
                             <FaPiggyBank className="text-red-500 text-7xl mx-auto"/>
                             <p style={{color: "#36454F"}} className="font-bold mt-1">Gestione delle Bollette</p>
@@ -210,8 +216,8 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                     </Link>
                 </FadeIn>
                 <FadeIn>
-                    <Link onClick={()=>setConsulenzaImmobiliare(true)} className="transition-transform hover:scale-105 sm:mb-3">
-                        <div className="text-center sm:mt-3">
+                    <Link onClick={()=>setConsulenzaImmobiliare(true)} className="transition-transform hover:scale-105">
+                        <div className="text-center mt-5">
                             <FaHome className="text-red-500 text-7xl mx-auto"/>
                             <p style={{color: "#36454F"}}  className="font-bold mt-1">Consulenza Immobiliare</p>
                             <p style={{color: "#36454F"}} className="w-10 mx-auto">
@@ -226,7 +232,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                 <FadeIn>
                     {/* Archittetura */}
                     <Link onClick={()=>set_architectura_interior_design(true)} className="transition-transform hover:scale-105 sm:mb-3">
-                        <div className="text-center sm:mt-3">
+                        <div className="text-center  mt-5">
                             <MdArchitecture className="text-red-500 text-7xl mx-auto"/>
                             <p style={{color: "#36454F"}}  className="font-bold mt-1">Architectura <br /> e Interior Design</p>
                             <p style={{color: "#36454F"}} className="w-10 mx-auto">Hai trovato la casa giusta? Ora rendila perfetta.</p>
@@ -237,7 +243,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                 <FadeIn>
                     {/* Manutenzione Ordinaria */}
                     <Link onClick={()=>setModuloManutenzione(true)} className="transition-transform hover:scale-105 sm:mb-3">
-                        <div className="text-center sm:mt-3">
+                        <div className="text-center  mt-5">
                             <GrVmMaintenance className="text-red-500 text-7xl mx-auto"/>
                             <p style={{color: "#36454F"}}  className="font-bold mt-1">Manutenzione Ordinaria</p>
                             <p style={{color: "#36454F"}} className="w-10 mx-auto">Hai trovato la casa giusta? Ora rendila perfetta.</p>
@@ -249,7 +255,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                 <FadeIn>
                     {/* Manutenzione Straodinaria */}
                     <Link onClick={()=>setModuloManutenzioneStra(true)} className="transition-transform hover:scale-105 sm:mb-3">
-                        <div className="text-center sm:mt-3">
+                        <div className="text-center  mt-5">
                             <GrVmMaintenance className="text-red-500 text-7xl mx-auto"/>
                             <p style={{color: "#36454F"}}  className="font-bold mt-1">Manutenzione Straordinaria</p>
                             <p style={{color: "#36454F"}} className="w-10 mx-auto">
@@ -324,19 +330,19 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
 
             {/* FAQs */}
             <section className="faq py-8 ">
-                <h2 className="text-center text-black text-2xl sm:text-3xl mb-2">FAQs</h2>
-                <p className="text-center text-base sm:text-lg mb-6">Queste sono le domande frequenti</p>
+                
+                <p className="text-center text-gray-800 font-bold text-lg mb-6">Domande frequenti</p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:px-4">
                     {/* FAQ 1 */}
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                    <FaQuestion className="text-red-500 text-[18rem] md:inline-block sm:hidden"/>
+                    <FaQuestion className="text-red-500 text-[18rem]  md:inline-block hidden"/>
                     <FadeIn>
                         <div>
-                            <h1 className="text-gray-800 font-bold uppercase md:!text-4xl sm:!text-2xl sm:text-center mb-2 sm:mx-2 md:text-left md:ml-0">
+                            <h1 className="text-gray-800 text-center mx-2 font-bold uppercase md:text-4xl text-2xl mb-2 md:text-left md:ml-0">
                             Come faccio a sapere se un immobile è adatto alle mie esigenze?
                             </h1>
-                            <p className="text-sm sm:text-center sm:text-base md:text-left md:ml-0 sm:mx-2">
+                            <p className="text-sm text-center mx-2 md:text-left md:ml-0">
                             Scegliere casa non è solo questione di prezzo: contano la zona, i servizi vicini, la metratura,
                             l’esposizione, e lo stile di vita. <br /><br />
                             Spesso ci si innamora di immobili che non funzionano nel lungo periodo. <br /><br />
@@ -353,13 +359,13 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
 
                     {/* FAQ 2 */}
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                    <FaQuestion className="text-red-500 text-[18rem] md:inline-block sm:hidden" />
+                    <FaQuestion className="text-red-500 text-[18rem] md:inline-block  hidden" />
                     <FadeIn>
                         <div>
-                            <h1 className="text-gray-800 font-bold uppercase md:!text-4xl text-lg sm:!text-2xl  mb-2 sm:text-center sm:mx-2 md:text-left md:ml-0">
+                            <h1 className="text-gray-800 font-bold uppercase md:text-4xl text-2xl  mb-2 text-center mx-2  md:text-left md:ml-0">
                             Come posso sapere quanto vale la mia casa?
                             </h1>
-                            <p className="text-sm sm:text-base sm:text-center sm:mx-2 md:text-left md:ml-0">
+                            <p className="text-sm text-center mx-2 md:text-left md:ml-0">
                             Il valore di un immobile dipende da zona, metratura, stato, classe energetica e mercato locale. Ma attenzione:
                             non basta guardare immobili simili online — ogni casa ha caratteristiche uniche che incidono sulla resa reale. <br /><br />
                             Vuoi sapere quanto potresti guadagnare vendendo o affittando la tua proprietà? <br />
@@ -371,13 +377,13 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
 
                     {/* FAQ 3 */}
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                    <FaQuestion className="text-red-500 text-[18rem] md:inline-block sm:hidden" />
+                    <FaQuestion className="text-red-500 text-[18rem] md:inline-block  hidden" />
                     <FadeIn>
                         <div>
-                            <h1 className="text-gray-800 font-bold uppercase md:!text-4xl text-lg sm:text-center sm:mx-2 sm:!text-2xl mb-2 md:text-left md:ml-0 ">
+                            <h1 className="text-gray-800 font-bold uppercase md:!text-4xl text-2xl text-center mx-2  mb-2 md:text-left md:ml-0 ">
                             Quali documenti servono per vendere un immobile?
                             </h1>
-                            <p className="text-sm sm:text-base sm:text-center sm:mx-2 md:text-left md:ml-0">
+                            <p className="text-sm text-center mx-2 md:text-left md:ml-0">
                             Per vendere casa ti servono: l’atto di proprietà, visura e planimetria catastale, APE (Attestato di Prestazione Energetica),
                             dichiarazione di conformità urbanistica e documenti personali. <br /><br />
                             Le certificazioni degli impianti non sono obbligatorie, ma aumentano il valore dell’immobile. <br /><br />
@@ -390,20 +396,20 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
 
                     {/* FAQ 4 */}
                     <div className="flex flex-col sm:flex-row items-start sm:items-center  gap-4">
-                    <FaQuestion className="text-red-500 text-[18rem] md:inline-block sm:hidden" />
+                    <FaQuestion className="text-red-500 text-[18rem] md:inline-block  hidden" />
                     <FadeIn>
                         <div>
-                            <h1 className="text-gray-800 font-bold uppercase md:!text-4xl text-lg sm:!text-2xl sm:text-center sm:mx-2 mb-2 md:text-left md:ml-0">
+                            <h1 className="text-gray-800 font-bold uppercase md:!text-4xl text-2xl  text-center mx-2  mb-2 md:text-left md:ml-0">
                             Aiutate con mutui?
                             </h1>
-                            <p className="text-sm sm:text-center sm:mx-2 sm:text-base md:text-left md:ml-0">
+                            <p className="text-sm text-center mx-2 md:text-left md:ml-0">
                             Sì, supportiamo i nostri clienti in tutte le fasi dell’acquisto, anche nella scelta del mutuo. <br /><br />
                             Collaboriamo con consulenti del credito qualificati e banche locali per offrirti soluzioni personalizzate, con tassi competitivi
                             e condizioni trasparenti. <br /><br />
                             Ti aiutiamo a comprendere quale mutuo è adatto al tuo profilo, quali documenti servono e come aumentare le probabilità di approvazione. <br /><br />
                             Che tu sia un lavoratore dipendente, autonomo o giovane acquirente, non sei solo in questo percorso. <br /><br />
                             📅 Prenota ora un appuntamento gratuito con un nostro agente e ricevi una simulazione su misura. <br /><br />
-                            <Link href="#" className="text-blue-600 underline">Prenota ora la tua consulenza</Link>
+                            <Link to="/consulenza-privata" className="text-blue-600 underline">Prenota ora la tua consulenza</Link>
                             </p>
                         </div>
                     </FadeIn>
