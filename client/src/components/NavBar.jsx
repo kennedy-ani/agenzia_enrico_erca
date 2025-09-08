@@ -7,7 +7,7 @@ const NavBar = () => {
     return <>
 
         {/** NAV LINKS */}
-        <div className="md:hidden ml-10 w-3 p-1 flex justify-left items-center">
+        <div className="md:hidden ml-2 w-3 p-1 flex justify-left items-center">
             <FaBars onClick={()=>setShowMenu(true)} className="text-2xl"/>
         </div>
         

@@ -11,6 +11,11 @@
   --text-sm: 1rem;
   --text-lg: 2rem;
   --text-md: 1.5rem;
+
+  /* Breaking Points */
+  --breakpoint-xs: 390px;
+  --breakpoint-2xl: 412px;
+  --breakpoint-3xl: 430px;
 }
 
 /* font size  */

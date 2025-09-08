@@ -21,7 +21,7 @@ const ConsulenzaPrivata = ({gestireDatiConsulenza, nome, setNome, cognome, setCo
             <div className="w-full min-h-screen bg-red-500 rounded-b-[100%]">
                 <div className="flex items-center justify-center h-full text-white">
                     {/* Contact Bar */}
-                    <div className="flex md:w-56  sm:w-25 justify-between text-xs sm:text-sm px-2 py-1">
+                    <div className="flex md:w-56 sm:w-25 justify-between text-xs sm:text-sm px-2 py-1">
                         {/* phone and email */}
                         <div className="flex sm:flex-col md:flex-row sm:items-start  justify-center items-center">
                             <FaPhone className="mr-0.5 sm:hidden"/>

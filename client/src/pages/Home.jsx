@@ -83,36 +83,36 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                 backgroundSize: `cover`, backgroundPosition: `center`}} className=" min-h-screen img bg-cover flex-col items-center bg-center  text-white md:px-5 py-2">
                     
                 {/* Contact Bar */}
-                <div className="flex w-full justify-between  items-center text-sm px-2 py-1">
+                <div className="flex w-full justify-between items-center text-sm px-2 py-1">
                     {/* phone and email */}
                     
-                    <div className="flex flex-col md:flex-row lg:flex-row w-10 md:w-1/2  justify-start md:items-center">
+                    <div className="flex flex-col md:flex-row -ml-2 lg:flex-row w-10 md:w-1/2  justify-start md:items-center">
                         <FaPhone className="md:w-1/5  hidden md:inline"/>
-                        <span className="md:mr-2  w-1/2 md:w-full text-[0.9rem]">+39 331-1887849 | 0573-737305</span>
+                        <span className="md:mr-2 w-5 ml-[0rem] md:w-full text-[0.9rem]">+393311887849 | 0573-737305</span>
 
-                        <FaEnvelope className=" md:w-1/5   hidden md:inline"/>
+                        <FaEnvelope className=" md:w-1/5  hidden md:inline"/>
                         <span className=" text-[0.9rem] ">gunzimangusta@gmail.com</span>
                     </div>
                     
 
                     {/* time */}
-                    <div className="flex flex-col md:justify-end md:flex-row md:w-1/2 ">
+                    <div className="flex flex-col md:justify-end md:flex-row  md:w-1/2 ml-0.5">
                         <FaClock className="mr-0.5  md:text-md hidden"/>
-                        <span className="w-5  text-[0.9rem]">Lunedi - Venerdi</span>
-                        <span className="w-1/2  text-[0.9rem]">9:30  - 13:00 | 16:00 - 19:30</span>
+                        <span className="w-5 md:w-1/2 text-[0.9rem]">Lunedi - Venerdi</span>
+                        <span className="w-5 md:w-1/2  text-[0.9rem]">9:30  - 13:00 | 16:00 - 19:30</span>
                     </div>
                 </div>
 
                 <div className="flex justify-between items-center">
-                    <img src={logo} className="w-5 ml-1.5" alt="Enrico Erca"/>
+                    <img src={logo} className="w-5 ml-0" alt="Enrico Erca"/>
                     <NavBar/>
                 </div>
-                <h1 className="text-lg md:text-7xl text-center mt-3 mx-3 font-bold">La scelta intelligente per il tuo immobile!</h1>
-                <p className="mt-2 sm:mt-1 text-base md:text-base text-center mx-auto px-2 md:px-5">Ti aiutiamo a <b>risparmiare su gas e luce</b>, calcolare il <b>valore della tua proprietà</b> e trovare le migliori <b>soluzioni in vendita</b> o <b>in affitto</b>. Hai bisogno di ristrutturazioni o di una consulenza esperta? I nostri consulenti immobiliari sono a tua disposizione!</p>
+                <h1 className="text-lg md:text-7xl text-center mt-3 mx-1 font-bold">La scelta intelligente per il tuo immobile!</h1>
+                <p className="mt-2 sm:mt-1 text-base md:text-base text-center mx-auto px-1 md:px-5">Ti aiutiamo a <b>risparmiare su gas e luce</b>, calcolare il <b>valore della tua proprietà</b> e trovare le migliori <b>soluzioni in vendita</b> o <b>in affitto</b>. Hai bisogno di ristrutturazioni o di una consulenza esperta? I nostri consulenti immobiliari sono a tua disposizione!</p>
 
 
                 {/* Search bar */}
-                    <div className="relative w-full flex justify-center items-center px-4">
+                    <div className="relative w-full flex justify-center items-center px-1">
                         <div className="flex flex-col sm:flex-row items-center gap-2 mt-0 w-[40rem] md:w-[50rem] justify-center ">
                             <input type="search" /*value={valueRicerca}*/ onChange={(e)=>setSearch(e.target.value)} className="border-b text-white border-white outline-none py-0.5 px-1 sm:w-3/4 outline-0 my-1  sm:ml-1 flex justify-between items-center focus:outline-none focus:ring-2 w-full focus:ring-white-500 "  name="search_immobili" id="search_immobili" placeholder="Ricerca tutti immobili disponibile, locazione, prezzo, tipo" />
                             {/* <button className="bg-red-500 text-white px-0.5 md:ml-9 py-0.5 hover:border-amber-50 hover:pointer" onClick={()=> onSearch(valueRicerca)}>Cerca</button> */}
@@ -147,7 +147,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                 <h1 className="text-center my-2 text-md  md:text-2xl font-bold uppercase underline underline-offset-8">Annunci In Evidenza</h1>
                 
                 
-                <div className=" grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 gap-3">
+                <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                     {
                         // Questa parte monstra solo le 3 recenti annunci scaricato
                         Object.keys(annunci).slice(0, 3).map((data)=>{
@@ -162,20 +162,20 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                                         />
                                         <div className="p-3 flex flex-col h-full">
                                             <div className="mb-2">
-                                                <h3 className="text-xl font-semibold">{annunci[data].titolo}</h3>
-                                                <p className="text-gray-500 text-sm">{annunci[data].indirizzo}</p>
+                                                <h3 className="text-xl text-center font-semibold">{annunci[data].titolo}</h3>
+                                                <p className="text-gray-500 text-center mt-1 text-sm">{annunci[data].indirizzo}</p>
                                             </div>
-                                            <div className="flex justify-between items-center mb-2">
+                                            <div className="flex flex-col justify-between items-center mb-2">
                                                 <h2 className="text-green-600 text-2xl font-bold">€{annunci[data].prezzo} {annunci[data].is_vendita === 0 ? '/mese': ''}</h2>
                                                 <span className="text-sm bg-green-100 text-green-700 px-2 py-0.5 rounded">
                                                     {annunci[data].is_vendita === 1 ? 'Vendita': 'Affitto'}
                                                 </span>
                                             </div>
-                                            <div className="text-gray-600 text-sm flex justify-between items-center">
-                                            <p>{annunci[data].camere} camere · {annunci[data].bagni} bagni · 1250 sqft</p>
-                                            <a href="#" className="text-blue-500 underline hover:text-blue-700">
-                                                Chiama
-                                            </a>
+                                            <div className="text-gray-600 text-sm flex flex-col justify-between items-center">
+                                                <p className="w-10">{annunci[data].camere} camere · {annunci[data].bagni} bagni · 1250 sqft</p>
+                                                <a href="#" className="text-blue-500 mt-2 underline hover:text-blue-700">
+                                                    Chiama
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -191,20 +191,20 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
             {/* Chi siamo */}
             <FadeIn>
             <div style={{background: `url(${image2})`,
-                backgroundSize: `cover`, backgroundPosition: `center`}} className="min-h-24 img w-full flex flex-col md:flex-row justify-center items-center bg-cover bg-center text-white px-4  py-10 text-center  md:text-left">
-                <div className="px-2 md:w-2/3">
+                backgroundSize: `cover`, backgroundPosition: `center`}} className="min-h-24 img w-full flex flex-col md:flex-row justify-center items-center bg-cover bg-center text-white py-10 text-center  md:text-left">
+                <div className="px-0 md:w-2/3">
                     <h2 className="font-bold text-4xl md:text-6xl mb-4">CHI SIAMO</h2>
-                    <p>
+                    <p className="px-2">
                         Siamo un'agenzia immobiliare impegnata ad aiutarti a trovare la casa perfetta, sia in affitto che in acquisto, fornendo allo stesso tempo una guida esperta su come risparmiare su gas ed elettricità. La nostra missione è rendere le transazioni immobiliari fluide e convenienti per te!
                     </p>
                 </div>
-                <img className="w-10 md:w-15 md:h-20 md:block mt-6 md:mt-0 md:ml-6 h-15 border-5" src={guide} alt=""/>
+                <img className="w-11 h-15 md:w-15 md:h-20 md:block mt-6 md:mt-0 md:ml-6  border-5" src={guide} alt=""/>
             </div>
             </FadeIn>
 
 
             {/* Servizi */}
-            <p className="text-xl font-bold mx-3 my-3 text-center" style={{color: "#36454F"}}>Non obbligatorio di acquistare da noi immobili per usufruire dei nostri servizi*</p>
+            <p className="text-xl font-bold mx-1 my-3 text-center" style={{color: "#36454F"}}>Non obbligatorio di acquistare da noi immobili per usufruire dei nostri servizi*</p>
             <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 gap-3">
                 <FadeIn>
                     <Link onClick={()=>setPopupUtenze(true)} className="transition-transform hover:scale-105 mb-5">
