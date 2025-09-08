@@ -3,7 +3,7 @@ const ModalUtenze = ({setPopupUtenze,setServizioSelezionato, servizioSelezionato
     return <>
         <div>
             <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-                <div className="bg-white p-2 rounded-lg shadow-lg w-24 text-center relative">
+                <div className="bg-white p-2 rounded-lg shadow-lg md:w-24 mx-auto  text-center relative">
                     <button
                     onClick={() => setPopupUtenze(false)}
                     className="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-xl font-bold"
