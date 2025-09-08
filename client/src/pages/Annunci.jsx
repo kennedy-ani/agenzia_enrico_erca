@@ -74,32 +74,36 @@ const getAllAnnunci = async(page = 1) =>{
 
                 <div style={{background: `url(${hero})`, backgroundSize: `cover`, backgroundPosition: `center`, backgroundRepeat: `no-repeat`}} className="min-h-screen img bg-cover flex-col items-center bg-center text-white md:px-5 py-2">
                         {/* Contact Bar */}
-                        <div className="flex md:w-56  sm:w-25 flex-col sm:flex-row justify-between text-xs sm:text-sm px-2 py-1">
+                        <div className="flex flex-col sm:flex-row  w-full justify-between items-center text-sm px-2 py-1">
                             {/* phone and email */}
-                            <div className="flex sm:flex-col md:flex-row sm:items-start  justify-center items-center">
-                                <FaPhone className="mr-0.5 sm:hidden"/>
-                                <span className="mr-2 md:w-1/2">+39 331-1887849 | 0573-737305</span>
-                                <FaEnvelope className="mr-0.5 md:w-1/2 sm:hidden"/>
-                                <span>gunzimangusta@gmail.com</span>
+                            
+                            <div className="flex flex-col md:flex-row w-full lg:flex-row md:w-1/2  justify-start md:items-center">
+                                <FaPhone className="md:w-1/5  hidden md:inline"/>
+                                <span className="md:mr-2 ml-[0rem] md:w-full text-[0.9rem] w-full">+393311887849 | 0573-737305</span>
+        
+                                <FaEnvelope className=" md:w-1/5  hidden md:inline"/>
+                                <span className=" text-[0.9rem] w-1/2">gunzimangusta@gmail.com</span>
                             </div>
-
+                            
+        
                             {/* time */}
-                            <div className="flex  sm:flex-col md:flex-row md:w-20 sm:justify-center items-center sm:items-start justify-start">
-                                <FaClock className="mr-0.5 md:text-md sm:hidden"/>
-                                <span className="mr-2 w-full md:w-1/2">Lunedi - Venerdi</span>
-                                <span className="w-full md:w-1/2">9:30 - 13:00 16:00 - 19:30</span>
+                            <div className="flex flex-col md:justify-end mt-1 md:mt-0 md:ml-5 md:flex-row w-full md:w-1/2 ">
+                                <FaClock className="mr-0.5  md:text-md hidden "/>
+                                <span className=" md:w-1/2 text-[0.9rem]">Lunedi - Venerdi</span>
+                                <span className=" md:w-1/2  text-[0.9rem] ">9:30  - 13:00 | 16:00 - 19:30</span>
                             </div>
                         </div>
-                        <div className="flex sm:justify-between sm:ml-2 sm:items-center">
-                            <img src={logo} className="w-5" alt="Enrico Erca"/>
+        
+                        <div className="flex justify-between items-center">
+                            <img src={logo} className="w-5 ml-2" alt="Enrico Erca"/>
                             <NavBar/>
                         </div>
-                    <h1 className="text-7xl sm:text-5xl sm:mt-4 px-9 sm:px-3 pt-3 font-bold text-center">Scopri La Tua Casa Perfetta!</h1>
+                    <h1  className="text-lg md:text-7xl text-center mt-3 mx-1 font-bold">Scopri La Tua Casa Perfetta!</h1>
 
                     {/* Search bar */}
-                    <div className="relative w-full max-w-6xl sm:w-26 md:ml-[15rem] px-4 ">
-                        <div className="flex flex-col sm:flex-row items-center gap-2 mt-0 w-[60rem] sm:w-[35rem]">
-                            <input type="search" /*value={valueRicerca}*/ onChange={(e)=>setSearch(e.target.value)} className="border-b text-white border-white outline-none py-0.5 px-1 w-full sm:w-3/4 outline-0 my-1 md:ml-9 lg:ml-0 sm:ml-1 flex justify-between items-center focus:outline-none focus:ring-2 focus:ring-white-500"  name="search_immobili" id="search_immobili" placeholder="Ricerca tutti immobili disponibile, locazione, prezzo, tipo" />
+                    <div className="relative w-full flex justify-center items-center px-1">
+                        <div className="flex flex-col sm:flex-row items-center gap-2 mt-0 w-[40rem] md:w-[50rem] justify-center ">
+                            <input type="search" /*value={valueRicerca}*/ onChange={(e)=>setSearch(e.target.value)} className="border-b text-white border-white outline-none py-0.5 px-1 sm:w-3/4 outline-0 my-1  sm:ml-1 flex justify-between items-center focus:outline-none focus:ring-2 w-full focus:ring-white-500 "  name="search_immobili" id="search_immobili" placeholder="Ricerca tutti immobili disponibile, locazione, prezzo, tipo" />
                             {/* <button className="bg-red-500 text-white px-0.5 md:ml-9 py-0.5 hover:border-amber-50 hover:pointer" onClick={()=> onSearch(valueRicerca)}>Cerca</button> */}
                         </div>
                         {/* Search Results */}
@@ -138,25 +142,25 @@ const getAllAnnunci = async(page = 1) =>{
                             {/* Card */}
                             
                             <FadeIn>
-                                <div key={data.id} onClick={()=>{setIsModalOpen(true); setlistingSelected(data); onOpenGallery(data.id)}} className="md:w-20 sm:w-25 sm:mb-2 bg-white rounded-2xl cursor-pointer shadow-md overflow-hidden transition-transform hover:scale-105">
+                                <div key={data.id} onClick={()=>{setIsModalOpen(true); setlistingSelected(data); onOpenGallery(data.id)}} className="w-full mb-2 sm:mb-2 bg-white rounded-2xl shadow-md overflow-hidden  transition-transform hover:scale-105">
                                     <img
                                         src={`http://localhost:2001/uploads/${data.img_url}`}
                                         alt={data.titolo}
                                         className="w-full h-12 object-cover"
                                     />
-                                    <div className="p-1 flex flex-col h-full">
+                                    <div className="p-3 flex flex-col h-full">
                                         <div className="mb-2">
-                                            <h3 className="text-xl font-semibold">{data.titolo}</h3>
+                                            <h3 className="text-xl text-center font-semibold">{data.titolo}</h3>
                                             <p className="text-gray-500 text-sm">{data.indirizzo}</p>
                                         </div>
-                                        <div className="flex justify-between items-center mb-2">
+                                        <div className="flex flex-col justify-between items-center mb-2">
                                             <h2 className="text-green-600 text-2xl font-bold">€{data.prezzo} {data.is_vendita === 0 ? '/mese': ''}</h2>
                                             <span className="text-sm bg-green-100 text-green-700 px-2 py-0.5 rounded">
                                                 {data.is_vendita === 1 ? 'Vendita': 'Affitto'}
                                             </span>
                                         </div>
-                                        <div className="text-gray-600 text-sm flex justify-between items-center">
-                                        <p>{data.camere} camere · {data.bagni} bagni · 1250 sqft</p>
+                                        <div className="text-gray-600 text-sm flex flex-col justify-between items-center">
+                                        <p className="w-10">{data.camere} camere · {data.bagni} bagni · 1250 sqft</p>
                                         
                                         </div>
                                     </div>
@@ -280,7 +284,7 @@ const getAllAnnunci = async(page = 1) =>{
                 <FaArrowAltCircleLeft/>
             </button>
 
-            <span>Page {page} of {totalPages}</span>
+            <span className="border ">Page {page} of {totalPages}</span>
 
             <button 
                 disabled={page === totalPages} 
