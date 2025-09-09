@@ -110,97 +110,97 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
             {/* Service Sections */}
             <div className="grid md:grid-cols-2 sm:grid-cols-1">
                 {/* Service Card */}
-                <div onClick={()=>setPopupEntrate(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl h-[10rem]">
-                    <div className="w-[17rem] absolute right-[-30%] top-[-20%] ">
+                <div onClick={()=>setPopupEntrate(true)} className="my-2 relative cursor-pointer transition-transform  hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 h-13 sm:h-7 p-1 sm:p-0 items-start rounded-xl ">
+                    <div className="w-[10rem] absolute right-20% sm:-right-[5%] top-[-20%]">
                         <img src={service_provider1} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
-                        <p className="font-bold uppercase">Marco Pulcini</p>
+                        <p className="font-bold text-center uppercase">Marco Pulcini</p>
                     </div>
-                    <div className="">
-                        <h2 className="font-bold text-red-600 " >AGENZIA ENTRATE</h2>
-                        <p className="font-semibold w-10">Registrazioni Contratti e/o 
-                        compromessi, communicazioni varie    </p>
+                    <div className="mt-5 sm:mt-0 sm:-ml-3 ">
+                        <h2 className="font-bold text-center sm:text-left text-red-600">AGENZIA ENTRATE</h2>
+                        <p className="font-semibold w-7 sm:w-10 sm:text-left text-center">Registrazioni Contratti e/o 
+                        compromessi, communicazioni varie</p>
                     </div>
-                    <FaFile className="text-5xl text-red-600"/>
+                    <FaFile className="text-5xl hidden text-red-600"/>
                 </div>
 
                 {/* Utenze */}
-                <div onClick={()=>setPopupUtenze(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl h-[10rem]">
-                    <div className="w-[17rem] absolute right-[-30%] top-[-20%] ">
+                <div onClick={()=>setPopupUtenze(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10  sm:h-7 p-1 sm:p-0 items- rounded-xl ">
+                    <div className="w-[10rem] absolute right-20% top-[-20%] sm:-right-[5%]">
                         <img src={service_provider2} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
-                        <p className="font-bold uppercase">Marco Pulcini</p>
+                        <p className="font-bold text-center uppercase">Marco Pulcini</p>
+                    </div> 
+                    <div className="mt-5 sm:mt-0 sm:-ml-3">
+                        <h2 className="font-bold text-center text-red-600 sm:text-left">UTENZE</h2>
+                        <p className="font-semibold w-7 sm:w-10 sm:text-left text-center">Luce, gas e aqua </p>
                     </div>
-                    <div className="">
-                        <h2 className="font-bold text-red-600">UTENZE</h2>
-                        <p className="font-semibold">Luce, gas e aqua </p>
-                    </div>
-                    <FaLightbulb className="text-5xl text-red-600"/>
+                    <FaLightbulb className="text-5xl hidden text-red-600"/>
                 </div>
 
                {/*Interior Design */}
-                <div onClick={()=>setPopupInterior(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl h-[12rem]">
-                    <div className="w-[17rem] absolute right-[-30%] top-[0%] ">
+                <div onClick={()=>setPopupInterior(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 sm:h-7 p-1 sm:p-0 items- rounded-xl ">
+                    <div className="w-[10rem] absolute right-20% top-[-20%] sm:-right-[5%]">
                         <img src={service_provider3} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
-                        <p className="font-bold uppercase">Marco Pulcini</p>
+                        <p className="font-bold text-center uppercase">Marco Pulcini</p>
                     </div>
-                    <div className="">
-                        <h2 className="font-bold text-red-600 " >INTERIOR DESIGN</h2>
-                        <p className="font-semibold w-10">Con Designer pronti ad offrire la miglior soluzione per adornare l'immobile</p>
+                    <div className="mt-5 sm:mt-0 sm:-ml-3">
+                        <h2 className="font-bold text-center sm:text-left text-red-600 " >INTERIOR DESIGN</h2>
+                        <p className="font-semibold w-7 sm:w-10 sm:text-left text-center">Con Designer pronti ad offrire la miglior soluzione per adornare l'immobile</p>
                     </div>
-                    <MdArchitecture className="text-7xl text-red-600"/>
+                    <MdArchitecture className="text-7xl hidden text-red-600"/>
                 </div>
 
                 {/* Architecttura */}
-                <div onClick={()=>setPopupArchitectura(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl h-[12rem]">
-                    <div className="w-[17rem] absolute right-[-30%] top-[0%] ">
+                <div onClick={()=>setPopupArchitectura(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 h-13 sm:h-7 p-1 sm:p-0 rounded-xl ">
+                    <div className="w-[10rem] absolute right-20% sm:-right-[5%] top-[-20%]">
                         <img src={service_provider1} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
-                        <p className="font-bold uppercase">Marco Pulcini</p>
+                        <p className="font-bold text-center uppercase">Marco Pulcini</p>
                     </div>
-                    <div className="">
-                        <h2 className="font-bold text-red-600 " >ARCHITETTURA</h2>
-                        <p className="font-semibold w-10">Con architetti specializzati in progettazioni 3D</p>
+                    <div className="mt-5 sm:mt-0 sm:-ml-3">
+                        <h2 className="font-bold text-center sm:text-left text-red-600 " >ARCHITETTURA</h2>
+                        <p className="font-semibold w-7 sm:w-10 sm:text-left text-center">Con architetti specializzati in progettazioni 3D</p>
                     </div>
-                    <MdArchitecture className="text-7xl text-red-600"/>
+                    <MdArchitecture className="text-7xl hidden text-red-600"/>
                 </div>
 
 
                 {/* Manutenzioni Straordinario */}
-                <div onClick={()=>setModuloManutenzioneStra(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl h-[12rem]">
-                    <div className="w-[17rem] absolute right-[-30%] top-[0%] ">
+                <div onClick={()=>setModuloManutenzioneStra(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-1 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 h-13  sm:h-7 p-1 sm:p-0 items- rounded-xl ">
+                    <div className="w-[10rem] absolute right-20% top-[-20%] sm:-right-[5%]">
                         <img src={service_provider4} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
-                        <p className="font-bold uppercase">Marco Pulcini</p>
+                        <p className="font-bold text-center uppercase">Marco Pulcini</p>
                     </div>
-                    <div className="">
-                        <h2 className="font-bold text-red-600 " >MANUTENZIONI STRAORDINARIO</h2>
-                        <p className="font-semibold w-10">Con le ditte con cui collaboriamo al fine di ottenere il prodotto desiderato nella maniera migliore e piu economia</p>
+                    <div className="mt-5 sm:mt-0 sm:-ml-3">
+                        <h2 className="font-bold text-center sm:text-left text-red-600 " >MANUTENZIONI STRAORDINARIO</h2>
+                        <p className="font-semibold w-7 text-center sm:text-left">Con le ditte con cui collaboriamo al fine di ottenere il prodotto desiderato nella maniera migliore</p>
                     </div>
-                    <GrVmMaintenance className="text-8xl text-red-600"/>
+                    <GrVmMaintenance className="text-8xl hidden text-red-600"/>
                 </div>
 
                  {/* La Consulenza Immobiliare */}
-                <div onClick={()=>setConsulenzaImmobiliare(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl h-[12rem]">
-                    <div className="w-[17rem] absolute right-[-30%] top-[0%] ">
+                <div onClick={()=>setConsulenzaImmobiliare(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 h-13 sm:h-7 p-1 sm:p-0 items- rounded-xl">
+                    <div className="w-[10rem] absolute right-20% top-[-20%] sm:-right-[5%]">
                         <img src={service_provider5} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
-                        <p className="font-bold uppercase">Marco Pulcini</p>
+                        <p className="font-bold text-center  uppercase">Mirko Erca</p>
                     </div>
-                    <div className="">
-                        <h2 className="font-bold text-red-600 " >CONSULENZA IMMOBILIARE</h2>
-                        <p className="font-semibold w-10">Supporto esperto per comprare, 
+                    <div className="mt-5 sm:mt-0 sm:-ml-3">
+                        <h2 className="font-bold text-center text-red-600 sm:text-left" >CONSULENZA IMMOBILIARE</h2>
+                        <p className="font-semibold w-7 text-center sm:w-10 sm:text-left ">Supporto esperto per comprare, 
                         vendere o gestire immobili con sicurezza.</p>
                     </div>
-                    <FaCompass className="text-7xl text-red-600"/>
+                    <FaCompass className="text-7xl hidden text-red-600"/>
                 </div>
 
                 {/* Manutenzioni Ordinario */}
-                <div onClick={()=>setModuloManutenzione(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around w-md p-1 items- rounded-xl h-[12rem]">
-                    <div className="w-[17rem] absolute right-[-30%] top-[0%] ">
+                <div onClick={()=>setModuloManutenzione(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 h-13 sm:h-7 p-1 sm:p-0 items- rounded-xl ">
+                    <div className="w-[10rem] absolute right-20% top-[-20%] sm:-right-[5%]">
                         <img src={service_provider6} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
-                        <p className="font-bold uppercase">Marco Pulcini</p>
+                        <p className="font-bold text-center uppercase">Marco Pulcini</p>
                     </div>
-                    <div className="">
-                        <h2 className="font-bold text-red-600 ">MANUTENZIONI ORDINARIO</h2>
-                        <p className="font-semibold w-10">Manutenzione Caldaia, Servizi Falegnameria, Servizio Idraulica</p>
+                    <div className="mt-5 sm:mt-0 sm:-ml-3">
+                        <h2 className="font-bold text-center text-red-600 sm:text-left">MANUTENZIONI ORDINARIO</h2>
+                        <p className="font-semibold w-7 sm:w-10 sm:text-left text-center">Manutenzione Caldaia, Servizi Falegnameria, Servizio Idraulica</p>
                     </div>
-                    <GrVmMaintenance className="text-8xl text-red-600"/>
+                    <GrVmMaintenance className="text-8xl hidden text-red-600"/>
                 </div>
             </div>
         </FadeIn>

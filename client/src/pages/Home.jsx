@@ -204,10 +204,10 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
 
 
             {/* Servizi */}
-            <p className="text-xl font-bold mx-1 my-3 text-center" style={{color: "#36454F"}}>Non obbligatorio di acquistare da noi immobili per usufruire dei nostri servizi*</p>
+            <p className="text-xl font-bold mx-1 my-3 text-center" style={{color: "#36454F"}}>Non e' obbligatorio di acquistare da noi immobili per usufruire dei nostri servizi*</p>
             <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 gap-3">
                 <FadeIn>
-                    <Link onClick={()=>setPopupUtenze(true)} className="transition-transform hover:scale-105 mb-5">
+                    <Link onClick={()=>setPopupUtenze(true)} className="transition-transform hover:scale-105 mb-5 mb:mb-0">
                         < div className="text-center mt-5">
                             <FaPiggyBank className="text-red-500 text-7xl mx-auto"/>
                             <p style={{color: "#36454F"}} className="font-bold mt-1">Gestione delle Bollette</p>
