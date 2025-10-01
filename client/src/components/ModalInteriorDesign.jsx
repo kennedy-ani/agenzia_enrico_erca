@@ -1,9 +1,91 @@
 import { Link } from "react-router-dom";
 
-const ModalInteriorDesign = ({nome, setNome, cognome, setCognome, emailUtente, setEmailUtente, telnumero, setTelnumero, indirizzoMobileRis,setIndirizzoMobileRis, tipodiImmobiliareRis, setTipodiImmobiliareRis, noteDellUtente, setNoteDellUtente,  inviaDatiPerInteriorDesign, moderno, setModerno, minimal, setMinimal, classico, setClassico, industriale, setIndustriale, luxury, setLuxury, decidereConVoi, setDecidereConVoi, setPopupInterior, setUrlispirazione, urlispirazione, accettoPrivacy, setAccettoPrivacy}) => {
+const ModalInteriorDesign = ({onSubmitInteriorDesign, setModuloInteriorDesign, handleSubmit, register, errors}) => {
+
 
     return <>
         <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+            <div className="bg-white p-2 rounded-lg shadow-lg w-full max-w-2xl overflow-hidden max-h-[90vh] text-center relative">
+                <button
+                onClick={() => setModuloInteriorDesign(false)}
+                className="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-xl font-bold"
+                >
+                &times;
+                </button>
+                <h2 className="text-xl font-bold text-red-600 mb-2">Interior Design</h2>
+                <p className="text-gray-700">
+                    Inserisci i tuoi dati personali
+                </p>
+                
+                <div className="mt-1 overflow-y-auto max-h-[70vh] pb-5">
+                    <form onSubmit={handleSubmit(onSubmitInteriorDesign)}>
+                        <div className="flex flex-col md:flex-row  justify-around items-center my-2">
+                            <div className="flex flex-col justify-start items-start">
+                                <label className="">Nome</label>
+                                <input placeholder="Es:Enrico" className="p-0.5 rounded-sm bg-gray-200 md:w-10 w-full outline-0" {...register("nome")} />
+                                <p className="error">{errors.nome?.message}</p>
+                            </div>
+
+                            <div className="flex flex-col justify-start items-start">
+                                <label className="">Cognome</label>
+                                <input placeholder="Es:Erca" className="p-0.5 rounded-sm bg-gray-200 md:w-10 w-full outline-0" {...register("cognome")} />
+                                <p className="error">{errors.cognome?.message}</p>
+                            </div>
+
+                        </div>
+                        <div className="flex flex-col md:flex-row  justify-around items-center my-2">
+                            
+                            <div className="flex flex-col justify-start items-start">
+                                <label className="">Email</label>
+                                <input placeholder="Es:nome@esempio.com" className="p-0.5 rounded-sm bg-gray-200 md:w-10 w-full outline-0" {...register("email")} />
+                                <p className="error">{errors.email?.message}</p>
+                            </div>
+
+                            <div className="flex flex-col justify-start items-start">
+                                <label className="">Telefono</label>
+                                <input placeholder="Es:123 456 7890" className="p-0.5 rounded-sm bg-gray-200 w-full outline-0" {...register("numeroditelefono")} />
+                                <p className="error text-red-500">{errors.numeroditelefono?.message}</p>
+                            </div>
+
+                        </div>
+
+                        <div className="flex flex-col justify-start items-start">
+                            <label className="">Note</label>
+                            <textarea className="p-0.5 rounded-sm bg-gray-200 w-full outline-0" {...register("noteDellUtente")} /> <br /><br />
+                        </div>
+
+                        <label className="flex justify-start items-center">
+                            <input type="checkbox" {...register("accettoPrivacy")} /><p> Accetto La <Link to="/privacy-policy"> Privacy Policy</Link></p> 
+                            <p className="error">{errors.accettoPrivacy?.message}</p>
+                        </label>
+
+                        <button type="submit" className="bg-red-500 text-white py-0.5 px-2 rounded-full">Invia</button>
+                    </form>
+                </div>  
+            </div>
+        </div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {/* <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
             <div className="bg-white p-2 rounded-lg shadow-lg w-full max-w-2xl overflow-hidden max-h-[90vh] text-center relative">
                 <button
                 onClick={() => setPopupInterior(false)}
@@ -61,7 +143,7 @@ const ModalInteriorDesign = ({nome, setNome, cognome, setCognome, emailUtente, s
                         
                     </div>
 
-                    {/* Link a ispirazione */}
+                    
                     <label htmlFor="ispirazione_url">Ispirazioni (link) </label>
                     <input type="url" name="ispirazione_url" id="ispirazione_url" className="p-0.5 rounded-sm outline-0 bg-gray-300 w-full" value={urlispirazione} 
                     placeholder="E.g: https://pinterest.com" onChange={(e)=>setUrlispirazione(e.target.value)} />
@@ -77,7 +159,7 @@ const ModalInteriorDesign = ({nome, setNome, cognome, setCognome, emailUtente, s
                     <button type="submit" onClick={()=>inviaDatiPerInteriorDesign()} className="bg-red-500 text-white rounded-sm p-0.5 mt-2">Richiedi Consulenza Design</button>
                 </div>
             </div>
-        </div>
+        </div> */}
     </>
 }
 

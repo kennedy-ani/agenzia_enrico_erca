@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar";
 import herox from '../assets/img/home.jpeg';
 import image2 from '../assets/img/image2.png';
 import guide from '../assets/img/la fondatrice.jpg';
-import {FaPiggyBank, FaHome, FaTools, FaPhone, FaEnvelope, FaClock, FaQuestion} from 'react-icons/fa'
+import {FaPiggyBank, FaHome, FaPaintBrush, FaTools, FaPhone, FaEnvelope, FaClock, FaQuestion} from 'react-icons/fa'
 import {MdArchitecture} from 'react-icons/md';
 import { GrVmMaintenance } from "react-icons/gr";
 import proprieta_1 from '../assets/img/proprieta_1.jpg';
@@ -13,31 +13,39 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import ModalUtenze from "../components/ModalUtenze.jsx";
 import ModalConsulenza from "../components/ModalConsulenza.jsx";
+import ModuloConsulenzaFinanzaria from "../components/ModalConsulenzaFinanziaria.jsx";
 import ModalRistrutturazioni from "../components/ModalRistrutturazione.jsx";
 import logo from '../assets/img/White Logo.png';
 import FAQSchema from "../components/FAQ.jsx";
 import { Helmet } from "react-helmet";
 import ModalOrdinaria from "../components/ModalOrdinaria.jsx";
 import ModalStraOrdinaria from "../components/ModalStraOrdinaria.jsx";
+import { useForm } from "react-hook-form";
+import {yupResolver} from '@hookform/resolvers/yup';
+
 
 import ModalArchitectura from "../components/ModalArchitectura.jsx";
 import { FadeIn } from "../components/animations/FadeIn.jsx";
+import ModalInteriorDesign from "../components/ModalInteriorDesign.jsx";
 
-const Home = ({popupUtenze, nome, setNome, setCognome, cognome, emailUtente, setEmailUtente, telnumero, setTelnumero, setMotivoPerConsulenzaImmobiliare, motivoPerConsulenzaImmobiliare, setServizioSelezionato ,gestireDatiConsulenza,  gestireContattiWhatsapp, setPopupUtenze, popupConsulenzaImmobiliare, setConsulenzaImmobiliare, moduloConsulenza, setModuloConsulenza, ristrutturazione, setRistrutturazione, setAccettoPrivacy, accettoPrivacy, nomeRis, emailRis, setEmailRis, setNomeRis, cognomeRis, setCognomeRis, telfonoRis, setTelfonoRis, indirizzoMobileRis, setIndirizzoMobileRis, tipodiImmobiliareRis, setTipodiImmobiliareRis, superficieRis, setSuperficieRis, stanzedaRis, setStanzedaRis, impattiElettrici, setImpattiElettrici, pavimenti, setPavimenti, descrizioneRis, setDescrizioneRis, budgetRis, setBudgetRis, tempisticheRis, setTempisticheRis, durataRis, setDurataRis, inviaDatiPerRistrutturazione, moduloManutenzione, setModuloManutenzione,
-nomeManutenzione, setNomeManutenzione, cognomeManutenzione,
-setCognomeManutenzione, emailUtenteManutenzione,  setEmailUtenteManutenzione, telnumeroManutenzione, setTelnumeroManutenzione,
-indirizzoManutenzione, setindirizzoManutenzione,
-capManutenzione, setCapManutenzione, cittaManutenzione, setCittaManutenzione,
-tipoDiImmobiliareManutenzione, setTipoDiImmobiliareManutenzione, impattiElettriciManutenzione, setImpattiElettriciManutenzione, impianto_idraulicoManutenzione, setImpiantoIdraulicoManutenzione, tinteggiaturaManutenzione, setTinteggiaturaManutenzione, pulizieCondoManutenzione, setpulizieCondoManutenzione, controllo_caldaiaManutenzione, setControllo_caldaiaManutenzione, calendarioManutenzione, setcalendarioManutenzione, fasciaGiornoManutenzione, setfasciaGiornoManutenzione, messaggioManutenzione, setMessaggioManutenzione, accettoPrivacyOrdinaria, setAccettoPrivacyOrdinaria,
-nomeManutenzioneStra, setNomeManutenzioneStra, cognomeManutenzioneStra, setCognomeManutenzioneStra,
-emailUtenteManutenzioneStra, setEmailUtenteManutenzioneStra, telnumeroManutenzioneStra, setTelnumeroManutenzioneStra,
-indirizzoManutenzioneStra, setindirizzoManutenzioneStra, capManutenzioneStra, setCapManutenzioneStra, cittaManutenzioneStra, setCittaManutenzioneStra, tipoDiImmobiliareManutenzioneStra, setTipoDiImmobiliareManutenzioneStra,
-ristrutturazione_parziale,  setRistrutturazione_parziale, perdite_gravi, setPerdite_gravi, Impianti_elettrici_idraulici, setImpianti_elettrici_idraulici, messa_norma_caldaie, setMessa_norma_caldaie, opere_murarie_strutturali,
-setOpere_murarie_strutturali, rifacimento_bagni, setRifacimento_bagni, interventi_post_allagamento, setInterventi_post_allagamento, grado_di_urgenza, setGrado_di_urgenza, accettoPrivacyStraOrdinaria, setAccettoPrivacyStraOrdinaria,
-moduloManutenzioneStra, setModuloManutenzioneStra, setDescrizioneManutenzioneStra, descrizioneManutenzioneStra, ristrutturazione_completa, setRistrutturazione_completa, interior_design_arredo, setInterior_design_arredo, ridistribuzione_spazi_interni, setRidistribuzione_spazi_interni,
-luce_illuminotecnica, setLuce_illuminotecnica, cucine_bagni_camere_su_misura, setcucine_bagni_camere_su_misura, noteDellUtente, setNoteDellUtente,
-set_architectura_interior_design, architectura_interior_design, valueRicerca, setValueRicerca, onChangeRicerca
-, setIsModalOpen, setlistingSelected, onOpenGallery}) => {
+const Home = ({valueRicerca, setValueRicerca, onSearch, onOpenGallery, setIsModalOpen, setlistingSelected,
+//INTERIOR DESIGN
+inviaDatiPerInteriorDesign,  moduloInteriorDesign, 
+setModuloInteriorDesign,
+// UTENZE
+setPopupUtenze, popupUtenze, gestireContattiWhatsapp, setServizioSelezionato, servizioSelezionato,
+// DATI CONSULENZA
+inviaDatiPerConsulenzaImmobiliare, moduloConsulenza, setModuloConsulenza,
+// Dati Mutui
+inviaDatiConsulenzaFinanzario,moduloConsulenzaFinanzario,setModuloConsulenzaFinanzario,
+//STRAORDINARIA
+inviaDatiPerStraOrdinaria, moduloManutenzioneStra, setModuloManutenzioneStra,
+// ORDINARIA
+inviaDatiPerOrdinaria, moduloManutenzione, setModuloManutenzione,
+// ARCHITETTURA
+setPopupArchitectura, popupArchitectura, inviaDatiPerArchitectura
+
+}) => {
     /** THE HOME PAGE */
     const [annunci, setAnnunci] = useState([]);
     const getAnnuncImmobiliari = async () =>{
@@ -49,25 +57,165 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
     //const [valueRicerca, setValueRicerca] = useState('');
     const redirectAnnunci =  useNavigate();
         
-    // const onChangeRicerca = (e) =>{
-    //     setValueRicerca(e.target.value);
-    // }
+    const onChangeRicerca = (e) =>{
+        setValueRicerca(e.target.value);
+     }
 
-    const onSearch = (valueRicerca)=> {
-        //Call API
-        setValueRicerca(valueRicerca);
-       redirectAnnunci(`/annunci?ricercaData=${valueRicerca}`);
-        
-        console.log("Search: ", valueRicerca);
-    }
+    // Servizi Disponibili
+    const {register: registerConsulenzaImmobiliare, handleSubmit: handleSubmitConsulenzaImmobiliare, reset:resetConsulenzaImmobiliare, formState: {errors:errorsConsulenzaImmobiliare}} = useForm({
+        resolver: yupResolver(inviaDatiPerConsulenzaImmobiliare)
+    });
+    const onSubmitConsulenzaImmobiliare = async (data) => {
+        try {
+            const response = await axios.post(
+                "http://localhost:2001/consulenzaimmobiliare",
+                data,
+                {headers: {"Content-Type": "application/json"}}
+            );
+
+            if(response.status === 200){
+                toast.success("Richiesta inviata con successo");
+                setModuloConsulenza(false)//Close modal
+                resetConsulenzaImmobiliare(); //resettare il modulo dopo submission
+            }
+        } catch (error) {
+            console.error("Errore: ", error);
+            toast.error("Errore durante l'invio della richiesta");
+        }
+    };
+
+    const {register: registerArchitettura, handleSubmit: handleSubmitArchitettura, reset:resetArchitettura, formState: {errors:errorsArchitettura}} = useForm({
+        resolver: yupResolver(inviaDatiPerArchitectura)
+    });
+    // Submit data to the backend (Architettura)
+    const onSubmitArchitettura = async (data) => {
+        try {
+            const response = await axios.post(
+                "http://localhost:2001/servizi/consulenza-architettura",
+                data,
+                {headers: {"Content-Type": "application/json"}}
+            );
+
+            if(response.status === 200){
+                toast.success("Richiesta inviata con successo");
+                setModuloInteriorDesign(false)//Close modal
+                reset(); //resettare il modulo dopo submission
+            }
+        } catch (error) {
+            console.error("Errore: ", error);
+            toast.error("Errore durante l'invio della richiesta");
+        }
+    };
+
+
+    // Handles errors and validation on the form (Ordinaria)
+    const {register: registerOrdinaria, handleSubmit: handleSubmitOrdinaria, reset:resetOrdinaria, formState: {errors:errorsOrdinaria}} = useForm({
+        resolver: yupResolver(inviaDatiPerOrdinaria)
+    });
+    // Submit data to the backend (Ordinaria)
+    const onSubmitOrdinaria = async (data) => {
+        try {
+            const response = await axios.post(
+                "http://localhost:2001/servizi/consulenza-manutenzione-ordinaria",
+                data,
+                {headers: {"Content-Type": "application/json"}}
+            );
+
+            if(response.status === 200){
+                toast.success("Richiesta inviata con successo");
+                setModuloManutenzione(false)//Close modal
+                reset(); //resettare il modulo dopo submission
+            }
+        } catch (error) {
+            console.error("Errore: ", error);
+            toast.error("Errore durante l'invio della richiesta");
+        }
+    };
+
+    // Handles errors and validation on the form (Consulenza Finanzario)
+        const {register: registerConsulenzaFinanzario, handleSubmit: handleSubmitConsulenzaFinanzario, reset:resetConsulenzaFinanzario, formState: {errors:errorsConsulenzaFinanzario}} = useForm({
+            resolver: yupResolver(inviaDatiConsulenzaFinanzario)
+        });
+        // Submit data to the backend (Cosnulensa Finnazario)
+        const onSubmitConsulenzaFinanzario = async (data) => {
+            try {
+                const response = await axios.post(
+                    "http://localhost:2001/servizi/consulenza-finanziario",
+                    data,
+                    {headers: {"Content-Type": "application/json"}}
+                );
+    
+                if(response.status === 200){
+                    toast.success("Richiesta inviata con successo");
+                    setModuloConsulenzaFinanzario(false)//Close modal
+                    resetConsulenzaFinanzario(); //resettare il modulo dopo submission
+                }
+            } catch (error) {
+                console.error("Errore: ", error);
+                toast.error("Errore durante l'invio della richiesta");
+            }
+        };
+
+    // Handles errors and validation on the form (Straordinaria)
+    const {register: registerStraOrdinaria, handleSubmit: handleSubmitStraOrdinaria, reset:resetStraOrdinaria, formState: {errors:errorsStraOrdinaria}} = useForm({
+        resolver: yupResolver(inviaDatiPerStraOrdinaria)
+    });
+    // Submit data to the backend (Straordinaria)
+    const onSubmitStraOrdinaria = async (data) => {
+        try {
+            const response = await axios.post(
+                "http://localhost:2001/servizi/consulenza-manutenzione-straordinaria",
+                data,
+                {headers: {"Content-Type": "application/json"}}
+            );
+
+            if(response.status === 200){
+                toast.success("Richiesta inviata con successo");
+                setModuloInteriorDesign(false)//Close modal
+                resetStraOrdinaria(); //resettare il modulo dopo submission
+            }
+        } catch (error) {
+            console.error("Errore: ", error);
+            toast.error("Errore durante l'invio della richiesta");
+        }
+    };
+
+
+    // Handles errors and validation on the form (Interior Design)
+        const {register, handleSubmit, reset, formState: {errors}} = useForm({
+            resolver: yupResolver(inviaDatiPerInteriorDesign)
+        });
+        // Submit data to the backend (Interior Design)
+        const onSubmitInteriorDesign = async (data) => {
+            try {
+                const response = await axios.post(
+                    "http://localhost:2001/servizi/consulenza-interior-design",
+                    data,
+                    {headers: {"Content-Type": "application/json"}}
+                );
+    
+                if(response.status === 200){
+                    toast.success("Richiesta inviata con successo");
+                    setModuloInteriorDesign(false)//Close modal
+                    reset(); //resettare il modulo dopo submission
+                }
+            } catch (error) {
+                console.error("Errore: ", error);
+                toast.error("Errore durante l'invio della richiesta");
+            }
+        };
+
+
+
+
     useEffect(()=>{
         getAnnuncImmobiliari()
     }, []);
 
 
     return <>
-        <div>
-            {/* Meta description */}
+        <div className="font-display">
+            {/* Meta description for SEO Optimization*/}
             <div>
                 <Helmet>
                     <title>La Scelta Intelligente per il tuo immobile</title>
@@ -78,7 +226,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
 
 
             {/** Hero section */}
-            <FadeIn>
+            
             <div  style={{background: `url(${herox})`,
                 backgroundSize: `cover`, backgroundPosition: `center`}} className=" min-h-screen img bg-cover flex-col items-center bg-center  text-white md:px-5 ">
                     
@@ -86,32 +234,41 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                 <div className="flex flex-col sm:flex-row  w-full justify-between items-center text-sm px-2 py-1">
                     {/* phone and email */}
                     
-                    <div className="flex flex-col md:flex-row w-full lg:flex-row md:w-1/2  justify-start md:items-center">
-                        <FaPhone className="md:w-1/5  hidden md:inline"/>
-                        <span className="md:mr-2 ml-[0rem] md:w-full text-[0.9rem] w-full">+393311887849 | 0573-737305</span>
+                    <FadeIn>
+                        <div className="flex flex-col md:flex-row w-full lg:flex-row md:w-1/2  justify-start md:items-center">
+                            <FaPhone className="md:w-1/5  hidden md:inline"/>
+                            <span className="md:mr-2 ml-[0rem] md:w-full text-[0.9rem] w-full">+393311887849 | 0573-737305</span>
 
-                        <FaEnvelope className=" md:w-1/5  hidden md:inline"/>
-                        <span className=" text-[0.9rem] w-1/2">gunzimangusta@gmail.com</span>
-                    </div>
-                    
+                            <FaEnvelope className=" md:w-1/5  hidden md:inline"/>
+                            <span className=" text-[0.9rem] w-1/2">gunzimangusta@gmail.com</span>
+                        </div>
+                        
+                    </FadeIn>
 
                     {/* time */}
-                    <div className="flex flex-col md:justify-end mt-1 md:mt-0 md:ml-5 md:flex-row w-full md:w-1/2 ">
-                        <FaClock className="mr-0.5  md:text-md hidden "/>
-                        <span className=" md:w-1/2 text-[0.9rem]">Lunedi - Venerdi</span>
-                        <span className=" md:w-1/2  text-[0.9rem] ">9:30  - 13:00 | 16:00 - 19:30</span>
-                    </div>
+                    <FadeIn>
+                        <div className="flex flex-col md:justify-end mt-1 md:mt-0 md:ml-5 md:flex-row w-full md:w-1/2 ">
+                            <FaClock className="mr-0.5  md:text-md hidden "/>
+                            <span className=" md:w-1/2 text-[0.9rem]">Lunedi - Venerdi</span>
+                            <span className=" md:w-1/2  text-[0.9rem] ">9:30  - 13:00 | 16:00 - 19:30</span>
+                        </div>
+                    </FadeIn>
                 </div>
 
-                <div className="flex justify-between items-center">
-                    <img src={logo} className="w-5 ml-2" alt="Enrico Erca"/>
-                    <NavBar/>
-                </div>
-                <h1 className="text-lg md:text-7xl text-center mt-3 mx-1 font-bold">La scelta intelligente per il tuo immobile!</h1>
-                <p className="mt-2 sm:mt-1 text-base md:text-base text-center mx-auto px-1 md:px-5">Ti aiutiamo a <b>risparmiare su gas e luce</b>, calcolare il <b>valore della tua proprietà</b> e trovare le migliori <b>soluzioni in vendita</b> o <b>in affitto</b>. Hai bisogno di ristrutturazioni o di una consulenza esperta? I nostri consulenti immobiliari sono a tua disposizione!</p>
+                <FadeIn>
+                    <div className="flex justify-between items-center">
+                        <img src={logo} className="w-5 ml-2" alt="Enrico Erca"/>
+                        <NavBar/>
+                    </div>
+                </FadeIn>
+
+                <FadeIn><h1 className="text-lg md:text-7xl text-center mt-3 mx-1 font-bold">La scelta intelligente per il tuo immobile!</h1></FadeIn>
+                <FadeIn><p className="mt-2 sm:mt-1 text-base md:text-base text-center mx-auto px-1 md:px-5">Ti aiutiamo a <b>risparmiare su gas e luce</b>, calcolare il <b>valore della tua proprietà</b> e trovare le migliori <b>soluzioni in vendita</b> o <b>in affitto</b>. Hai bisogno di ristrutturazioni o di una consulenza esperta? I nostri consulenti immobiliari sono a tua disposizione!</p></FadeIn>
+                
 
 
                 {/* Search bar */}
+                <FadeIn>
                     <div className="relative w-full flex justify-center items-center px-1">
                         <div className="flex flex-col sm:flex-row items-center gap-2 mt-0 w-[40rem] md:w-[50rem] justify-center ">
                             <input type="search" /*value={valueRicerca}*/ onChange={(e)=>setSearch(e.target.value)} className="border-b text-white border-white outline-none py-0.5 px-1 sm:w-3/4 outline-0 my-1  sm:ml-1 flex justify-between items-center focus:outline-none focus:ring-2 w-full focus:ring-white-500 "  name="search_immobili" id="search_immobili" placeholder="Ricerca tutti immobili disponibile, locazione, prezzo, tipo" />
@@ -134,12 +291,11 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                                 </ul>
                             </div>
                         )}
-                        
                     </div>
+                </FadeIn>
                 
                 
             </div>
-            </FadeIn>
 
             {/* Listing top 5 recent */}
             <FadeIn>
@@ -189,22 +345,25 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
             </FadeIn>
 
             {/* Chi siamo */}
-            <FadeIn>
+            
             <div style={{background: `url(${image2})`,
-                backgroundSize: `cover`, backgroundPosition: `center`}} className="min-h-24 img w-full flex flex-col md:flex-row justify-center items-center bg-cover bg-center text-white py-10 text-center  md:text-left">
-                <div className="px-0 md:w-2/3">
-                    <h2 className="font-bold text-4xl md:text-6xl mb-4">CHI SIAMO</h2>
-                    <p className="px-2">
-                        Siamo un'agenzia immobiliare impegnata ad aiutarti a trovare la casa perfetta, sia in affitto che in acquisto, fornendo allo stesso tempo una guida esperta su come risparmiare su gas ed elettricità. La nostra missione è rendere le transazioni immobiliari fluide e convenienti per te!
-                    </p>
-                </div>
-                <img className="w-11 h-15 md:w-15 md:h-20 md:block mt-6 md:mt-0 md:ml-6  border-5" src={guide} alt=""/>
+                backgroundSize: `cover`, backgroundPosition: `center`}} className="min-h-24 img w-full flex flex-col md:flex-row justify-center items-center bg-cover bg-center text-white py-10 md:px-5 text-center  md:text-left">
+                <FadeIn>
+                    <div className="px-0 md:w-2/3">
+                        <h2 className="font-bold md:px-2 text-4xl md:text-6xl mb-4">CHI SIAMO</h2>
+                        <p className="px-2">
+                            Siamo un'agenzia immobiliare impegnata ad aiutarti a trovare la casa perfetta, sia in affitto che in acquisto, fornendo allo stesso tempo una guida esperta su come risparmiare su gas ed elettricità. La nostra missione è rendere le transazioni immobiliari fluide e convenienti per te!
+                        </p>
+                    </div>
+                </FadeIn>
+                <FadeIn>
+                    <img className="w-11 h-15 md:w-30 md:h-20 md:block mt-6 md:mt-0 md:ml-3 border-5" src={guide} alt=""/>
+                </FadeIn>
             </div>
-            </FadeIn>
 
 
             {/* Servizi */}
-            <p className="text-xl font-bold mx-1 my-3 text-center" style={{color: "#36454F"}}>Non e' obbligatorio di acquistare da noi immobili per usufruire dei nostri servizi*</p>
+           <FadeIn><p className="text-xl font-bold mx-1 my-3 text-center" style={{color: "#36454F"}}>Non e' obbligatorio di acquistare da noi immobili per usufruire dei nostri servizi*</p></FadeIn> 
             <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 gap-3">
                 <FadeIn>
                     <Link onClick={()=>setPopupUtenze(true)} className="transition-transform hover:scale-105 mb-5 mb:mb-0">
@@ -216,7 +375,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                     </Link>
                 </FadeIn>
                 <FadeIn>
-                    <Link onClick={()=>setConsulenzaImmobiliare(true)} className="transition-transform hover:scale-105">
+                    <Link onClick={()=>setModuloConsulenza(true)} className="transition-transform hover:scale-105">
                         <div className="text-center mt-5">
                             <FaHome className="text-red-500 text-7xl mx-auto"/>
                             <p style={{color: "#36454F"}}  className="font-bold mt-1">Consulenza Immobiliare</p>
@@ -231,10 +390,10 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
 
                 <FadeIn>
                     {/* Archittetura */}
-                    <Link onClick={()=>set_architectura_interior_design(true)} className="transition-transform hover:scale-105 sm:mb-3">
+                    <Link onClick={()=>setPopupArchitectura(true)} className="transition-transform hover:scale-105 sm:mb-3">
                         <div className="text-center  mt-5">
                             <MdArchitecture className="text-red-500 text-7xl mx-auto"/>
-                            <p style={{color: "#36454F"}}  className="font-bold mt-1">Architectura <br /> e Interior Design</p>
+                            <p style={{color: "#36454F"}}  className="font-bold mt-1">Architettura</p>
                             <p style={{color: "#36454F"}} className="w-10 mx-auto">Hai trovato la casa giusta? Ora rendila perfetta.</p>
                         </div>
                     </Link>
@@ -251,7 +410,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                     </Link>
                 </FadeIn>
 
-
+                
                 <FadeIn>
                     {/* Manutenzione Straodinaria */}
                     <Link onClick={()=>setModuloManutenzioneStra(true)} className="transition-transform hover:scale-105 sm:mb-3">
@@ -266,67 +425,59 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                     </Link>
                 </FadeIn>
 
+                <FadeIn>
+                    {/* Interior Design */}
+                    <Link onClick={()=>setModuloInteriorDesign(true)} className="transition-transform hover:scale-105 sm:mb-3">
+                        <div className="text-center  mt-5">
+                            <FaPaintBrush className="text-red-500 text-7xl mx-auto"/>
+                            <p style={{color: "#36454F"}}  className="font-bold mt-1">Interior Design</p>
+                            <p style={{color: "#36454F"}} className="w-10 mx-auto">Hai trovato la casa giusta? Ora rendila perfetta.</p>
+                        </div>
+                    </Link>
+                </FadeIn>
             </div>
+
+            <button className="bg-red-500 text-white px-0.5 mx-auto block py-0.5 hover:border-amber-50 hover:pointer transition-transform md:mt-5 hover:scale-75"><Link className="!text-white" to={'/servizi'}>Scopri Tutti I Nostri Servizi</Link></button>
+            
+
+            {/* Tutti moduli per ogni servizi */}
             {popupUtenze === true && (
-                
                 <ModalUtenze popupUtenze={popupUtenze} gestireContattiWhatsapp={gestireContattiWhatsapp} setServizioSelezionato={setServizioSelezionato} setPopupUtenze={setPopupUtenze}/>
-                
             )}
 
-            {popupConsulenzaImmobiliare === true && (
-                <ModalConsulenza gestireDatiConsulenza={gestireDatiConsulenza} nome={nome} setNome={setNome} setCognome={setCognome} cognome={cognome} emailUtente={emailUtente} setEmailUtente={setEmailUtente}  telnumero={telnumero} setTelnumero={setTelnumero} setMotivoPerConsulenzaImmobiliare={setMotivoPerConsulenzaImmobiliare} motivoPerConsulenzaImmobiliare={motivoPerConsulenzaImmobiliare} setModuloConsulenza={setModuloConsulenza} toast={toast} 
-                setConsulenzaImmobiliare={setConsulenzaImmobiliare} 
-                popupConsulenzaImmobiliare={popupConsulenzaImmobiliare}moduloConsulenza={moduloConsulenza} setAccettoPrivacy={setAccettoPrivacy} accettoPrivacy={accettoPrivacy}/>
+            {/* CONSULENZA IMMOBILIARE*/}
+            {moduloConsulenza && (<ModalConsulenza
+                onSubmitConsulenzaImmobiliare={onSubmitConsulenzaImmobiliare} registerConsulenzaImmobiliare={registerConsulenzaImmobiliare}
+                handleSubmitConsulenzaImmobiliare={handleSubmitConsulenzaImmobiliare} resetConsulenzaImmobiliare={resetConsulenzaImmobiliare}
+                errorsConsulenzaImmobiliare={errorsConsulenzaImmobiliare}
+                setModuloConsulenza={setModuloConsulenza}
+            />)}
+
+            {/* Consulenza Mutui */}
+            {moduloConsulenzaFinanzario && (<ModuloConsulenzaFinanzaria
+                inviaDatiConsulenzaFinanzario={inviaDatiConsulenzaFinanzario} setModuloConsulenzaFinanzario={setModuloConsulenzaFinanzario}registerConsulenzaFinanzario={registerConsulenzaFinanzario} handleSubmitConsulenzaFinanzario={handleSubmitConsulenzaFinanzario} onSubmitConsulenzaFinanzario={onSubmitConsulenzaFinanzario} errorsConsulenzaFinanzario={errorsConsulenzaFinanzario}
+            />)}
+
+            {/* INTERIOR DESIGN */}
+            {moduloInteriorDesign && (
+                <ModalInteriorDesign onSubmitInteriorDesign={onSubmitInteriorDesign} handleSubmit={handleSubmit} register={register} errors={errors} setModuloInteriorDesign={setModuloInteriorDesign}/>
             )}
 
-            {architectura_interior_design === true && (
-                <ModalArchitectura 
-                    nome={nome} setNome={setNome} setCognome={setCognome} cognome={cognome} emailUtente={emailUtente} setEmailUtente={setEmailUtente} telnumero={telnumero} setTelnumero={setTelnumero}
-                    indirizzoMobileRis={indirizzoMobileRis} setIndirizzoMobileRis={setIndirizzoMobileRis}
-                    setTipodiImmobiliareRis={setTipodiImmobiliareRis}
-                    tipodiImmobiliareRis={tipodiImmobiliareRis} 
-                    ristrutturazione_completa={ristrutturazione_completa} setRistrutturazione_completa={setRistrutturazione_completa} interior_design_arredo={interior_design_arredo} setInterior_design_arredo={setInterior_design_arredo}
-                    ridistribuzione_spazi_interni={ridistribuzione_spazi_interni} setRidistribuzione_spazi_interni={setRidistribuzione_spazi_interni}
-                    luce_illuminotecnica={luce_illuminotecnica} setLuce_illuminotecnica={setLuce_illuminotecnica} cucine_bagni_camere_su_misura={cucine_bagni_camere_su_misura} 
-                    setcucine_bagni_camere_su_misura={setcucine_bagni_camere_su_misura} noteDellUtente={noteDellUtente} setNoteDellUtente={setNoteDellUtente}
-                    set_architectura_interior_design={set_architectura_interior_design} architectura_interior_design={architectura_interior_design}
-                />
+            {/* MANUTENZIONE ORDINARIA */}
+            {moduloManutenzione && (
+                <ModalOrdinaria inviaDatiPerOrdinaria={inviaDatiPerOrdinaria} moduloManutenzione={moduloManutenzione} setModuloManutenzione={setModuloManutenzione} registerOrdinaria={registerOrdinaria} handleSubmitOrdinaria={handleSubmitOrdinaria} onSubmitOrdinaria={onSubmitOrdinaria}
+                errorsOrdinaria={errorsOrdinaria} toast={toast}/>
             )}
 
-            {moduloManutenzione === true && (
-                <ModalOrdinaria 
-                  moduloManutenzione={moduloManutenzione} 
-            setModuloManutenzione={setModuloManutenzione}
-            nomeManutenzione={nomeManutenzione} setNomeManutenzione={setNomeManutenzione} cognomeManutenzione={cognomeManutenzione}
-            setCognomeManutenzione={setCognomeManutenzione} emailUtenteManutenzione={emailUtenteManutenzione} setEmailUtenteManutenzione={setEmailUtenteManutenzione} telnumeroManutenzione={telnumeroManutenzione} setTelnumeroManutenzione={setTelnumeroManutenzione}
-            indirizzoManutenzione={indirizzoManutenzione} setindirizzoManutenzione={setindirizzoManutenzione}
-            capManutenzione={capManutenzione} setCapManutenzione={setCapManutenzione} cittaManutenzione={cittaManutenzione} setCittaManutenzione={setCittaManutenzione}
-            tipoDiImmobiliareManutenzione={tipoDiImmobiliareManutenzione} setTipoDiImmobiliareManutenzione={setTipoDiImmobiliareManutenzione} impattiElettriciManutenzione={impattiElettriciManutenzione} setImpattiElettriciManutenzione={setImpattiElettriciManutenzione} impianto_idraulicoManutenzione={impianto_idraulicoManutenzione} setImpiantoIdraulicoManutenzione={setImpiantoIdraulicoManutenzione} tinteggiaturaManutenzione={tinteggiaturaManutenzione} setTinteggiaturaManutenzione={setTinteggiaturaManutenzione} pulizieCondoManutenzione={pulizieCondoManutenzione} setpulizieCondoManutenzione={setpulizieCondoManutenzione} controllo_caldaiaManutenzione={controllo_caldaiaManutenzione} setControllo_caldaiaManutenzione={setControllo_caldaiaManutenzione} calendarioManutenzione={calendarioManutenzione} setcalendarioManutenzione={setcalendarioManutenzione} fasciaGiornoManutenzione={fasciaGiornoManutenzione} setfasciaGiornoManutenzione={setfasciaGiornoManutenzione} messaggioManutenzione={messaggioManutenzione} setMessaggioManutenzione={setMessaggioManutenzione} accettoPrivacyOrdinaria={accettoPrivacyOrdinaria} setAccettoPrivacyOrdinaria={setAccettoPrivacyOrdinaria}/>
+            {/* MANUTENZIONE STRAORDINARIA */}
+            {moduloManutenzioneStra && (
+                <ModalStraOrdinaria registerStraOrdinaria={registerStraOrdinaria} toast={toast} handleSubmitStraOrdinaria={handleSubmitStraOrdinaria} resetArchitettura={resetArchitettura} moduloManutenzioneStra={moduloManutenzioneStra} setModuloManutenzioneStra={setModuloManutenzioneStra} inviaDatiPerStraOrdinaria={inviaDatiPerStraOrdinaria} onSubmitStraOrdinaria={onSubmitStraOrdinaria} errorsStraOrdinaria={errorsStraOrdinaria}/>
             )}
 
-            {moduloManutenzioneStra === true && (
-                <ModalStraOrdinaria 
-                    nomeManutenzioneStra={nomeManutenzioneStra} setNomeManutenzioneStra={setNomeManutenzioneStra}
-                    cognomeManutenzioneStra={cognomeManutenzioneStra} setCognomeManutenzioneStra={setCognomeManutenzioneStra}
-                    emailUtenteManutenzioneStra={emailUtenteManutenzioneStra} setEmailUtenteManutenzioneStra={setEmailUtenteManutenzioneStra}
-                    telnumeroManutenzioneStra={telnumeroManutenzioneStra} setTelnumeroManutenzioneStra={setTelnumeroManutenzioneStra}
-                    indirizzoManutenzioneStra={indirizzoManutenzioneStra} setindirizzoManutenzioneStra={setindirizzoManutenzioneStra}
-                    capManutenzioneStra={capManutenzioneStra} setCapManutenzioneStra={setCapManutenzioneStra}
-                    cittaManutenzioneStra={cittaManutenzioneStra} setCittaManutenzioneStra={setCittaManutenzioneStra}
-                    tipoDiImmobiliareManutenzioneStra={tipoDiImmobiliareManutenzioneStra} setTipoDiImmobiliareManutenzioneStra={setTipoDiImmobiliareManutenzioneStra}
-                    ristrutturazione_parziale={ristrutturazione_parziale} setRistrutturazione_parziale={setRistrutturazione_parziale}
-                    perdite_gravi={perdite_gravi} setPerdite_gravi={setPerdite_gravi}
-                    Impianti_elettrici_idraulici={Impianti_elettrici_idraulici} setImpianti_elettrici_idraulici={setImpianti_elettrici_idraulici}
-                    messa_norma_caldaie={messa_norma_caldaie} setMessa_norma_caldaie={setMessa_norma_caldaie}
-                    opere_murarie_strutturali={opere_murarie_strutturali} setOpere_murarie_strutturali={setOpere_murarie_strutturali}
-                    rifacimento_bagni={rifacimento_bagni} setRifacimento_bagni={setRifacimento_bagni}
-                    interventi_post_allagamento={interventi_post_allagamento} setInterventi_post_allagamento={setInterventi_post_allagamento}
-                    grado_di_urgenza={grado_di_urgenza} setGrado_di_urgenza={setGrado_di_urgenza}
-                    accettoPrivacyStraOrdinaria={accettoPrivacyStraOrdinaria} setAccettoPrivacyStraOrdinaria={setAccettoPrivacyStraOrdinaria}
-                    moduloManutenzioneStra={moduloManutenzioneStra} setModuloManutenzioneStra={setModuloManutenzioneStra}
-                    descrizioneManutenzioneStra={descrizioneManutenzioneStra} setDescrizioneManutenzioneStra={setDescrizioneManutenzioneStra}
-                />
-            )}
+            {/* ARCHITETTURA */}
+            {popupArchitectura && (<ModalArchitectura registerArchitettura={registerArchitettura} toast={toast} handleSubmitArchitettura={handleSubmitArchitettura} resetArchitettura={resetArchitettura} onSubmitArchitettura={onSubmitArchitettura} setPopupArchitectura={setPopupArchitectura} errorsArchitettura={errorsArchitettura}/>)}
+
+            
 
             {/* FAQs */}
             <section className="faq py-8 ">
@@ -368,8 +519,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                             <p className="text-sm text-center mx-2 md:text-left md:ml-0">
                             Il valore di un immobile dipende da zona, metratura, stato, classe energetica e mercato locale. Ma attenzione:
                             non basta guardare immobili simili online — ogni casa ha caratteristiche uniche che incidono sulla resa reale. <br /><br />
-                            Vuoi sapere quanto potresti guadagnare vendendo o affittando la tua proprietà? <br />
-                            Usa il nostro calcolatore di resa immobiliare: ti fornisce una stima rapida e gratuita basata su dati reali.
+                            
                             </p>
                         </div>
                     </FadeIn>
@@ -387,8 +537,7 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                             Per vendere casa ti servono: l’atto di proprietà, visura e planimetria catastale, APE (Attestato di Prestazione Energetica),
                             dichiarazione di conformità urbanistica e documenti personali. <br /><br />
                             Le certificazioni degli impianti non sono obbligatorie, ma aumentano il valore dell’immobile. <br /><br />
-                            <b>Vuoi evitare errori? Scarica la nostra checklist gratuita con tutti i documenti spiegati in modo semplice</b> <br /><br />
-                            <Link href="#" className="text-blue-600 underline">Scarica ora</Link>
+                            
                             </p>
                         </div>
                     </FadeIn>
@@ -409,7 +558,8 @@ set_architectura_interior_design, architectura_interior_design, valueRicerca, se
                             Ti aiutiamo a comprendere quale mutuo è adatto al tuo profilo, quali documenti servono e come aumentare le probabilità di approvazione. <br /><br />
                             Che tu sia un lavoratore dipendente, autonomo o giovane acquirente, non sei solo in questo percorso. <br /><br />
                             📅 Prenota ora un appuntamento gratuito con un nostro agente e ricevi una simulazione su misura. <br /><br />
-                            <Link to="/consulenza-privata" className="text-blue-600 underline">Prenota ora la tua consulenza</Link>
+                            <button onClick={()=>setModuloConsulenzaFinanzario(true)}>Prenota ora la tua consulenza</button>
+                            {/* <Link to="/" className="text-blue-600 underline">Prenota ora la tua consulenza</Link> */}
                             </p>
                         </div>
                     </FadeIn>

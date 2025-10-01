@@ -1,7 +1,8 @@
 const postConsulenzaInteriorDesign = async (req, res) => {
-    const {nome, cognome, email, numeroditelefono, indirizzo, tipoDiImmobiliare, stilePreferito, noteDellUtente, url, accettoPrivacy} = req.body;
+    console.log(req.body);
+    const {nome, cognome, email, numeroditelefono, noteDellUtente, accettoPrivacy} = req.body;
 
-    if(nome != "" && cognome!="" && email!="" && numeroditelefono!="" && indirizzo!="" && tipoDiImmobiliare!="" && stilePreferito.length > 0 && accettoPrivacy != false){
+    if(nome != "" && cognome!="" && numeroditelefono!="" && accettoPrivacy != false){
 
         try{
             const twilio = require('twilio');
@@ -13,11 +14,8 @@ const postConsulenzaInteriorDesign = async (req, res) => {
                     // manda un messaggio al consulente
                     let messaggioPerAgente = `Nuova Richiesta di Consulenza Interior Design:
                     👨 Nome: ${nome} ${cognome},
-                    Email: ${email},
+                    ${email !== "" ? `Email: ${email},` : ``},
                     Numero di telefono: ${numeroditelefono},
-                    Indirizzo: ${indirizzo},
-                    Tipo Da Immobiliare: ${tipoDiImmobiliare},
-                    Stile Preferito: ${stilePreferito}
                     Messaggio: ${noteDellUtente}`;
             
                     // Numero del agente

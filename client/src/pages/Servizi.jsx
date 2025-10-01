@@ -1,5 +1,6 @@
 import NavBar from "../components/NavBar";
 import heroImage from "../assets/img/heroImage.jpg";
+import { Link } from "react-router-dom";
 import { FaCompass, FaCompressAlt, FaFile, FaLightbulb, FaPhone, FaEnvelope, FaClock} from "react-icons/fa";
 import {MdArchitecture } from "react-icons/md";
 import { useState } from "react";
@@ -9,58 +10,279 @@ import Footer from "../components/Footer";
 import { toast, ToastContainer } from "react-toastify";
 import ModalUtenze from "../components/ModalUtenze";
 import logo from '../assets/img/White Logo.png';
+import ModalConsulenzaFinanzario from "../components/ModalConsulenzaFinanziaria";
 import ModalArchitectura from "../components/ModalArchitectura";
 import ModalStraOrdinaria from "../components/ModalStraOrdinaria";
 import ModalOrdinaria from "../components/ModalOrdinaria";
 import { FadeIn } from "../components/animations/FadeIn";
+
 // agenti
-import service_provider1 from '../assets/img/agenti/alexander-hipp-iEEBWgY_6lA-unsplash.jpg'
-import service_provider2 from '../assets/img/agenti/calm-therapy-kyYsAAf4xS8-unsplash.jpg'
-import service_provider3 from '../assets/img/agenti/daniil-lobachev-XAo09LtQiAQ-unsplash.jpg'
-import service_provider4 from '../assets/img/agenti/diego-hernandez-MSepzbKFz10-unsplash.jpg'
-import service_provider5 from '../assets/img/agenti/podmatch-GEnCnYhA1J4-unsplash.jpg'
-import service_provider6 from '../assets/img/agenti/nicolas-horn-MTZTGvDsHFY-unsplash.jpg'
+import service_provider_no_pic from '../assets/img/agenti/user.jpg';
+import service_provider2 from '../assets/img/agenti/Regione_Toscana_logo.jpg';
 import ModalConsulenza from "../components/ModalConsulenza";
 import ModalInteriorDesign from "../components/ModalInteriorDesign";
 
+// Work on Modal Forms
+import { useForm } from "react-hook-form";
+import {yupResolver} from '@hookform/resolvers/yup';
+import axios from "axios";
+import ModalTrasloco from "../components/ModalTrasloco";
+import ModuloConsulenzaFinanzaria from "../components/ModalConsulenzaFinanziaria";
+import ModalServizioGeometra from "../components/ModalServizioGeometra";
+import ModalAvvocato from "../components/ModalAvvocato";
+//import { toast } from "react-toastify";
 
-const Servizi = ({popupUtenze, setPopupUtenze, setPopupArchitectura, popupArchitectura, popupConsulenzaImmobiliare, 
+const Servizi = ({popupUtenze, setPopupUtenze, popupConsulenzaImmobiliare, 
 setServizioSelezionato, setConsulenzaImmobiliare, gestireContattiWhatsapp, popupEntrate, setPopupEntrate, servizioSelezionato, 
-
+toast, 
 // Dati per consulenza immobiliare
 gestireDatiConsulenza, motivoPerConsulenzaImmobiliare, setMotivoPerConsulenzaImmobiliare, accettoPrivacy, setAccettoPrivacy,
 popupInterior, setPopupInterior,
-// Dati per servizi architectura
-ristrutturazione_completa, setRistrutturazione_completa, 
-interior_design_arredo, setInterior_design_arredo, 
-inviaDatiPerInteriorDesign,
-ridistribuzione_spazi_interni, setRidistribuzione_spazi_interni,
-setOpereStrutturali, opereStrutturali,  altriServizi, setAltriServizi, 
-luce_illuminotecnica, setLuce_illuminotecnica, cucine_bagni_camere_su_misura, 
-moderno, setModerno, minimal, setMinimal, classico, setClassico, industriale, setIndustriale, luxury, setLuxury,decidereConVoi,setDecidereConVoi,inviaDatiPerArchitectura,
+// Interior Design
+inviaDatiPerInteriorDesign, moduloInteriorDesign, setModuloInteriorDesign,
+// Architettura 
+inviaDatiPerArchitectura, popupArchitectura, setPopupArchitectura,
+// Straordinaria
+inviaDatiPerStraOrdinaria, moduloManutenzioneStra, setModuloManutenzioneStra,
 
-setcucine_bagni_camere_su_misura, noteDellUtente, setNoteDellUtente, indirizzoMobileRis,setIndirizzoMobileRis,
-nome, setNome, cognome, setCognome, emailUtente, setEmailUtente, telnumero, setTelnumero, tipodiImmobiliareRis,
-set_architectura_interior_design, setTipodiImmobiliareRis, architectura_interior_design,
-// Dati per servizio Manutenzione Straordinaria 
-setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognomeManutenzioneStra, setCognomeManutenzioneStra,
-    emailUtenteManutenzioneStra, setEmailUtenteManutenzioneStra, telnumeroManutenzioneStra, setTelnumeroManutenzioneStra,
-    indirizzoManutenzioneStra, setindirizzoManutenzioneStra, capManutenzioneStra, setCapManutenzioneStra, cittaManutenzioneStra, setCittaManutenzioneStra, tipoDiImmobiliareManutenzioneStra, setTipoDiImmobiliareManutenzioneStra,
-    ristrutturazione_parziale,  setRistrutturazione_parziale, perdite_gravi, setPerdite_gravi, Impianti_elettrici_idraulici, setImpianti_elettrici_idraulici, messa_norma_caldaie, setMessa_norma_caldaie, opere_murarie_strutturali,
-    setOpere_murarie_strutturali, rifacimento_bagni, setRifacimento_bagni, interventi_post_allagamento, setInterventi_post_allagamento, grado_di_urgenza, setGrado_di_urgenza, accettoPrivacyStraOrdinaria, setAccettoPrivacyStraOrdinaria,
-    moduloManutenzioneStra, setDescrizioneManutenzioneStra, descrizioneManutenzioneStra, setUrlispirazione, urlispirazione,
-    gestireDatiManutenzioneStra,
-    // Manutenzione Ordinaria
-    moduloManutenzione, setModuloManutenzione,
-    nomeManutenzione, setNomeManutenzione, cognomeManutenzione,
-    setCognomeManutenzione, emailUtenteManutenzione,  setEmailUtenteManutenzione, telnumeroManutenzione, setTelnumeroManutenzione,
-    indirizzoManutenzione, setindirizzoManutenzione, accettoPrivacyOrdinaria, setAccettoPrivacyOrdinaria,
-    capManutenzione, setCapManutenzione, cittaManutenzione, setCittaManutenzione,
-    tipoDiImmobiliareManutenzione, setTipoDiImmobiliareManutenzione, impattiElettriciManutenzione, setImpattiElettriciManutenzione, impianto_idraulicoManutenzione, setImpiantoIdraulicoManutenzione, tinteggiaturaManutenzione, setTinteggiaturaManutenzione, pulizieCondoManutenzione, setpulizieCondoManutenzione, controllo_caldaiaManutenzione, setControllo_caldaiaManutenzione, calendarioManutenzione, setcalendarioManutenzione, fasciaGiornoManutenzione, setfasciaGiornoManutenzione, messaggioManutenzione, setMessaggioManutenzione, invia_dati_per_manutenzioni_ordinaria
+// Consulenza
+inviaDatiPerConsulenzaImmobiliare, moduloConsulenza,setModuloConsulenza,
 
-    //
+// Ordinaria
+inviaDatiPerOrdinaria, moduloManutenzione, setModuloManutenzione,
+
+//SERVIZIO TRASLOCO
+inviaDatiPerTrasloco,moduloServizioTransloco,setModuloServizioTransloco,
+
+//CONSULENZA FINANZARIO
+inviaDatiConsulenzaFinanzario,moduloConsulenzaFinanzario,setModuloConsulenzaFinanzario,
+
+ // GEOMETRA 
+inviaDatiServizioGeometra, moduloServizioGeometra, setModuloServizioGeometra,
+
+//AVVOCATO
+inviaDatiServizioAvvocato,moduloAvvocato, setModuloavvocato,
+
 }) => {
-  
+
+    // Handles errors and validation on the form (Interior Design)
+    const {register, handleSubmit, reset, formState: {errors}} = useForm({
+        resolver: yupResolver(inviaDatiPerInteriorDesign)
+    });
+    // Submit data to the backend (Interior Design)
+    const onSubmitInteriorDesign = async (data) => {
+        try {
+            const response = await axios.post(
+                "http://localhost:2001/servizi/consulenza-interior-design",
+                data,
+                {headers: {"Content-Type": "application/json"}}
+            );
+
+            if(response.status === 200){
+                toast.success("Richiesta inviata con successo");
+                setModuloInteriorDesign(false)//Close modal
+                reset(); //resettare il modulo dopo submission
+            }
+        } catch (error) {
+            console.error("Errore: ", error);
+            toast.error("Errore durante l'invio della richiesta");
+        }
+    };
+
+    // Handles errors and validation on the form (Architettura)
+    const {register: registerArchitettura, handleSubmit: handleSubmitArchitettura, reset:resetArchitettura, formState: {errors:errorsArchitettura}} = useForm({
+        resolver: yupResolver(inviaDatiPerArchitectura)
+    });
+    // Submit data to the backend (Architettura)
+    const onSubmitArchitettura = async (data) => {
+        try {
+            const response = await axios.post(
+                "http://localhost:2001/servizi/consulenza-architettura",
+                data,
+                {headers: {"Content-Type": "application/json"}}
+            );
+
+            if(response.status === 200){
+                toast.success("Richiesta inviata con successo");
+                setModuloInteriorDesign(false)//Close modal
+                reset(); //resettare il modulo dopo submission
+            }
+        } catch (error) {
+            console.error("Errore: ", error);
+            toast.error("Errore durante l'invio della richiesta");
+        }
+    };
+
+    // Handles errors and validation on the form (Straordinaria)
+    const {register: registerStraOrdinaria, handleSubmit: handleSubmitStraOrdinaria, reset:resetStraOrdinaria, formState: {errors:errorsStraOrdinaria}} = useForm({
+        resolver: yupResolver(inviaDatiPerStraOrdinaria)
+    });
+    // Submit data to the backend (Straordinaria)
+    const onSubmitStraOrdinaria = async (data) => {
+        try {
+            const response = await axios.post(
+                "http://localhost:2001/servizi/consulenza-manutenzione-straordinaria",
+                data,
+                {headers: {"Content-Type": "application/json"}}
+            );
+
+            if(response.status === 200){
+                toast.success("Richiesta inviata con successo");
+                setModuloInteriorDesign(false)//Close modal
+                reset(); //resettare il modulo dopo submission
+            }
+        } catch (error) {
+            console.error("Errore: ", error);
+            toast.error("Errore durante l'invio della richiesta");
+        }
+    };
+
+    // Handles errors and validation on the form (Consulenza)
+    const {register: registerConsulenzaImmobiliare, handleSubmit: handleSubmitConsulenzaImmobiliare, reset:resetConsulenzaImmobiliare, formState: {errors:errorsConsulenzaImmobiliare}} = useForm({
+        resolver: yupResolver(inviaDatiPerConsulenzaImmobiliare)
+    });
+    // Submit data to the backend (ConsulenzaImmobiliare)
+    const onSubmitConsulenzaImmobiliare = async (data) => {
+        try {
+            const response = await axios.post(
+                "http://localhost:2001/servizi/consulenza-immobiliare",
+                data,
+                {headers: {"Content-Type": "application/json"}}
+            );
+
+            if(response.status === 200){
+                toast.success("Richiesta inviata con successo");
+                setModuloConsulenza(false)//Close modal
+                reset(); //resettare il modulo dopo submission
+            }
+        } catch (error) {
+            console.error("Errore: ", error);
+            toast.error("Errore durante l'invio della richiesta");
+        }
+    };
+
+    // Handles errors and validation on the form (Ordinaria)
+    const {register: registerOrdinaria, handleSubmit: handleSubmitOrdinaria, reset:resetOrdinaria, formState: {errors:errorsOrdinaria}} = useForm({
+        resolver: yupResolver(inviaDatiPerOrdinaria)
+    });
+    // Submit data to the backend (Ordinaria)
+    const onSubmitOrdinaria = async (data) => {
+        try {
+            const response = await axios.post(
+                "http://localhost:2001/servizi/consulenza-manutenzione-ordinaria",
+                data,
+                {headers: {"Content-Type": "application/json"}}
+            );
+
+            if(response.status === 200){
+                toast.success("Richiesta inviata con successo");
+                setModuloManutenzione(false)//Close modal
+                reset(); //resettare il modulo dopo submission
+            }
+        } catch (error) {
+            console.error("Errore: ", error);
+            toast.error("Errore durante l'invio della richiesta");
+        }
+    };
+
+
+    // Handles errors and validation on the form (Trasloco)
+    const {register: registerTrasloco, handleSubmit: handleSubmitTrasloco, reset:resetTrasloco, formState: {errors:errorsTrasloco}} = useForm({
+        resolver: yupResolver(inviaDatiPerTrasloco)
+    });
+    // Submit data to the backend (Trasloco)
+    const onSubmitTrasloco = async (data) => {
+        try {
+            const response = await axios.post(
+                "http://localhost:2001/servizi/trasloco",
+                data,
+                {headers: {"Content-Type": "application/json"}}
+            );
+
+            if(response.status === 200){
+                toast.success("Richiesta inviata con successo");
+                setModuloServizioTransloco(false)//Close modal
+                resetTrasloco(); //resettare il modulo dopo submission
+            }
+        } catch (error) {
+            console.error("Errore: ", error);
+            toast.error("Errore durante l'invio della richiesta");
+        }
+    };
+
+
+    // Handles errors and validation on the form (Consulenza Finanzario)
+    const {register: registerConsulenzaFinanzario, handleSubmit: handleSubmitConsulenzaFinanzario, reset:resetConsulenzaFinanzario, formState: {errors:errorsConsulenzaFinanzario}} = useForm({
+        resolver: yupResolver(inviaDatiConsulenzaFinanzario)
+    });
+    // Submit data to the backend (Cosnulensa Finnazario)
+    const onSubmitConsulenzaFinanzario = async (data) => {
+        try {
+            const response = await axios.post(
+                "http://localhost:2001/servizi/consulenza-finanziario",
+                data,
+                {headers: {"Content-Type": "application/json"}}
+            );
+
+            if(response.status === 200){
+                toast.success("Richiesta inviata con successo");
+                setModuloConsulenzaFinanzario(false)//Close modal
+                resetConsulenzaFinanzario(); //resettare il modulo dopo submission
+            }
+        } catch (error) {
+            console.error("Errore: ", error);
+            toast.error("Errore durante l'invio della richiesta");
+        }
+    };
+
+    // Handles errors and validation on the form (Servizio Geometra)
+    const {register: registerServizioGeometra, handleSubmit: handleSubmitServizioGeometra, reset:resetServizioGeometra, formState: {errors:errorsServizioGeometra}} = useForm({
+        resolver: yupResolver(inviaDatiServizioGeometra)
+    });
+    // Submit data to the backend (Servizio Geometra)
+    const onSubmitServizioGeometra = async (data) => {
+        try {
+            const response = await axios.post(
+                "http://localhost:2001/servizi/servizio-geometra",
+                data,
+                {headers: {"Content-Type": "application/json"}}
+            );
+
+            if(response.status === 200){
+                toast.success("Richiesta inviata con successo");
+                setModuloServizioGeometra(false)//Close modal
+                resetServizioGeometra(); //resettare il modulo dopo submission
+            }
+        } catch (error) {
+            console.error("Errore: ", error);
+            toast.error("Errore durante l'invio della richiesta");
+        }
+    };
+
+
+    // Handles errors and validation on the form (Servizio Avvocato)
+    const {register: registerServizioAvvocato, handleSubmit: handleSubmitServizioAvvocato, reset:resetServizioAvvocato, formState: {errors:errorsServizioAvvocato}} = useForm({
+        resolver: yupResolver(inviaDatiServizioAvvocato)
+    });
+    // Submit data to the backend (Servizio Avvocato)
+    const onSubmitServizioAvvocato = async (data) => {
+        try {
+            const response = await axios.post(
+                "http://localhost:2001/servizi/avvocato",
+                data,
+                {headers: {"Content-Type": "application/json"}}
+            );
+
+            if(response.status === 200){
+                toast.success("Richiesta inviata con successo");
+                setModuloavvocato(false)//Close modal
+                resetServizioAvvocato(); //resettare il modulo dopo submission
+            }
+        } catch (error) {
+            console.error("Errore: ", error);
+            toast.error("Errore durante l'invio della richiesta");
+        }
+    };
 
     return <>
     <div>
@@ -109,16 +331,18 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
             <h1 className="text-center my-2 sm:!text-lg md:text-2xl font-bold uppercase underline underline-offset-8">Le Nostre Soluzioni</h1>
             {/* Service Sections */}
             <div className="grid md:grid-cols-2 sm:grid-cols-1">
+                
                 {/* Service Card */}
                 <div onClick={()=>setPopupEntrate(true)} className="my-2 relative cursor-pointer transition-transform  hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 h-13 sm:h-7 p-1 sm:p-0 items-start rounded-xl ">
                     <div className="w-[10rem] absolute right-20% sm:-right-[5%] top-[-20%]">
-                        <img src={service_provider1} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <img src={service_provider_no_pic} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
                         <p className="font-bold text-center uppercase">Marco Pulcini</p>
                     </div>
-                    <div className="mt-5 sm:mt-0 sm:-ml-3 ">
+                    <div className="mt-5 -ml-3 md:mt-0 md:-ml-5">
                         <h2 className="font-bold text-center sm:text-left text-red-600">AGENZIA ENTRATE</h2>
                         <p className="font-semibold w-7 sm:w-10 sm:text-left text-center">Registrazioni Contratti e/o 
                         compromessi, communicazioni varie</p>
+                        <Link to="/" className="font-bold text-center uppercase text-xs">Scopri di più sul fornitore del servizio</Link>
                     </div>
                     <FaFile className="text-5xl hidden text-red-600"/>
                 </div>
@@ -127,24 +351,26 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
                 <div onClick={()=>setPopupUtenze(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10  sm:h-7 p-1 sm:p-0 items- rounded-xl ">
                     <div className="w-[10rem] absolute right-20% top-[-20%] sm:-right-[5%]">
                         <img src={service_provider2} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
-                        <p className="font-bold text-center uppercase">Marco Pulcini</p>
+                        <p className="font-bold text-center uppercase">ZeroCode</p>
                     </div> 
-                    <div className="mt-5 sm:mt-0 sm:-ml-3">
+                    <div className="mt-5 -ml-3 md:mt-0 md:-ml-5">
                         <h2 className="font-bold text-center text-red-600 sm:text-left">UTENZE</h2>
                         <p className="font-semibold w-7 sm:w-10 sm:text-left text-center">Luce, gas e aqua </p>
+                        <Link to="/" className="font-bold text-center uppercase text-xs">Scopri di più sul fornitore del servizio</Link>
                     </div>
                     <FaLightbulb className="text-5xl hidden text-red-600"/>
                 </div>
 
                {/*Interior Design */}
-                <div onClick={()=>setPopupInterior(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 sm:h-7 p-1 sm:p-0 items- rounded-xl ">
+                <div onClick={()=>setModuloInteriorDesign(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 sm:h-7 p-1 sm:p-0 items- rounded-xl ">
                     <div className="w-[10rem] absolute right-20% top-[-20%] sm:-right-[5%]">
-                        <img src={service_provider3} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
-                        <p className="font-bold text-center uppercase">Marco Pulcini</p>
+                        <img src={service_provider_no_pic} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <p className="font-bold text-center uppercase">ERIKA</p>
                     </div>
-                    <div className="mt-5 sm:mt-0 sm:-ml-3">
+                    <div className="mt-5 -ml-3 md:mt-0 md:-ml-5">
                         <h2 className="font-bold text-center sm:text-left text-red-600 " >INTERIOR DESIGN</h2>
                         <p className="font-semibold w-7 sm:w-10 sm:text-left text-center">Con Designer pronti ad offrire la miglior soluzione per adornare l'immobile</p>
+                        <Link to="/" className="font-bold text-center uppercase text-xs">Scopri di più sul fornitore del servizio</Link>
                     </div>
                     <MdArchitecture className="text-7xl hidden text-red-600"/>
                 </div>
@@ -152,12 +378,13 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
                 {/* Architecttura */}
                 <div onClick={()=>setPopupArchitectura(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 h-13 sm:h-7 p-1 sm:p-0 rounded-xl ">
                     <div className="w-[10rem] absolute right-20% sm:-right-[5%] top-[-20%]">
-                        <img src={service_provider1} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
-                        <p className="font-bold text-center uppercase">Marco Pulcini</p>
+                        <img src={service_provider_no_pic} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <p className="font-bold text-center uppercase">Mirko</p>
                     </div>
-                    <div className="mt-5 sm:mt-0 sm:-ml-3">
+                    <div className="mt-5 -ml-3 md:mt-0 md:-ml-5">
                         <h2 className="font-bold text-center sm:text-left text-red-600 " >ARCHITETTURA</h2>
-                        <p className="font-semibold w-7 sm:w-10 sm:text-left text-center">Con architetti specializzati in progettazioni 3D</p>
+                        <p className="font-semibold w-7  sm:w-10 sm:text-left text-center">Con architetti specializzati in progettazioni 3D</p>
+                        <Link to="/" className="font-bold text-center uppercase text-xs">Scopri di più sul fornitore del servizio</Link>
                     </div>
                     <MdArchitecture className="text-7xl hidden text-red-600"/>
                 </div>
@@ -166,12 +393,13 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
                 {/* Manutenzioni Straordinario */}
                 <div onClick={()=>setModuloManutenzioneStra(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-1 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 h-13  sm:h-7 p-1 sm:p-0 items- rounded-xl ">
                     <div className="w-[10rem] absolute right-20% top-[-20%] sm:-right-[5%]">
-                        <img src={service_provider4} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <img src={service_provider_no_pic} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
                         <p className="font-bold text-center uppercase">Marco Pulcini</p>
                     </div>
-                    <div className="mt-5 sm:mt-0 sm:-ml-3">
+                    <div className="mt-5 -ml-3 md:mt-0 md:-ml-5">
                         <h2 className="font-bold text-center sm:text-left text-red-600 " >MANUTENZIONI STRAORDINARIO</h2>
-                        <p className="font-semibold w-7 text-center sm:text-left">Con le ditte con cui collaboriamo al fine di ottenere il prodotto desiderato nella maniera migliore</p>
+                        <p className="font-semibold w-7  sm:w-10 sm:text-left text-center">Con le ditte con cui collaboriamo al fine di ottenere il prodotto desiderato nella maniera migliore</p>
+                        <Link to="/" className="font-bold text-center uppercase text-xs">Scopri di più sul fornitore del servizio</Link>
                     </div>
                     <GrVmMaintenance className="text-8xl hidden text-red-600"/>
                 </div>
@@ -179,13 +407,14 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
                  {/* La Consulenza Immobiliare */}
                 <div onClick={()=>setConsulenzaImmobiliare(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 h-13 sm:h-7 p-1 sm:p-0 items- rounded-xl">
                     <div className="w-[10rem] absolute right-20% top-[-20%] sm:-right-[5%]">
-                        <img src={service_provider5} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <img src={service_provider_no_pic} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
                         <p className="font-bold text-center  uppercase">Mirko Erca</p>
                     </div>
-                    <div className="mt-5 sm:mt-0 sm:-ml-3">
+                    <div className="mt-5 -ml-3 md:mt-0 md:-ml-5">
                         <h2 className="font-bold text-center text-red-600 sm:text-left" >CONSULENZA IMMOBILIARE</h2>
                         <p className="font-semibold w-7 text-center sm:w-10 sm:text-left ">Supporto esperto per comprare, 
                         vendere o gestire immobili con sicurezza.</p>
+                        <Link to="/" className="font-bold text-center uppercase text-xs">Scopri di più sul fornitore del servizio</Link>
                     </div>
                     <FaCompass className="text-7xl hidden text-red-600"/>
                 </div>
@@ -193,12 +422,78 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
                 {/* Manutenzioni Ordinario */}
                 <div onClick={()=>setModuloManutenzione(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 h-13 sm:h-7 p-1 sm:p-0 items- rounded-xl ">
                     <div className="w-[10rem] absolute right-20% top-[-20%] sm:-right-[5%]">
-                        <img src={service_provider6} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
-                        <p className="font-bold text-center uppercase">Marco Pulcini</p>
+                        <img src={service_provider_no_pic} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <p className="font-bold text-center uppercase">Gerardo Idealmatic</p>
                     </div>
-                    <div className="mt-5 sm:mt-0 sm:-ml-3">
+                    <div className="mt-5 -ml-3 md:mt-0 md:-ml-5">
                         <h2 className="font-bold text-center text-red-600 sm:text-left">MANUTENZIONI ORDINARIO</h2>
                         <p className="font-semibold w-7 sm:w-10 sm:text-left text-center">Manutenzione Caldaia, Servizi Falegnameria, Servizio Idraulica</p>
+                        <Link to="/" className="font-bold text-center uppercase text-xs">Scopri di più sul fornitore del servizio</Link>
+                    </div>
+                    <GrVmMaintenance className="text-8xl hidden text-red-600"/>
+                </div>
+
+                <div onClick={()=>setModuloServizioTransloco(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 h-13 sm:h-7 p-1 sm:p-0 items- rounded-xl ">
+                    <div className="w-[10rem] absolute right-20% top-[-20%] sm:-right-[5%]">
+                        <img src={service_provider_no_pic} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <p className="font-bold text-center uppercase">Gerardo Idealmatic</p>
+                    </div>
+                    <div className="mt-5 -ml-3 md:mt-0 md:-ml-5">
+                        <h2 className="font-bold text-center text-red-600 sm:text-left uppercase">Servizi di Trasloco</h2>
+                        <p className="font-semibold w-7 sm:w-10 sm:text-left text-center">Manutenzione Caldaia, Servizi Falegnameria, Servizio Idraulica</p>
+                        <Link to="/" className="font-bold text-center uppercase text-xs">Scopri di più sul fornitore del servizio</Link>
+                    </div>
+                    <GrVmMaintenance className="text-8xl hidden text-red-600"/>
+                </div>
+
+                <div onClick={()=>setModuloConsulenzaFinanzario(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 h-13 sm:h-7 p-1 sm:p-0 items- rounded-xl ">
+                    <div className="w-[10rem] absolute right-20% top-[-20%] sm:-right-[5%]">
+                        <img src={service_provider_no_pic} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <p className="font-bold text-center uppercase">Gerardo Idealmatic</p>
+                    </div>
+                    <div className="mt-5 -ml-3 md:mt-0 md:-ml-5">
+                        <h2 className="font-bold text-center text-red-600 sm:text-left uppercase">Consulenza Finanzario</h2>
+                        <p className="font-semibold w-7 sm:w-10 sm:text-left text-center">Manutenzione Caldaia, Servizi Falegnameria, Servizio Idraulica</p>
+                        <Link to="/" className="font-bold text-center uppercase text-xs">Scopri di più sul fornitore del servizio</Link>
+                    </div>
+                    <GrVmMaintenance className="text-8xl hidden text-red-600"/>
+                </div>
+
+                <div onClick={()=>setModuloServizioGeometra(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 h-13 sm:h-7 p-1 sm:p-0 items- rounded-xl ">
+                    <div className="w-[10rem] absolute right-20% top-[-20%] sm:-right-[5%]">
+                        <img src={service_provider_no_pic} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <p className="font-bold text-center uppercase">Gerardo Idealmatic</p>
+                    </div>
+                    <div className="mt-5 -ml-3 md:mt-0 md:-ml-5">
+                        <h2 className="font-bold text-center text-red-600 sm:text-left uppercase">Servizio Geometra</h2>
+                        <p className="font-semibold w-7 sm:w-10 sm:text-left text-center">Manutenzione Caldaia, Servizi Falegnameria, Servizio Idraulica</p>
+                        <Link to="/" className="font-bold text-center uppercase text-xs">Scopri di più sul fornitore del servizio</Link>
+                    </div>
+                    <GrVmMaintenance className="text-8xl hidden text-red-600"/>
+                </div>
+
+                <div onClick={()=>setModuloavvocato(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 h-13 sm:h-7 p-1 sm:p-0 items- rounded-xl ">
+                    <div className="w-[10rem] absolute right-20% top-[-20%] sm:-right-[5%]">
+                        <img src={service_provider_no_pic} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <p className="font-bold text-center uppercase">Gerardo Idealmatic</p>
+                    </div>
+                    <div className="mt-5 -ml-3 md:mt-0 md:-ml-5">
+                        <h2 className="font-bold text-center text-red-600 sm:text-left uppercase">Avvocato</h2>
+                        <p className="font-semibold w-7 sm:w-10 sm:text-left text-center">Manutenzione Caldaia, Servizi Falegnameria, Servizio Idraulica</p>
+                        <Link to="/" className="font-bold text-center uppercase text-xs">Scopri di più sul fornitore del servizio</Link>
+                    </div>
+                    <GrVmMaintenance className="text-8xl hidden text-red-600"/>
+                </div>
+
+                <div onClick={()=>setModuloManutenzione(true)} className="my-2 relative cursor-pointer transition-transform hover:scale-105 mx-2 shadow-xl/20 flex justify-around sm:max-w-md max-w-10 h-13 sm:h-7 p-1 sm:p-0 items- rounded-xl ">
+                    <div className="w-[10rem] absolute right-20% top-[-20%] sm:-right-[5%]">
+                        <img src={service_provider_no_pic} className="w-[10rem] h-[10rem] border-red-500 border-4 rounded-full"/>
+                        <p className="font-bold text-center uppercase">Kennedy Ani</p>
+                    </div>
+                    <div className="mt-5 -ml-3 md:mt-0 md:-ml-5">
+                        <h2 className="font-bold text-center text-red-600 sm:text-left">SVILUPPATORE WEB</h2>
+                        <p className="font-semibold w-7 sm:w-10 sm:text-left text-center">Manutenzione Caldaia, Servizi Falegnameria, Servizio Idraulica</p>
+                        <Link to="/" className="font-bold text-center uppercase text-xs">Scopri di più sul fornitore del servizio</Link>
                     </div>
                     <GrVmMaintenance className="text-8xl hidden text-red-600"/>
                 </div>
@@ -240,76 +535,77 @@ setModuloManutenzioneStra, nomeManutenzioneStra, setNomeManutenzioneStra, cognom
             )}
 
             {/* PER LE UTENZE  */}
-            {popupUtenze && (
+            {/* {popupUtenze && (
                 <ModalUtenze setPopupUtenze={setPopupUtenze} servizioSelezionato={servizioSelezionato} setServizioSelezionato={setServizioSelezionato} gestireContattiWhatsapp={gestireContattiWhatsapp}/>
-            )}
+            )} */}
 
             
             {/* CONSULENZA */}
             {popupConsulenzaImmobiliare && (<ModalConsulenza
-                gestireDatiConsulenza={gestireDatiConsulenza} nome={nome} setNome={setNome} setCognome={setCognome} cognome={cognome} emailUtente={emailUtente} setEmailUtente={setEmailUtente} telnumero={telnumero} setTelnumero={setTelnumero} motivoPerConsulenzaImmobiliare={motivoPerConsulenzaImmobiliare} setMotivoPerConsulenzaImmobiliare={setMotivoPerConsulenzaImmobiliare} accettoPrivacy={accettoPrivacy} setAccettoPrivacy={setAccettoPrivacy} setConsulenzaImmobiliare={setConsulenzaImmobiliare}
+                onSubmitConsulenzaImmobiliare={onSubmitConsulenzaImmobiliare} registerConsulenzaImmobiliare={registerConsulenzaImmobiliare}
+                handleSubmitConsulenzaImmobiliare={handleSubmitConsulenzaImmobiliare} resetConsulenzaImmobiliare={resetConsulenzaImmobiliare}
+                errorsConsulenzaImmobiliare={errorsConsulenzaImmobiliare}
+                setConsulenzaImmobiliare={setConsulenzaImmobiliare}
             />)}
 
             {/* INTERIOR DESIGN */}
-            {popupInterior && (
-                <ModalInteriorDesign nome={nome} setNome={setNome} setCognome={setCognome} cognome={cognome} emailUtente={emailUtente} setEmailUtente={setEmailUtente} telnumero={telnumero} setTelnumero={setTelnumero} 
-                setIndirizzoMobileRis={setIndirizzoMobileRis} indirizzoMobileRis={indirizzoMobileRis}
-                tipodiImmobiliareRis={tipodiImmobiliareRis} setTipodiImmobiliareRis={setTipodiImmobiliareRis} ristrutturazione_completa={ristrutturazione_completa} setRistrutturazione_completa={setRistrutturazione_completa} ridistribuzione_spazi_interni={ridistribuzione_spazi_interni}  setRidistribuzione_spazi_interni={setRidistribuzione_spazi_interni} opereStrutturali={opereStrutturali} setOpereStrutturali={setOpereStrutturali} altriServizi={altriServizi} setAltriServizi={setAltriServizi} noteDellUtente={noteDellUtente} setNoteDellUtente={setNoteDellUtente} inviaDatiPerRistrutturazione inviaDatiPerInteriorDesign={inviaDatiPerInteriorDesign}
-                setPopupInterior={setPopupInterior}
-                moderno={moderno} setModerno={setModerno}
-                minimal={minimal} setMinimal={setMinimal}
-                classico={classico} setClassico={setClassico}
-                industriale={industriale} setIndustriale={setIndustriale}
-                luxury={luxury} setLuxury={setLuxury}
-                decidereConVoi={decidereConVoi} setDecidereConVoi={setDecidereConVoi}
-                setUrlispirazione={setUrlispirazione} urlispirazione={urlispirazione}
-                accettoPrivacy={accettoPrivacy} setAccettoPrivacy={setAccettoPrivacy}
-                />
+            {moduloInteriorDesign && (
+                <ModalInteriorDesign onSubmitInteriorDesign={onSubmitInteriorDesign} handleSubmit={handleSubmit} register={register} errors={errors} setModuloInteriorDesign={setModuloInteriorDesign}/>
             )}
 
             {/* ARCHITECTURA*/}
             {popupArchitectura && (
-                <ModalArchitectura 
-                                
-                ristrutturazione_completa={ristrutturazione_completa}
-                setRistrutturazione_completa={setRistrutturazione_completa} 
-                setPopupArchitectura={setPopupArchitectura}
-                noteDellUtente={noteDellUtente} setNoteDellUtente={setNoteDellUtente} indirizzoMobileRis={indirizzoMobileRis} setIndirizzoMobileRis={setIndirizzoMobileRis}
-                nome={nome} setNome={setNome} cognome={cognome} setCognome={setCognome} emailUtente={emailUtente} setEmailUtente={setEmailUtente} telnumero={telnumero} setTelnumero={setTelnumero} tipodiImmobiliareRis={tipodiImmobiliareRis}
-                set_architectura_interior_design={set_architectura_interior_design} setTipodiImmobiliareRis={setTipodiImmobiliareRis} architectura_interior_design={architectura_interior_design}
-                ridistribuzione_spazi_interni={ridistribuzione_spazi_interni} setRidistribuzione_spazi_intern={setRidistribuzione_spazi_interni}
-                setOpereStrutturali={setOpereStrutturali}
-                opereStrutturali={setOpereStrutturali}
-                altriServizi={altriServizi} setAltriServizi={setAltriServizi}
-                inviaDatiPerArchitectura={inviaDatiPerArchitectura}
-                accettoPrivacy={accettoPrivacy} setAccettoPrivacy={setAccettoPrivacy}
-                />
+                <ModalArchitectura registerArchitettura={registerArchitettura} toast={toast} handleSubmitArchitettura={handleSubmitArchitettura} resetArchitettura={resetArchitettura} onSubmitArchitettura={onSubmitArchitettura} setPopupArchitectura={setPopupArchitectura} errorsArchitettura={errorsArchitettura}/>
             )}
 
             {/* MANUTENZIONE STRAORDINARIA */}
+
             {moduloManutenzioneStra && (
-                <ModalStraOrdinaria
-                    gestireDatiManutenzioneStra={gestireDatiManutenzioneStra}
-                    nomeManutenzioneStra={nomeManutenzioneStra} setNomeManutenzioneStra={setNomeManutenzioneStra} cognomeManutenzioneStra={cognomeManutenzioneStra} setCognomeManutenzioneStra={setCognomeManutenzioneStra}
-                    emailUtenteManutenzioneStra={emailUtenteManutenzioneStra} setEmailUtenteManutenzioneStra={setEmailUtenteManutenzioneStra} telnumeroManutenzioneStra={telnumeroManutenzioneStra}setTelnumeroManutenzioneStra={setTelnumeroManutenzioneStra}
-                    indirizzoManutenzioneStra={indirizzoManutenzioneStra} setindirizzoManutenzioneStra={setindirizzoManutenzioneStra} capManutenzioneStra={capManutenzioneStra} setCapManutenzioneStra={setCapManutenzioneStra} cittaManutenzioneStra={cittaManutenzioneStra} setCittaManutenzioneStra={setCittaManutenzioneStra} tipoDiImmobiliareManutenzioneStra={tipoDiImmobiliareManutenzioneStra} setTipoDiImmobiliareManutenzioneStra={setTipoDiImmobiliareManutenzioneStra}
-                    ristrutturazione_parziale={ristrutturazione_parziale}  setRistrutturazione_parziale={setRistrutturazione_parziale} perdite_gravi={perdite_gravi} setPerdite_gravi={setPerdite_gravi} Impianti_elettrici_idraulici={Impianti_elettrici_idraulici} setImpianti_elettrici_idraulici={setImpianti_elettrici_idraulici} messa_norma_caldaie={messa_norma_caldaie} setMessa_norma_caldaie={setMessa_norma_caldaie} opere_murarie_strutturali={opere_murarie_strutturali}
-                    setOpere_murarie_strutturali={setOpere_murarie_strutturali} rifacimento_bagni={rifacimento_bagni} setRifacimento_bagni={setRifacimento_bagni} interventi_post_allagamento={interventi_post_allagamento} setInterventi_post_allagamento={setInterventi_post_allagamento} grado_di_urgenza={grado_di_urgenza} setGrado_di_urgenza={setGrado_di_urgenza} accettoPrivacyStraOrdinaria={accettoPrivacyStraOrdinaria} setAccettoPrivacyStraOrdinaria={setAccettoPrivacyStraOrdinaria}
-                    moduloManutenzioneStra={moduloManutenzioneStra} setModuloManutenzioneStra={setModuloManutenzioneStra} setDescrizioneManutenzioneStra={setDescrizioneManutenzioneStra} descrizioneManutenzioneStra={descrizioneManutenzioneStra}
-                />
+                <ModalStraOrdinaria registerStraOrdinaria={registerStraOrdinaria} toast={toast} handleSubmitStraOrdinaria={handleSubmitStraOrdinaria} resetArchitettura={resetArchitettura} moduloManutenzioneStra={moduloManutenzioneStra} setModuloManutenzioneStra={setModuloManutenzioneStra} inviaDatiPerStraOrdinaria={inviaDatiPerStraOrdinaria} onSubmitStraOrdinaria={onSubmitStraOrdinaria} errorsStraOrdinaria={errorsStraOrdinaria}/>
             )}
 
             {/* MANUTENZIONE ORDINARIA*/}
+
             {moduloManutenzione && (
                 <ModalOrdinaria
-                nomeManutenzione={nomeManutenzione} setNomeManutenzione={setNomeManutenzione} cognomeManutenzione={cognomeManutenzione}
-                setCognomeManutenzione={setCognomeManutenzione} emailUtenteManutenzione={emailUtenteManutenzione}  setEmailUtenteManutenzione={setEmailUtenteManutenzione} telnumeroManutenzione={telnumeroManutenzione} setTelnumeroManutenzione={setTelnumeroManutenzione}
-                indirizzoManutenzione={indirizzoManutenzione} setindirizzoManutenzione={setindirizzoManutenzione} accettoPrivacyOrdinaria={accettoPrivacyOrdinaria} setAccettoPrivacyOrdinaria={setAccettoPrivacyOrdinaria}
-                capManutenzione={capManutenzione} setCapManutenzione={setCapManutenzione} cittaManutenzione={cittaManutenzione} setCittaManutenzione={setCittaManutenzione}
-                tipoDiImmobiliareManutenzione={tipoDiImmobiliareManutenzione} setTipoDiImmobiliareManutenzione={setTipoDiImmobiliareManutenzione} impattiElettriciManutenzione={impattiElettriciManutenzione} setImpattiElettriciManutenzione={setImpattiElettriciManutenzione} impianto_idraulicoManutenzione={impianto_idraulicoManutenzione} setImpiantoIdraulicoManutenzione={setImpiantoIdraulicoManutenzione} tinteggiaturaManutenzione={tinteggiaturaManutenzione} setTinteggiaturaManutenzione={setTinteggiaturaManutenzione} pulizieCondoManutenzione={pulizieCondoManutenzione} setpulizieCondoManutenzione={setpulizieCondoManutenzione} controllo_caldaiaManutenzione={controllo_caldaiaManutenzione} setControllo_caldaiaManutenzione={setControllo_caldaiaManutenzione} calendarioManutenzione={calendarioManutenzione} setcalendarioManutenzione={setcalendarioManutenzione} fasciaGiornoManutenzione={fasciaGiornoManutenzione} setfasciaGiornoManutenzione={setfasciaGiornoManutenzione} messaggioManutenzione={messaggioManutenzione} setMessaggioManutenzione={setMessaggioManutenzione} setModuloManutenzione={setModuloManutenzione}
-                invia_dati_per_manutenzioni_ordinaria={invia_dati_per_manutenzioni_ordinaria}
+                inviaDatiPerOrdinaria={inviaDatiPerOrdinaria} moduloManutenzione={moduloManutenzione} setModuloManutenzione={setModuloManutenzione}
+                registerOrdinaria={registerOrdinaria} handleSubmitOrdinaria={handleSubmitOrdinaria}
+                onSubmitOrdinaria={onSubmitOrdinaria}
+                errorsOrdinaria={errorsOrdinaria}
+                toast={toast}
                 />
             )}
+
+            {/* TRASLOCO */}
+            {moduloServizioTransloco && (
+                <ModalTrasloco inviaDatiPerTrasloco={inviaDatiPerTrasloco} moduloServizioTransloco={moduloServizioTransloco} setModuloServizioTransloco={setModuloServizioTransloco}
+                registerTrasloco={registerTrasloco} handleSubmitTrasloco={handleSubmitTrasloco}
+                onSubmitTrasloco={onSubmitTrasloco}
+                errorsTrasloco={errorsTrasloco}
+                toast={toast}/>
+            )}
+
+            {/* CONSULENZA FINANZARIO */}
+            {moduloConsulenzaFinanzario && (
+                <ModalConsulenzaFinanzario inviaDatiConsulenzaFinanzario={inviaDatiConsulenzaFinanzario} setModuloConsulenzaFinanzario={setModuloConsulenzaFinanzario}
+                registerConsulenzaFinanzario={registerConsulenzaFinanzario} handleSubmitConsulenzaFinanzario={handleSubmitConsulenzaFinanzario}
+                onSubmitConsulenzaFinanzario={onSubmitConsulenzaFinanzario}
+                errorsConsulenzaFinanzario={errorsConsulenzaFinanzario}
+                toast={toast}/>
+                
+            )}
+
+
+            {/* SERVIZI  GEOMETRA*/}
+            {moduloServizioGeometra && (
+                <ModalServizioGeometra inviaDatiServizioGeometra={inviaDatiServizioGeometra} setModuloServizioGeometra={setModuloServizioGeometra} registerServizioGeometra={registerServizioGeometra} handleSubmitServizioGeometra={handleSubmitServizioGeometra} onSubmitServizioGeometra={onSubmitServizioGeometra} errorsServizioGeometra={errorsServizioGeometra}/>
+            )}
+
+            {/* SERVIZI AVVOCATO */}
+            {moduloAvvocato && (
+                <ModalAvvocato inviaDatiServizioAvvocato={inviaDatiServizioAvvocato} setModuloavvocato={setModuloavvocato} registerServizioAvvocato={registerServizioAvvocato} handleSubmitServizioAvvocato={handleSubmitServizioAvvocato} onSubmitServizioAvvocato={onSubmitServizioAvvocato} errorsServizioAvvocato={errorsServizioAvvocato}/>
+            )}
+            
             
         </div>
     </div>

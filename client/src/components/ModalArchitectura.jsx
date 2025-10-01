@@ -1,12 +1,6 @@
 import {Link } from "react-router-dom";
 
-const ModalArchitectura = ({ristrutturazione_completa, setRistrutturazione_completa, 
-opereStrutturali, setOpereStrutturali,
-ridistribuzione_spazi_interni, setRidistribuzione_spazi_interni,
-luce_illuminotecnica, setLuce_illuminotecnica, cucine_bagni_camere_su_misura, 
-setcucine_bagni_camere_su_misura, noteDellUtente, setNoteDellUtente, indirizzoMobileRis,setIndirizzoMobileRis,
-nome, setNome, cognome, setCognome, emailUtente, setEmailUtente, telnumero, setTelnumero, tipodiImmobiliareRis,
-set_architectura_interior_design, setTipodiImmobiliareRis, setPopupArchitectura, altriServizi, setAltriServizi, inviaDatiPerArchitectura, accettoPrivacy, setAccettoPrivacy}) => {
+const ModalArchitectura = ({registerArchitettura, handleSubmitArchitettura, resetArchitettura, errorsArchitettura, onSubmitArchitettura, setPopupArchitectura}) => {
     
     return <>
         <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
@@ -17,62 +11,55 @@ set_architectura_interior_design, setTipodiImmobiliareRis, setPopupArchitectura,
                 >
                 &times;
                 </button>
-                <h2 className="text-xl font-bold text-red-600 mb-2">Architectura</h2>
+                <h2 className="text-xl font-bold text-red-600 mb-2 uppercase">Architettura</h2>
                 <p className="text-gray-700">
                     Inserisci i tuoi dati personali
                 </p>
 
                 <div className="mt-1 overflow-y-auto max-h-[70vh] pb-5">
-                    <h2 className="font-bold">Dati Personali</h2>
-                    <div className="flex justify-around items-center my-2">
-                        <input type="text" className="p-0.5 rounded-sm bg-gray-300 w-10 outline-0" value={nome} onChange={(e)=>setNome(e.target.value)} name="nome" placeholder="Nome " required/>
+                    <form onSubmit={handleSubmitArchitettura(onSubmitArchitettura)}>
+                        <div className="flex flex-col md:flex-row  justify-around items-center my-2">
+                            <div className="flex flex-col justify-start items-start">
+                                <label className="">Nome</label>
+                                <input placeholder="Es:Enrico" className="p-0.5 rounded-sm bg-gray-200 md:w-10 w-full outline-0" {...registerArchitettura("nome")} />
+                                <p className="error">{errorsArchitettura.nome?.message}</p>
+                            </div>
 
-                        <input type="text" className="p-0.5 rounded-sm bg-gray-300 w-10 outline-0" value={cognome} onChange={(e)=>setCognome(e.target.value)} name="Cognome" placeholder="Cognome" required/>
+                            <div className="flex flex-col justify-start items-start">
+                                <label className="">Cognome</label>
+                                <input placeholder="Es:Erca" className="p-0.5 rounded-sm bg-gray-200 md:w-10 w-full outline-0" {...registerArchitettura("cognome")} />
+                                <p className="error">{errorsArchitettura.cognome?.message}</p>
+                            </div>
 
-                    </div>
+                        </div>
+                        <div className="flex flex-col md:flex-row  justify-around items-center my-2">
+                            
+                            <div className="flex flex-col justify-start items-start">
+                                <label className="">Email</label>
+                                <input placeholder="Es:nome@esempio.com" className="p-0.5 rounded-sm bg-gray-200 md:w-10 w-full outline-0" {...registerArchitettura("email")} />
+                                <p className="error">{errorsArchitettura.email?.message}</p>
+                            </div>
 
-                    <input type="text" className="p-0.5 rounded-sm outline-0 bg-gray-300 w-full" value={emailUtente} onChange={(e)=>setEmailUtente(e.target.value)} name="email" placeholder="Email" required/> <br />
+                            <div className="flex flex-col justify-start items-start">
+                                <label className="">Telefono</label>
+                                <input placeholder="Es:123 456 7890" className="p-0.5 rounded-sm bg-gray-200 w-full outline-0" {...registerArchitettura("numeroditelefono")} />
+                                <p className="error text-red-500">{errorsArchitettura.numeroditelefono?.message}</p>
+                            </div>
 
-                        <input type="tel" className="p-0.5 rounded-sm outline-0 mt-2 bg-gray-300 w-full" name="telefono" value={telnumero} onChange={(e)=>setTelnumero(e.target.value)} placeholder="Telefono" />
+                        </div>
 
-                    <h2 className="my-2 font-bold">Immobile</h2>
-                    <div className="">
-                        <input type="text" className="p-0.5 outline-0 rounded-sm bg-gray-300 w-full" name="indirizzo" value={indirizzoMobileRis} onChange={(e)=>setIndirizzoMobileRis(e.target.value)} placeholder="Indirizzo Immobile"/>
-                    </div>
-                    <select required className=" bg-gray-300 mt-1 w-full outline-0 p-0.5" value={tipodiImmobiliareRis} onChange={(e)=>setTipodiImmobiliareRis(e.target.value)}>
-                        <option value="">Scegli il tipo di immobile</option>
-                        <option value="appartmento">Appartamento</option>
-                        <option value="villa">Villa</option>
-                        <option value="ufficio">Ufficio</option>
-                        <option value="locale_commerciale">Locale Commerciale</option>
+                        <div className="flex flex-col justify-start items-start">
+                            <label className="">Note</label>
+                            <textarea className="p-0.5 rounded-sm bg-gray-200 w-full outline-0" {...registerArchitettura("noteDellUtente")} /> <br /><br />
+                        </div>
 
-                    </select>
-
-                    <h2 className="my-1 font-bold">Tipo di Servizio Richiesto*</h2>
-                    <div className="flex flex-col justify-left items-center">
-                        <label><input type="checkbox" checked={ristrutturazione_completa} name="interventi" onChange={(e)=>setRistrutturazione_completa(e.target.checked)} value="Progetto di ristrutturazione completa" /> Progetto di ristrutturazione completa</label>
-
-                        <label><input type="checkbox" name="Ridistribuzione_spazi_interni"  checked={ridistribuzione_spazi_interni} value="Ridistribuzione spazi interni" onChange={(e)=>setRidistribuzione_spazi_interni(e.target.checked)}/> Ridistribuzione spazi interni
+                        <label className="flex justify-start items-center">
+                            <input type="checkbox" {...registerArchitettura("accettoPrivacy")} /><p> Accetto La <Link to="/privacy-policy"> Privacy Policy</Link></p> 
+                            <p className="error">{errorsArchitettura.accettoPrivacy?.message}</p>
                         </label>
 
-                        <label><input type="checkbox" name="Opere_strutturali" value="Opere Strutturali" checked={opereStrutturali} onChange={(e)=>setOpereStrutturali(e.target.checked)}/> Opere Strutturali</label>
-
-                        <label><input type="checkbox" name="altro" value="altro" checked={altriServizi} onChange={(e)=>setAltriServizi(e.target.checked)}/> Altro</label>
-                        {/* {altro && (
-                            // Esci fuori un input per farsi spiegare meglio l'utente
-
-                        )} */}
-                    </div>
-
-                    <textarea value={noteDellUtente} onChange={(e)=>setNoteDellUtente(e.target.value)} name="dettagli" placeholder="Descrivi meglio cosa vuoi fare" className="w-full mt-1 bg-gray-300 outline-0 rounded-sm p-0.5"></textarea>
-
-                    <h2 className="mt-1 font-bold">Privacy</h2>
-                    <div className="flex flex-col text-left ">
-                        <label><input type="checkbox" checked={accettoPrivacy} onClick={(e)=>setAccettoPrivacy(e.target.checked)} className="" required />Accetto la privacy policy. <Link to="/privacy">Clicca qui per piu informazione sulla privacy</Link></label>
-                    
-                    </div>
-                    
-                    <button type="submit" onClick={()=>inviaDatiPerArchitectura()} className="bg-red-500 text-white rounded-sm p-0.5 mt-2">Richiedi Consulenza Architettura</button>
+                        <button type="submit" className="bg-red-500 text-white py-0.5 px-2 rounded-full">Invia</button>
+                    </form>
                 </div>
             </div>
         </div>

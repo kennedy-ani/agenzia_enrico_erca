@@ -1,7 +1,7 @@
 const postConsulenzaManutenzioneOrdinaria = async (req, res) =>{
-    const {nome, cognome, email, numeroditelefono, indirizzoMobile, cap, citta, tipoDiImmobiliare, servizi, calendario, fascia_giorno, messaggio} = req.body;
+    const {nome, cognome, email, numeroditelefono, noteDellUtente, accettoPrivacy} = req.body;
 
-    if(nome!=="" && cognome!=="" && email!=="" && numeroditelefono!=="" && indirizzoMobile!=="" && cap!=="" && citta!=="" && servizi.length > 0 && calendario!=="" && fascia_giorno!==""){
+    if(nome!=="" && cognome!=="" && email!=="" && numeroditelefono!=="" && accettoPrivacy!==false){
     
         try{
             const twilio = require('twilio');
@@ -15,12 +15,7 @@ const postConsulenzaManutenzioneOrdinaria = async (req, res) =>{
                     👨 Nome: ${nome} ${cognome},
                     ${email !== "" ? `Email: ${email},` : ``}
                     Numero di telefono: ${numeroditelefono},
-                    Indirizzo: ${indirizzoMobile},
-                    Tipo Da Immobiliare: ${tipoDiImmobiliare},
-                    Servizi: ${servizi},
-                    Calendario: ${calendario},
-                    Fase di Giorno: ${fascia_giorno},
-                    ${messaggio !== "" ? `Messaggio dal Cliente: ${messaggio} ` : ``}
+                    ${noteDellUtente !== "" ? `Messaggio dal Cliente: ${noteDellUtente} ` : ``}
                     `;
             
                     // Numero del agente

@@ -1,7 +1,7 @@
 const postConsulenzaArchitettura = async (req, res) => {
-    const {nome, cognome, email, numeroditelefono, indirizzo, tipoDiImmobiliare, servizioSelezionati, noteDellUtente, accettoPrivacy} = req.body;
+    const {nome, cognome, email, numeroditelefono, noteDellUtente, accettoPrivacy} = req.body;
 
-    if(nome!=="" && cognome!=="" && numeroditelefono!=="" && indirizzo!=="" && tipoDiImmobiliare!=="" && servizioSelezionati.length > 0 && accettoPrivacy!== false){
+    if(nome!=="" && cognome!=="" && numeroditelefono!=="" && accettoPrivacy!== false){
         try{
             const twilio = require('twilio');
                 const accountSid = process.env.ACCOUNT_SID;
@@ -14,9 +14,6 @@ const postConsulenzaArchitettura = async (req, res) => {
                     👨Nome: ${nome} ${cognome},
                     📧 ${email !== "" ? `Email: ${email},` : `Non Fornita`}
                     📞 Numero di telefono: ${numeroditelefono},
-                    🏠 Indirizzo: ${indirizzo},
-                    🏢 Tipo Da Immobiliare: ${tipoDiImmobiliare},
-                    🛠 Servizi: ${servizioSelezionati},
                     ${noteDellUtente !== "" ? `Messaggio dal Cliente: ${noteDellUtente} ` : ``}
                     `;
             

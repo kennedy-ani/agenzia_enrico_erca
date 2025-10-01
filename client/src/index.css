@@ -11,6 +11,7 @@
   --text-sm: 1rem;
   --text-lg: 2rem;
   --text-md: 1.5rem;
+  --font-display: "Lato", sans-serif;
 
   /* Breakpoint prefix	Minimum width	CSS
     sm	40rem (640px)	@media (width >= 40rem) { ... }

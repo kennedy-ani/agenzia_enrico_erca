@@ -1,7 +1,8 @@
-const postConsulenzaManutenzioneStraordinaria = async (req, res) => {
-    const {nome, cognome, email, numeroditelefono, noteDellUtente, accettoPrivacy} = req.body;
+const postAvvocato = async (req, res) => {
+    console.log(req.body);
 
-    if(nome!="" && cognome!="" && numeroditelefono!="" && accettoPrivacy !== false){
+    const {nome, cognome, email, numeroditelefono, noteDellUtente, accettoPrivacy} = req.body;
+    if(nome!=="" && cognome!=="" && numeroditelefono!=="" && accettoPrivacy!==false){
         try{
             const twilio = require('twilio');
                 const accountSid = process.env.ACCOUNT_SID;
@@ -10,28 +11,33 @@ const postConsulenzaManutenzioneStraordinaria = async (req, res) => {
             
                 try{
                     // manda un messaggio al consulente
-                    let messaggioPerAgente = `Nuova Richiesta di Consulenza Manutenzione Straordinaria:
-                    👨 Nome: ${nome} ${cognome},
-                    📧 ${email !== "" ? `Email: ${email},` : `Non Fornita`}
+                    let messaggioPerAgente = `Nuova Richiesta di Avvocato:
+                    👨Nome: ${nome} ${cognome},
+                    📧 ${email !== "" ? `Email: ${email},` : ``}
                     📞 Numero di telefono: ${numeroditelefono},
-                    ${noteDellUtente !== "" ? `💬 Messaggio: ${noteDellUtente}` : ``}
+                    ${noteDellUtente !== "" ? `Messaggio dal Cliente: ${noteDellUtente} ` : ``}
                     `;
             
                     // Numero del agente
-                    const numeroAgente = `3881578442`;
+                    const numeroAgente = [`3881578442`, `3272794535`];
                     // Manda messaggio al consulente
-                    const messaggioDaMandare = await client.messages.create({
-                        from: 'whatsapp:+14155238886',
-                        to: `whatsapp:+39${numeroAgente}`,
-                        body: messaggioPerAgente
-                    })
+                    const invii = await Promise.all(
+                        numeroAgente.map((numero)=>
+                                client.messages.create({
+                                from: 'whatsapp:+14155238886',
+                                to: `whatsapp:+39${numero}`,
+                                body: messaggioPerAgente
+                            })
+                        )
+                    )
+                    
                     //se Twillio risponde
-                    if(messaggioDaMandare.sid){
+                    if(invii.some((msg) => msg.sid)){
                         // Manda un messaggio di conferma al utente
                         return res.status(200).json({message: 'Messaggio inviato'});
                     }else{
                         // ❌ se non c'e SID prelevato, qualcosa e' andata storto
-                        return res.status(500).json({message: 'Errore: Il messaggio non è stato inviato al consulente'});
+                        return res.status(500).json({message: 'Errore: il messaggio non è stato inviato al consulente'});
                     }
                 }catch(error){
                     console.error("Errore Twilio:", error);
@@ -49,4 +55,4 @@ const postConsulenzaManutenzioneStraordinaria = async (req, res) => {
     }
 }
 
-module.exports = postConsulenzaManutenzioneStraordinaria;
+module.exports = postAvvocato;

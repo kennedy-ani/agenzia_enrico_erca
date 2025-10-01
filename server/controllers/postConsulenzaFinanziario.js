@@ -1,7 +1,7 @@
-const postConsulenzaManutenzioneStraordinaria = async (req, res) => {
+const postConsulenzaFinanziario = async (req, res) => {
+    console.log(req.body);
     const {nome, cognome, email, numeroditelefono, noteDellUtente, accettoPrivacy} = req.body;
-
-    if(nome!="" && cognome!="" && numeroditelefono!="" && accettoPrivacy !== false){
+    if(nome!=="" && cognome!=="" && numeroditelefono!=="" && accettoPrivacy!==false){
         try{
             const twilio = require('twilio');
                 const accountSid = process.env.ACCOUNT_SID;
@@ -10,11 +10,11 @@ const postConsulenzaManutenzioneStraordinaria = async (req, res) => {
             
                 try{
                     // manda un messaggio al consulente
-                    let messaggioPerAgente = `Nuova Richiesta di Consulenza Manutenzione Straordinaria:
-                    👨 Nome: ${nome} ${cognome},
-                    📧 ${email !== "" ? `Email: ${email},` : `Non Fornita`}
+                    let messaggioPerAgente = `Nuova Richiesta di Consulenza Finanzario/Mutui:
+                    👨Nome: ${nome} ${cognome},
+                    📧 ${email !== "" ? `Email: ${email},` : ``}
                     📞 Numero di telefono: ${numeroditelefono},
-                    ${noteDellUtente !== "" ? `💬 Messaggio: ${noteDellUtente}` : ``}
+                    ${noteDellUtente !== "" ? `Messaggio dal Cliente: ${noteDellUtente} ` : ``}
                     `;
             
                     // Numero del agente
@@ -25,13 +25,15 @@ const postConsulenzaManutenzioneStraordinaria = async (req, res) => {
                         to: `whatsapp:+39${numeroAgente}`,
                         body: messaggioPerAgente
                     })
+    
+                    
                     //se Twillio risponde
                     if(messaggioDaMandare.sid){
                         // Manda un messaggio di conferma al utente
                         return res.status(200).json({message: 'Messaggio inviato'});
                     }else{
                         // ❌ se non c'e SID prelevato, qualcosa e' andata storto
-                        return res.status(500).json({message: 'Errore: Il messaggio non è stato inviato al consulente'});
+                        return res.status(500).json({message: 'Errore: il messaggio non è stato inviato al consulente'});
                     }
                 }catch(error){
                     console.error("Errore Twilio:", error);
@@ -49,4 +51,4 @@ const postConsulenzaManutenzioneStraordinaria = async (req, res) => {
     }
 }
 
-module.exports = postConsulenzaManutenzioneStraordinaria;
+module.exports = postConsulenzaFinanziario;
